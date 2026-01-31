@@ -10,7 +10,6 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
-from openai import OpenAI
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -107,24 +106,13 @@ def _build_messages(payload: ChatRequest, sanitized: str, warnings: List[str]) -
 
 
 def _call_llm(messages: List[dict]) -> str:
-    api_key = os.getenv("OPENAI_API_KEY")
-    model = os.getenv("OPENAI_MODEL")
-    if not api_key or not model:
-        return json.dumps(
-            {
-                "assistant_answer": "AI is not configured yet. Please set OPENAI_API_KEY and OPENAI_MODEL.",
-                "suggested_fill_en": "",
-                "warnings": [],
-            }
-        )
-
-    client = OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=0.2,
+    return json.dumps(
+        {
+            "assistant_answer": "AI is currently disabled. Please connect an LLM provider.",
+            "suggested_fill_en": "",
+            "warnings": [],
+        }
     )
-    return response.choices[0].message.content or ""
 
 
 def _parse_model_json(text: str) -> Dict[str, object]:
