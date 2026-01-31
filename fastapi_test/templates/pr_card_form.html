@@ -1489,14 +1489,99 @@
       },
     };
 
+    const plainOverrides = {
+      en: {
+        continue_by_question: "See step 2 of the instruction guide.",
+        q3_note: "If renewing, keep your current card until the new one arrives. If replacing a damaged card, include it with your application.",
+        q19_label: "19. ADDRESS HISTORY: List all addresses for the last 5 years (or since becoming a PR), oldest to newest.",
+        q20_label: "20. WORK/EDUCATION HISTORY: List all work or study for the last 5 years (or since becoming a PR), oldest to newest.",
+        q21_label: "21. TRAVEL HISTORY: List all trips outside Canada in the last 5 years (or since becoming a PR).",
+        q22_label: "22. List all absences in the last 5 years by the situation that applies to you.",
+        q23_text: "If you choose YES and sign, CBSA can share your entry history with IRCC to check your eligibility.",
+        q23_note: "If you do not consent, you may need to request your entry history yourself, which can delay processing.",
+        q24_text: "If you choose YES and sign, IRCC may collect your SIN and ask CRA for tax and residency info.",
+        g_intro: "This declaration covers the information you provided on this form and attached documents.",
+        g6: "I asked for explanations when something was unclear.",
+        g7: "This signed form becomes part of my immigration record.",
+        h_declaration: "I declare the information is true and understand false information may lead to penalties.",
+        footer_privacy: "Your information is collected under law to assess your PR status. You can access and protect your personal information under privacy laws.",
+      },
+      es: {
+        continue_by_question: "Vea el paso 2 de la guia de instrucciones.",
+        q3_note: "Si renueva, conserve su tarjeta hasta recibir la nueva. Si reemplaza una tarjeta danada, incluyala con la solicitud.",
+        q19_label: "19. HISTORIAL DE DIRECCIONES: Liste todas las direcciones de los ultimos 5 anos (o desde que es PR), de la mas antigua a la mas reciente.",
+        q20_label: "20. HISTORIAL LABORAL/EDUCATIVO: Liste trabajo o estudio de los ultimos 5 anos (o desde que es PR), de lo mas antiguo a lo mas reciente.",
+        q21_label: "21. HISTORIAL DE VIAJES: Liste todos los viajes fuera de Canada en los ultimos 5 anos (o desde que es PR).",
+        q22_label: "22. Liste todas las ausencias de los ultimos 5 anos segun la situacion aplicable.",
+        q23_text: "Si elige SI y firma, la CBSA puede compartir su historial de entradas con IRCC para verificar su elegibilidad.",
+        q23_note: "Si no consiente, puede que deba solicitar su historial usted mismo, lo que puede demorar el proceso.",
+        q24_text: "Si elige SI y firma, IRCC puede recopilar su SIN y pedir a la CRA informacion fiscal y de residencia.",
+        g_intro: "Esta declaracion cubre la informacion de este formulario y los documentos adjuntos.",
+        g6: "Pedi explicaciones cuando algo no estaba claro.",
+        g7: "Este formulario firmado pasa a mi registro de inmigracion.",
+        h_declaration: "Declaro que la informacion es verdadera y entiendo que la informacion falsa puede traer sanciones.",
+        footer_privacy: "Su informacion se recopila para evaluar su estatus de PR. Puede acceder y proteger su informacion personal segun las leyes de privacidad.",
+      },
+      fr: {
+        continue_by_question: "Voir l'etape 2 du guide d'instructions.",
+        q3_note: "Si vous renouvelez, gardez votre carte actuelle jusqu'a la nouvelle. Si vous remplacez une carte endommagee, joignez-la.",
+        q19_label: "19. HISTORIQUE DES ADRESSES : Listez toutes les adresses des 5 dernieres annees (ou depuis la RP), de la plus ancienne a la plus recente.",
+        q20_label: "20. HISTORIQUE EMPLOI/ETUDES : Listez tout travail ou etudes des 5 dernieres annees (ou depuis la RP), de la plus ancienne a la plus recente.",
+        q21_label: "21. HISTORIQUE DE VOYAGES : Listez tous les voyages hors du Canada des 5 dernieres annees (ou depuis la RP).",
+        q22_label: "22. Listez toutes les absences des 5 dernieres annees selon la situation applicable.",
+        q23_text: "Si vous choisissez OUI et signez, la CBSA peut partager votre historique d'entrees avec IRCC pour verifier l'admissibilite.",
+        q23_note: "Sans consentement, vous devrez peut-etre demander l'historique vous-meme, ce qui peut retarder le traitement.",
+        q24_text: "Si vous choisissez OUI et signez, IRCC peut recueillir votre NAS et demander des infos fiscales a l'ARC.",
+        g_intro: "Cette declaration couvre les renseignements de ce formulaire et les documents joints.",
+        g6: "J'ai demande des explications quand quelque chose n'etait pas clair.",
+        g7: "Ce formulaire signe fait partie de mon dossier d'immigration.",
+        h_declaration: "Je declare que l'information est vraie et comprends que de fausses informations peuvent entrainer des sanctions.",
+        footer_privacy: "Vos renseignements sont recueillis pour evaluer votre statut RP. Vous pouvez acceder et proteger vos renseignements personnels selon les lois sur la vie privee.",
+      },
+      de: {
+        continue_by_question: "Siehe Schritt 2 der Anleitung.",
+        q3_note: "Bei Verlangerung behalten Sie die aktuelle Karte bis die neue da ist. Bei Ersatz einer beschadigten Karte fugen Sie sie bei.",
+        q19_label: "19. ADRESSHISTORIE: Alle Adressen der letzten 5 Jahre (oder seit PR), von alt nach neu.",
+        q20_label: "20. ARBEITS-/BILDUNGSHISTORIE: Alle Arbeit/Studium der letzten 5 Jahre (oder seit PR), von alt nach neu.",
+        q21_label: "21. REISEHISTORIE: Alle Reisen ausserhalb Kanadas der letzten 5 Jahre (oder seit PR).",
+        q22_label: "22. Alle Abwesenheiten der letzten 5 Jahre nach zutreffender Situation auflisten.",
+        q23_text: "Wenn Sie JA wahlen und unterschreiben, kann die CBSA Ihre Einreisehistorie an IRCC weitergeben.",
+        q23_note: "Ohne Zustimmung mussen Sie die Historie ggf. selbst anfordern, was verzogert.",
+        q24_text: "Wenn Sie JA wahlen und unterschreiben, kann IRCC Ihre SIN erfassen und Steuerinfos anfordern.",
+        g_intro: "Diese Erklarung betrifft die Angaben in diesem Formular und beigefugte Dokumente.",
+        g6: "Ich habe nachgefragt, wenn etwas unklar war.",
+        g7: "Dieses unterschriebene Formular wird Teil meines Einwanderungsdatensatzes.",
+        h_declaration: "Ich erklare, dass die Angaben wahr sind und verstehe, dass falsche Angaben zu Strafen fuhren konnen.",
+        footer_privacy: "Ihre Angaben werden zur Prufung Ihres PR-Status erhoben. Sie haben Rechte auf Zugang und Schutz Ihrer Daten.",
+      },
+      tr: {
+        continue_by_question: "Talimat kilavuzunun 2. adimina bakin.",
+        q3_note: "Kart yenilemede yeni kart gelene kadar mevcut karti saklayin. Hasarli kart degisimi icin karti basvuruya ekleyin.",
+        q19_label: "19. ADRES GECMISI: Son 5 yilin (veya PR oldugunuz tarihten beri) tum adreslerini eski tarihten yeni tarihe yazin.",
+        q20_label: "20. IS/EGITIM GECMISI: Son 5 yilin (veya PR oldugunuz tarihten beri) tum is ve egitim gecmisini eski tarihten yeni tarihe yazin.",
+        q21_label: "21. SEYAHAT GECMISI: Son 5 yilda (veya PR oldugunuzdan beri) Kanada disina tum cikislari listeleyin.",
+        q22_label: "22. Son 5 yildaki tum ayriliklari ilgili duruma gore listeleyin.",
+        q23_text: "\"EVET\" secip imzalarsaniz CBSA giris gecmisinizi IRCC ile paylasabilir.",
+        q23_note: "Onay vermezseniz, giris gecmisini kendiniz istemeniz gerekebilir ve bu gecikmeye yol acar.",
+        q24_text: "\"EVET\" secip imzalarsaniz IRCC SIN numaranizi alip vergi/ikamet bilgileri isteyebilir.",
+        g_intro: "Bu beyan, bu formda ve ek belgelerde verdiginiz bilgileri kapsar.",
+        g6: "Anlamadigim noktalarda aciklama istedim.",
+        g7: "Bu imzali form gocmenlik kaydimin bir parcasi olur.",
+        h_declaration: "Bilgilerin dogru oldugunu beyan ederim; yanlis bilgi cezalara yol acabilir.",
+        footer_privacy: "Bilgileriniz PR durumunuzu degerlendirmek icin toplanir. Kisisel bilgilerinize erisim ve koruma hakkiniz vardir.",
+      },
+    };
+
     function applyTranslations() {
       const params = new URLSearchParams(window.location.search);
       const lang = (params.get("lang") || "en").toLowerCase();
       const dict = translations[lang] || translations.en;
+      const plain = plainOverrides[lang] || plainOverrides.en;
+      const merged = { ...dict, ...plain };
       document.querySelectorAll("[data-i18n]").forEach((el) => {
         const key = el.getAttribute("data-i18n");
-        if (dict[key]) {
-          el.textContent = dict[key];
+        if (merged[key]) {
+          el.textContent = merged[key];
         }
       });
     }
