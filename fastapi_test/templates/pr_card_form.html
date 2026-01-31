@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Application for a Permanent Resident Card</title>
+  <style>
+    :root {
+      --ink: #222;
+      --line: #111;
+      --lite: #f0f0f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #e8eef3;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .page {
+      width: 816px;
+      min-height: 1056px;
+      margin: 24px auto;
+      background: #fff;
+      border: 1px solid #c9c9c9;
+      padding: 18px 20px 30px;
+    }
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 11px;
+    }
+    .title-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin: 6px 0 8px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      letter-spacing: 0.3px;
+    }
+    .tiny {
+      font-size: 10px;
+      line-height: 1.3;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 12px;
+      border-top: 2px solid var(--line);
+      padding-top: 6px;
+      margin-top: 10px;
+    }
+    .row {
+      display: grid;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .row.cols-5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+    .field {
+      border: 1px solid var(--line);
+      min-height: 28px;
+      padding: 4px 6px;
+      font-size: 11px;
+    }
+    .field label {
+      display: block;
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+    .field input[type="text"],
+    .field input[type="date"] {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 12px;
+    }
+    .checkbox-line {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 11px;
+    }
+    .checkbox-line input { margin-right: 6px; }
+    .box {
+      border: 1px solid var(--line);
+      padding: 6px;
+      font-size: 11px;
+      min-height: 34px;
+      margin-top: 6px;
+    }
+    table.form {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 10px;
+    }
+    table.form th, table.form td {
+      border: 1px solid var(--line);
+      padding: 3px 4px;
+      vertical-align: top;
+    }
+    table.form th {
+      background: var(--lite);
+      font-weight: 700;
+      text-align: left;
+    }
+    .notice {
+      border: 2px solid var(--line);
+      padding: 8px;
+      font-size: 11px;
+      text-align: center;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      margin-top: 16px;
+      align-items: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>Immigration, Refugees and Citizenship Canada</div>
+      <div>Immigration, Refugies et Citoyennete Canada</div>
+    </div>
+    <div class="title-row">
+      <h1>APPLICATION FOR A PERMANENT RESIDENT CARD</h1>
+      <div class="tiny">PROTECTED WHEN COMPLETED - B<br>PAGE 1 OF 4</div>
+    </div>
+
+    <div class="tiny">Continue by question? See step 2 of the instruction guide.<br>TYPE OR PRINT IN BLACK OR BLUE INK</div>
+
+    <div class="row cols-2">
+      <div class="field">
+        <label>1. Language you prefer for correspondence</label>
+        <div class="checkbox-line">
+          <label><input type="checkbox"> English</label>
+          <label><input type="checkbox"> French</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>UCI number</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>2. Date you became a permanent resident of Canada (YYYY-MM-DD)</label>
+      <input type="text">
+    </div>
+
+    <div class="field">
+      <label>3. You are applying to (check one box)</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Obtain your first Permanent Resident Card</label>
+        <label><input type="checkbox"> Renew your present Permanent Resident Card</label>
+        <label><input type="checkbox"> Replace a lost, stolen, destroyed or never received Permanent Resident Card</label>
+      </div>
+      <div class="tiny">NOTE: If you are applying to renew your present card, you should keep it until you receive your replacement card. You will be asked to destroy your old card when you receive your new one. If you are applying to replace your damaged card, you must send the damaged card with your application.</div>
+    </div>
+
+    <div class="section-title">A. PERSONAL DETAILS</div>
+
+    <div class="field">
+      <label>4. Your full name as shown on your Record of Landing (IMM 1000), Confirmation of Permanent Residence (IMM 5292) or (IMM 5688), or last Permanent Resident Card</label>
+      <div class="row cols-2">
+        <div class="field"><label>Family name (surname)</label><input type="text"></div>
+        <div class="field"><label>Given name(s)</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>5. Your current name, if different from above (provide supporting documents for any change in your name)</label>
+      <div class="row cols-2">
+        <div class="field"><label>Family name (surname)</label><input type="text"></div>
+        <div class="field"><label>Given name(s)</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="row cols-3">
+      <div class="field">
+        <label>6. Your sex</label>
+        <div class="checkbox-line">
+          <label><input type="checkbox"> Male</label>
+          <label><input type="checkbox"> Female</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>7. Your date of birth (YYYY-MM-DD)</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>8. Your country of birth</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="row cols-2">
+      <div class="field">
+        <label>9. Your country or countries of citizenship</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>10. Colour of your eyes</label>
+        <div class="checkbox-line">
+          <label><input type="checkbox"> Blue</label>
+          <label><input type="checkbox"> Grey</label>
+          <label><input type="checkbox"> Brown</label>
+          <label><input type="checkbox"> Green</label>
+          <label><input type="checkbox"> Black</label>
+          <label><input type="checkbox"> Hazel (yellowish brown)</label>
+          <label><input type="checkbox"> Other</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row cols-3">
+      <div class="field"><label>11. Your height (cm)</label><input type="text"></div>
+      <div class="field"><label>ft</label><input type="text"></div>
+      <div class="field"><label>in</label><input type="text"></div>
+    </div>
+
+    <div class="field">
+      <label>12. Your current residential address in Canada</label>
+      <div class="row cols-2">
+        <div class="field"><label>Apartment</label><input type="text"></div>
+        <div class="field"><label>Street no.</label><input type="text"></div>
+      </div>
+      <div class="field"><label>Street name</label><input type="text"></div>
+      <div class="row cols-3">
+        <div class="field"><label>City</label><input type="text"></div>
+        <div class="field"><label>Province</label><input type="text"></div>
+        <div class="field"><label>Postal code</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>13. Your mailing address in Canada (if different from above)</label>
+      <div class="row cols-2">
+        <div class="field"><label>Apartment</label><input type="text"></div>
+        <div class="field"><label>Street no.</label><input type="text"></div>
+      </div>
+      <div class="field"><label>Street name</label><input type="text"></div>
+      <div class="row cols-3">
+        <div class="field"><label>City</label><input type="text"></div>
+        <div class="field"><label>Province</label><input type="text"></div>
+        <div class="field"><label>Postal code</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>14. Your telephone numbers and e-mail address</label>
+      <div class="row cols-2">
+        <div class="field"><label>At home</label><input type="text"></div>
+        <div class="field"><label>Alternative</label><input type="text"></div>
+      </div>
+      <div class="field"><label>E-mail</label><input type="text"></div>
+    </div>
+
+    <div class="field">
+      <label>15. Your current marital status</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Never married</label>
+        <label><input type="checkbox"> Married</label>
+        <label><input type="checkbox"> Widowed</label>
+        <label><input type="checkbox"> Legally separated</label>
+        <label><input type="checkbox"> Divorced</label>
+        <label><input type="checkbox"> Common-law</label>
+      </div>
+    </div>
+
+    <div class="section-title">B. YOUR IMMIGRATION HISTORY</div>
+    <div class="row cols-2">
+      <div class="field">
+        <label>16. Place you became a permanent resident of Canada (City/Port of entry)</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Province</label>
+        <input type="text">
+      </div>
+    </div>
+    <div class="field">
+      <label>17. Have you ever been issued a removal order in Canada?</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Yes</label>
+        <label><input type="checkbox"> No</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>18. Has an Immigration Officer ever issued you a Report Under Subsection 44(1) or made the decision that you have not met the residency obligations required of Canadian permanent residents?</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Yes</label>
+        <label><input type="checkbox"> No</label>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>IMM 5444 (08-2016) E</div>
+      <div>This form is made available by Immigration, Refugees and Citizenship Canada and is not to be sold to applicants. (DISPONIBLE EN FRANCAIS - IMM 5444 F)</div>
+      <div>Canada</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="title-row">
+      <div></div>
+      <div class="tiny">PAGE 2 OF 4</div>
+    </div>
+
+    <div class="section-title">C. PERSONAL HISTORY</div>
+    <div class="tiny">If you need additional space for any of the questions below, print out an additional page containing the appropriate section, complete it and submit it with your application.</div>
+
+    <div class="field">
+      <label>19. ADDRESS HISTORY INSIDE AND OUTSIDE CANADA: Your address history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your address history since becoming a permanent resident. List all your addresses in chronological order from the oldest to the most recent.</label>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>Apartment, street no. and street name</th>
+        <th>City or town</th>
+        <th>Province</th>
+        <th>Country</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+
+    <div class="field">
+      <label>20. WORK AND EDUCATIONAL HISTORY INSIDE AND OUTSIDE CANADA: Your work and educational history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your work and educational history since becoming a permanent resident. If you have not worked or studied, provide your other activity history, including location. List all your activities in chronological order from the oldest to the most recent.</label>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>Name of employer or name of educational institution attended (do not use abbreviations)</th>
+        <th>City or town</th>
+        <th>Province</th>
+        <th>Country</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+
+    <div class="field">
+      <label>21. TRAVEL HISTORY: Have you travelled or lived outside of Canada in the last five (5) years (or if you became a permanent resident less than five (5) years ago, since becoming a permanent resident)? Include ALL absences, including those due to employment, vacations, trips to the United States and any other time you left Canada.</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> No</label>
+        <label><input type="checkbox"> Yes (List all your absences)</label>
+      </div>
+      <div class="tiny">Period to be assessed:</div>
+      <div class="row cols-2">
+        <div class="field"><label>From (YYYY-MM-DD)</label><input type="text"></div>
+        <div class="field"><label>To (YYYY-MM-DD)</label><input type="text"></div>
+      </div>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>Your location during your absence (city, country)</th>
+        <th>Reason for absence</th>
+        <th>Number of days</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td colspan="4" style="text-align:right;">Total number of days</td><td></td></tr>
+    </table>
+
+    <div class="notice">IMPORTANT: If your total number of days outside Canada is equal to 1095 days or more, you must complete Section D below.</div>
+
+    <div class="section-title">D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA</div>
+    <div class="tiny">Complete this section if you have been outside of Canada for 1095 days or more in the past five (5) years.</div>
+    <div class="field">
+      <label>22. List ALL your absences from Canada in the past five (5) years according to the situation that applies to you. If you became a permanent resident less than five (5) years ago, list ALL absences from the time you became a permanent resident to present. List your absences in chronological order from the oldest to the most recent.</label>
+    </div>
+    <div class="field">
+      <label>Situation 1 - Absences while accompanying a family member who is a Canadian citizen</label>
+      <div class="row cols-2">
+        <div class="field"><label>Name of family member</label><input type="text"></div>
+        <div class="field"><label>Relationship to you</label><input type="text"></div>
+      </div>
+      <div class="tiny">Provide proof of Canadian citizenship. Provide proof of your relationship.</div>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>No. and street</th>
+        <th>City/Town, country</th>
+        <th>Total number of days</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td colspan="4" style="text-align:right;">Total number of days</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="page">
+    <div class="title-row">
+      <div></div>
+      <div class="tiny">PAGE 3 OF 4</div>
+    </div>
+
+    <div class="section-title">D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA (continued)</div>
+
+    <div class="field">
+      <label>Situation 2 - Absences while employed by a Canadian business outside Canada or in the Canadian federal or provincial public service</label>
+      <div class="tiny">Provide proof of full-time Canadian employment</div>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>No. and street</th>
+        <th>City/Town, country</th>
+        <th>Total number of days</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td colspan="4" style="text-align:right;">Total number of days</td><td></td></tr>
+    </table>
+
+    <div class="field">
+      <label>Situation 3 - Absences while accompanying a family member who is a permanent resident of Canada AND who is employed by a Canadian business outside Canada or in the Canadian federal or provincial public service</label>
+      <div class="row cols-2">
+        <div class="field"><label>Name of family member</label><input type="text"></div>
+        <div class="field"><label>Relationship to you</label><input type="text"></div>
+      </div>
+      <div class="tiny">Provide proof of this person's permanent resident status and proof of this person's full-time employment. Provide proof of your relationship.</div>
+    </div>
+    <table class="form">
+      <tr>
+        <th>From (YYYY-MM-DD)</th>
+        <th>To (YYYY-MM-DD)</th>
+        <th>No. and street</th>
+        <th>City/Town, country</th>
+        <th>Total number of days</th>
+      </tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td colspan="4" style="text-align:right;">Total number of days</td><td></td></tr>
+    </table>
+
+    <div class="section-title">E. CONSENT TO DISCLOSE INFORMATION</div>
+    <div class="field">
+      <label>23. History of entries into Canada</label>
+      <div class="tiny">By selecting "YES" in the box below, and by signing this form, I hereby give my consent to the Canada Border Services Agency (CBSA) to disclose the details of my history of entries into Canada to Immigration, Refugees and Citizenship Canada (IRCC) in order to assist IRCC in determining my eligibility for a permanent resident card. I also hereby authorize IRCC to collect the history of my entries into Canada from the CBSA.</div>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Yes</label>
+        <label><input type="checkbox"> No</label>
+      </div>
+      <div class="tiny">Note: If you do not provide consent, you may be asked to request your history of entries directly from the CBSA and send it to IRCC which could result in delays in the processing of your application.</div>
+    </div>
+
+    <div class="section-title">F. STATEMENT OF CONSENT</div>
+    <div class="field">
+      <label>24. Income tax information and filing history</label>
+      <div class="tiny">By selecting "YES" in the box below, and by signing this application form, I hereby give my consent to the Immigration, Refugees and Citizenship Canada (IRCC) to collect my Social Insurance Number (SIN) for the purpose of requesting that the Canada Revenue Agency (CRA) disclose my income tax information and residency information for any taxation years required to assist the department in determining whether I meet the residency obligation as set out in Section 28 of the Immigration and Refugee Protection Act.</div>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Yes</label>
+        <label><input type="checkbox"> No</label>
+      </div>
+      <div class="row cols-2">
+        <div class="field"><label>Social Insurance Number (SIN)</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>IMM 5444 (08-2016) E</div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="title-row">
+      <div></div>
+      <div class="tiny">PAGE 4 OF 4</div>
+    </div>
+
+    <div class="section-title">G. DECLARATION OF APPLICANT</div>
+    <div class="box">
+      This declaration covers the information that I have provided on this form and all the information submitted with my application for a Permanent Resident Card as well as the attached accompanying documents.
+      <ul class="tiny">
+        <li>I declare that the information I have given is truthful, complete and correct.</li>
+        <li>I understand that any false statements or concealment of a material fact may be grounds for my prosecution or removal.</li>
+        <li>The photographs enclosed are a true likeness of me.</li>
+        <li>I am a permanent resident of Canada.</li>
+        <li>I am not a Canadian citizen.</li>
+        <li>I understand that all foreign statements, having asked for and obtained an explanation on every point that was not clear to me.</li>
+        <li>I realize that once this document has been completed and signed, it will form part of my Immigration Record and will be used to verify my family details on future applications.</li>
+        <li>I will immediately inform Immigration, Refugees and Citizenship Canada if any of the information or the answers provided in my application forms change.</li>
+      </ul>
+    </div>
+
+    <div class="notice">SIGN SECTION G BEFORE PROCEEDING TO SECTION H.<br><span class="tiny">To avoid processing delays, ensure your application is not postdated or stale dated.</span></div>
+
+    <div class="row cols-2">
+      <div class="field"><label>Signature of declarant</label><input type="text"></div>
+      <div class="field"><label>Signature of parent or legal guardian, if applicable</label><input type="text"></div>
+    </div>
+    <div class="row cols-3">
+      <div class="field"><label>Date (YYYY-MM-DD)</label><input type="text"></div>
+      <div class="field"><label>City</label><input type="text"></div>
+      <div class="field"><label>Province</label><input type="text"></div>
+    </div>
+    <div class="field">
+      <label>I am the applicant's (check appropriate box)</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Mother</label>
+        <label><input type="checkbox"> Father</label>
+        <label><input type="checkbox"> Legal guardian</label>
+      </div>
+    </div>
+
+    <div class="section-title">H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD</div>
+    <div class="tiny">Complete this section only if you are applying to replace a lost, stolen, destroyed or never received PR Card.</div>
+
+    <div class="row cols-2">
+      <div class="field"><label>26. Permanent Resident Card number</label><input type="text"></div>
+      <div class="field"><label>Date of issue (YYYY-MM-DD)</label><input type="text"></div>
+    </div>
+    <div class="field">
+      <label>My Permanent Resident Card was</label>
+      <div class="checkbox-line">
+        <label><input type="checkbox"> Lost</label>
+        <label><input type="checkbox"> Stolen</label>
+        <label><input type="checkbox"> Destroyed</label>
+        <label><input type="checkbox"> Never received</label>
+      </div>
+      <div class="row cols-2">
+        <div class="field"><label>On or about (YYYY-MM-DD)</label><input type="text"></div>
+        <div class="field"><label>At (city, country)</label><input type="text"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Under the following circumstances (full information must be provided below):</label>
+      <input type="text">
+    </div>
+    <div class="field">
+      <label>I have made the following efforts to locate this document</label>
+      <input type="text">
+    </div>
+
+    <div class="field">
+      <label>Should I ever regain possession of my original PR Card, I promise to destroy it immediately.</label>
+    </div>
+    <div class="tiny">I solemnly declare that the information I have provided is true, that it is of the same force and effect as if made under oath, and that it was freely given. I authorize the department of Immigration, Refugees and Citizenship Canada to verify the information I have provided. I also understand that the provision of any false or misleading information may lead to prosecution and/or removal. Section 127 of the Immigration and Refugee Protection Act.</div>
+
+    <div class="notice">DO NOT SIGN HERE UNLESS YOU ARE DECLARING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD.</div>
+
+    <div class="row cols-2">
+      <div class="field"><label>Signature of declarant</label><input type="text"></div>
+      <div class="field"><label>Signature of parent or legal guardian, if applicable</label><input type="text"></div>
+    </div>
+    <div class="row cols-2">
+      <div class="field"><label>Date (YYYY-MM-DD)</label><input type="text"></div>
+      <div class="field"><label>Date (YYYY-MM-DD)</label><input type="text"></div>
+    </div>
+
+    <div class="footer">
+      <div>IMM 5444 (08-2016) E</div>
+      <div class="tiny">The information you provide on this form is collected under the authority of the Immigration and Refugee Protection Act and will be used to determine whether the term and conditions of your permanent residency were maintained and whether you should be granted a Permanent Resident Card. It will be retained in the Personal Information Bank CIC PPU 047 and Personal Information Bank CIC PPU 051. Under the Privacy Act and the Access to Information Act, you have the right of access to your personal information and protection of access to this personal information. Details on these matters are available at the Information Centre of Immigration, Refugees and Citizenship Canada.</div>
+      <div>Canada</div>
+    </div>
+  </div>
+</body>
+</html>

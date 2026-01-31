@@ -9,3 +9,6 @@ Even while the user is filling out the form, the document continues to appear in
 Once the entire form is completed, the app converts everything back to the original English version, allowing the user to download and submit the final document as a PDF.
 The goal is to help newcomers who do not speak English well and who struggle with legal or cultural terms that may not exist in their home countries. Through this web app, they can complete their PR forms quickly, accurately, and without needing to leave the platform.
 Additionally, since the app is AI-powered, users can ask questions like “What happens if I enter incorrect information?” and receive clear answers within the same app, without searching elsewhere.
+
+run this commend to run the backend
+fastapi dev main.py 
