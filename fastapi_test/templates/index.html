@@ -105,12 +105,18 @@
   </div>
 
   <div style="margin-top: 24px;">
-    <a class="link-box" href="/pr-card-form">APPLICATION FOR A PERMANENT RESIDENT CARD</a>
+    <a id="pr-form-link" class="link-box" href="/pr-card-form">APPLICATION FOR A PERMANENT RESIDENT CARD</a>
   </div>
 
   <script>
     const select = document.getElementById("lang-select");
     const paragraphs = document.querySelectorAll("[data-lang]");
+    const prFormLink = document.getElementById("pr-form-link");
+
+    function syncFormLink() {
+      const lang = select.value;
+      prFormLink.setAttribute("href", `/pr-card-form?lang=${encodeURIComponent(lang)}`);
+    }
 
     select.addEventListener("change", () => {
       const selected = select.value;
@@ -121,7 +127,10 @@
           p.classList.add("hidden");
         }
       });
+      syncFormLink();
     });
+
+    syncFormLink();
   </script>
 </body>
 </html>
