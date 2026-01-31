@@ -2,24 +2,126 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>My First Web App</title>
+  <title>Multilingual Paragraph</title>
+  <style>
+    :root {
+      --bg: #fff3f0;
+      --card: #ffffff;
+      --ink: #1e1a1d;
+      --accent: #ff6b6b;
+      --accent-2: #4dabf7;
+      --accent-3: #51cf66;
+    }
+    body {
+      font-family: "Trebuchet MS", "Verdana", sans-serif;
+      max-width: 720px;
+      margin: 32px auto;
+      padding: 24px 16px;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    header {
+      margin-bottom: 20px;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #ffe8cc, #d0ebff);
+      border: 2px solid #ffe066;
+    }
+    label {
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 2px solid var(--accent-2);
+      background: #e7f5ff;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .paragraph {
+      font-size: 1.05rem;
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      border: 2px solid #c81d1d;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .link-box {
+      display: block;
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      border: 2px solid #c81d1d;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+    }
+    .link-box:hover {
+      border-color: var(--accent);
+    }
+    .hidden {
+      display: none;
+    }
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .dot.red { background: var(--accent); }
+    .dot.blue { background: var(--accent-2); }
+    .dot.green { background: var(--accent-3); }
+  </style>
 </head>
 <body>
-  <h1>My First Web App</h1>
+  <header>
+    <h1>Multilingual Paragraph <span class="dot red"></span><span class="dot blue"></span><span class="dot green"></span></h1>
+    <p>Select a language to switch the paragraph.</p>
+  </header>
 
-  <p>Add an item:</p>
+  <div>
+    <label for="lang-select">Language</label>
+    <select id="lang-select">
+      {% for lang in languages %}
+        <option value="{{ lang.code }}" {% if lang.code == default_code %}selected{% endif %}>
+          {{ lang.flag }} {{ lang.label }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
 
-  <form method="post" action="/add">
-    <input type="text" name="item" placeholder="Type something..." required>
-    <button type="submit">Add</button>
-  </form>
-
-  <h2>Items</h2>
-
-  <ul>
-    {% for x in items %}
-      <li>{{ x }}</li>
+  <div style="margin-top: 20px;">
+    {% for lang in languages %}
+      <p class="paragraph {% if lang.code != default_code %}hidden{% endif %}" data-lang="{{ lang.code }}">
+        {{ lang.text }}
+      </p>
     {% endfor %}
-  </ul>
+  </div>
+
+  <div style="margin-top: 24px;">
+    <a class="link-box" href="/pr-card-form">APPLICATION FOR A PERMANENT RESIDENT CARD</a>
+  </div>
+
+  <script>
+    const select = document.getElementById("lang-select");
+    const paragraphs = document.querySelectorAll("[data-lang]");
+
+    select.addEventListener("change", () => {
+      const selected = select.value;
+      paragraphs.forEach((p) => {
+        if (p.getAttribute("data-lang") === selected) {
+          p.classList.remove("hidden");
+        } else {
+          p.classList.add("hidden");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
