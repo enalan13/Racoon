@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Application for a Permanent Resident Card</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #e8eef3;
+      color: #111;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 24px auto 40px;
+      padding: 0 12px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .download {
+      background: #ffffff;
+      border: 1px solid #c9c9c9;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #111;
+      font-weight: 600;
+    }
+    .page {
+      background: #fff;
+      border: 1px solid #c9c9c9;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      margin: 18px auto;
+      padding: 12px;
+    }
+    .page img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">APPLICATION FOR A PERMANENT RESIDENT CARD</div>
+      <a class="download" href="/static/Application-for-a-Permanent-Resident-Card.pdf" download>
+        Download original PDF
+      </a>
+    </div>
+
+    <div class="page"><img src="/static/prcard_pages/page-1.png" alt="Page 1"></div>
+    <div class="page"><img src="/static/prcard_pages/page-2.png" alt="Page 2"></div>
+    <div class="page"><img src="/static/prcard_pages/page-3.png" alt="Page 3"></div>
+    <div class="page"><img src="/static/prcard_pages/page-4.png" alt="Page 4"></div>
+  </div>
+</body>
+</html>
