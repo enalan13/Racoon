@@ -8,11 +8,13 @@ from typing import Deque, Dict, List
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 languages = [
     {"code": "en", "label": "English", "flag": "🇬🇧", "text": "Hello! This is a simple multilingual page."},
@@ -141,6 +143,14 @@ def home(request: Request):
 def pr_card_form(request: Request):
     return templates.TemplateResponse(
         "pr_card_form.html",
+        {"request": request}
+    )
+
+
+@app.get("/pr-card-form-pdf", response_class=HTMLResponse)
+def pr_card_form_pdf(request: Request):
+    return templates.TemplateResponse(
+        "pr_card_form_pdf.html",
         {"request": request}
     )
 

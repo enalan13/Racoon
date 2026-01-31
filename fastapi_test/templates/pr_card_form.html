@@ -84,6 +84,7 @@
       gap: 16px;
       align-items: center;
       font-size: 11px;
+      flex-wrap: wrap;
     }
     .checkbox-line input { margin-right: 6px; }
     .box {
@@ -124,6 +125,29 @@
       margin-top: 16px;
       align-items: flex-end;
     }
+    .glossary-bubble {
+      position: fixed;
+      max-width: 320px;
+      background: #fff;
+      color: #111;
+      border: 2px solid #ffd43b;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.35;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+      z-index: 10;
+      display: none;
+    }
+    .glossary-bubble .title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .glossary-term {
+      cursor: pointer;
+      border-bottom: 1px dotted #333;
+      padding: 0 2px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -148,6 +172,7 @@
         </div>
       </div>
       <div class="field">
+        <label><span class="glossary-term" data-term="UCI number" data-definition="Bu terim Kanada’da, size verilen benzersiz kimlik numarasini ifade eder. Bu alani doldururken, belgelerinizde yazdigi sekliyle girin.">UCI number</span></label>
         <input type="text">
       </div>
     </div>
@@ -273,6 +298,7 @@
         <label><input type="checkbox"> Widowed</label>
         <label><input type="checkbox"> Legally separated</label>
         <label><input type="checkbox"> Divorced</label>
+        <label><input type="checkbox"> <span class="glossary-term" data-term="Common-law" data-definition="Bu terim Kanada’da, evli olmadan birlikte yaşayan ve evlilik benzeri bir iliskiyi belirli bir sure (genellikle en az 12 ay) surdurmus kisileri ifade eder. Bu alani doldururken, birlikte yasama surenizi ve ortak adresi belgeleyebilmeniz gerekebilir.">Common-law</span></label>
       </div>
     </div>
 
@@ -577,5 +603,35 @@
       <div>Canada</div>
     </div>
   </div>
+
+  <div id="glossary-bubble" class="glossary-bubble" role="dialog" aria-live="polite"></div>
+  <script>
+    const bubble = document.getElementById("glossary-bubble");
+    const terms = document.querySelectorAll(".glossary-term");
+
+    function showBubble(termEl) {
+      const term = termEl.getAttribute("data-term") || "Terim";
+      const def = termEl.getAttribute("data-definition") || "";
+      bubble.innerHTML = `<div class="title">${term}</div><div>${def}</div>`;
+      const rect = termEl.getBoundingClientRect();
+      const top = Math.max(12, rect.top - 12);
+      const left = Math.min(window.innerWidth - 300, rect.left);
+      bubble.style.top = `${top}px`;
+      bubble.style.left = `${left}px`;
+      bubble.style.display = "block";
+    }
+
+    terms.forEach((el) => {
+      el.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showBubble(el);
+      });
+    });
+
+    document.addEventListener("click", () => {
+      bubble.style.display = "none";
+    });
+  </script>
 </body>
 </html>
