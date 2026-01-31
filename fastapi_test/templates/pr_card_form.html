@@ -72,73 +72,6 @@
       font-size: 10px;
       margin-bottom: 2px;
     }
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-      border-bottom: 1px dotted #333;
-    }
-    .tooltip::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: 0;
-      top: -8px;
-      transform: translateY(-100%);
-      background: #fff;
-      color: #111;
-      border: 1px solid #111;
-      padding: 8px 10px;
-      font-size: 10px;
-      line-height: 1.3;
-      width: 220px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.15s ease;
-      z-index: 5;
-    }
-    .tooltip::before {
-      content: "";
-      position: absolute;
-      left: 12px;
-      top: -8px;
-      transform: translateY(-100%);
-      border-width: 6px;
-      border-style: solid;
-      border-color: #111 transparent transparent transparent;
-      opacity: 0;
-      transition: opacity 0.15s ease;
-      z-index: 5;
-    }
-    .tooltip:focus::after,
-    .tooltip:focus::before,
-    .tooltip:active::after,
-    .tooltip:active::before {
-      opacity: 1;
-    }
-    .glossary-bubble {
-      position: fixed;
-      max-width: 320px;
-      background: #fff;
-      color: #111;
-      border: 2px solid #ffd43b;
-      padding: 12px 14px;
-      font-size: 12px;
-      line-height: 1.35;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-      z-index: 10;
-      display: none;
-    }
-    .glossary-bubble .title {
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .glossary-term {
-      cursor: pointer;
-      border-bottom: 1px dotted #333;
-      padding: 0 2px;
-      display: inline-block;
-    }
     .field input[type="text"],
     .field input[type="date"] {
       width: 100%;
@@ -215,7 +148,6 @@
         </div>
       </div>
       <div class="field">
-        <label><span class="tooltip" tabindex="0" data-tooltip="UCI numarasi hakkinda aciklama buraya. Degistirmek icin bu metni duzenleyin.">UCI number</span></label>
         <input type="text">
       </div>
     </div>
@@ -341,7 +273,6 @@
         <label><input type="checkbox"> Widowed</label>
         <label><input type="checkbox"> Legally separated</label>
         <label><input type="checkbox"> Divorced</label>
-        <label><input type="checkbox"> <span class="glossary-term" data-term="Common-law" data-definition="Bu terim Kanada’da, evli olmadan birlikte yaşayan ve evlilik benzeri bir iliskiyi belirli bir sure (genellikle en az 12 ay) surdurmus kisileri ifade eder. Bu alani doldururken, birlikte yasama surenizi ve ortak adresi belgeleyebilmeniz gerekebilir.">Common-law</span></label>
       </div>
     </div>
 
@@ -646,34 +577,5 @@
       <div>Canada</div>
     </div>
   </div>
-  <div id="glossary-bubble" class="glossary-bubble" role="dialog" aria-live="polite"></div>
-  <script>
-    const bubble = document.getElementById("glossary-bubble");
-    const terms = document.querySelectorAll(".glossary-term");
-
-    function showBubble(termEl) {
-      const term = termEl.getAttribute("data-term") || "Terim";
-      const def = termEl.getAttribute("data-definition") || "";
-      bubble.innerHTML = `<div class="title">${term}</div><div>${def}</div>`;
-      const rect = termEl.getBoundingClientRect();
-      const top = Math.max(12, rect.top - 12);
-      const left = Math.min(window.innerWidth - 300, rect.left);
-      bubble.style.top = `${top}px`;
-      bubble.style.left = `${left}px`;
-      bubble.style.display = "block";
-    }
-
-    terms.forEach((el) => {
-      el.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        showBubble(el);
-      });
-    });
-
-    document.addEventListener("click", () => {
-      bubble.style.display = "none";
-    });
-  </script>
 </body>
 </html>
