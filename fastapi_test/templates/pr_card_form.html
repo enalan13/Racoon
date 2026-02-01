@@ -4,895 +4,521 @@
   <meta charset="UTF-8">
   <title>Application for a Permanent Resident Card</title>
   <style>
-    :root {
-      --ink: #222;
-      --line: #111;
-      --lite: #f0f0f0;
-    }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #e8eef3;
-      color: var(--ink);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    .top-actions {
-      width: 816px;
-      margin: 16px auto 0;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-    .btn {
-      background: #ffffff;
-      border: 1px solid #c9c9c9;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .page {
-      width: 816px;
-      min-height: 1056px;
-      margin: 24px auto;
-      background: #fff;
-      border: 1px solid #c9c9c9;
-      padding: 18px 20px 30px;
-    }
-    .header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 11px;
-    }
-    .title-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      margin: 6px 0 8px;
-    }
-    h1 {
-      font-size: 18px;
-      margin: 0;
-      letter-spacing: 0.3px;
-    }
-    .tiny {
-      font-size: 10px;
-      line-height: 1.3;
-    }
-    .section-title {
-      font-weight: 700;
-      font-size: 12px;
-      border-top: 2px solid var(--line);
-      padding-top: 6px;
-      margin-top: 10px;
-    }
-    .row {
-      display: grid;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .row.cols-2 { grid-template-columns: 1fr 1fr; }
-    .row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-    .row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-    .row.cols-5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
-    .field {
-      border: 1px solid var(--line);
-      min-height: 28px;
-      padding: 4px 6px;
-      font-size: 11px;
-    }
-    .field label {
-      display: block;
-      font-size: 10px;
-      margin-bottom: 2px;
-    }
-    .field input[type="text"],
-    .field input[type="date"] {
-      width: 100%;
-      border: none;
-      outline: none;
-      font-size: 12px;
-    }
-    .checkbox-line {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      font-size: 11px;
-      flex-wrap: wrap;
-    }
-    .checkbox-line input { margin-right: 6px; }
-    .box {
-      border: 1px solid var(--line);
-      padding: 6px;
-      font-size: 11px;
-      min-height: 34px;
-      margin-top: 6px;
-    }
-    table.form {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 6px;
-      font-size: 10px;
-      table-layout: fixed;
-    }
-    table.form th, table.form td {
-      border: 1px solid var(--line);
-      padding: 0;
-      vertical-align: middle;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    table.form td {
-      height: 22px;
-    }
-    table.form th {
-      background: var(--lite);
-      font-weight: 700;
-      text-align: left;
-    }
-    .notice {
-      border: 2px solid var(--line);
-      padding: 8px;
-      font-size: 11px;
-      text-align: center;
-      font-weight: 700;
-      margin: 8px 0;
-    }
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      margin-top: 16px;
-      align-items: flex-end;
-    }
-    .glossary-bubble {
-      position: fixed;
-      max-width: 380px;
-      background: #fff;
-      color: #111;
-      border: 2px solid #ffd43b;
-      padding: 14px 16px;
-      font-size: 13px;
-      line-height: 1.45;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-      z-index: 10;
-      display: none;
-    }
-    .glossary-bubble .title {
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .glossary-term {
-      cursor: pointer;
-      border-bottom: 1px dotted #333;
-      padding: 0 2px;
-      display: inline-block;
-    }
-    .chat-bubble {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: #fff;
-      color: #111;
-      border: 2px solid #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      z-index: 20;
-    }
-    .chat-bubble img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .chat-tooltip {
-      position: fixed;
-      right: 18px;
-      bottom: 96px;
-      width: 300px;
-      background: #fff;
-      border: 2px solid #111;
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 14px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-      display: none;
-      z-index: 20;
-    }
-    .chat-tooltip p {
-      margin: 0 0 8px;
-      font-weight: 600;
-    }
-    .chat-tooltip a {
-      display: block;
-      color: #0a58ca;
-      text-decoration: none;
-      margin-top: 6px;
-    }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #111; }
+    .wrap { max-width: 1200px; margin: 0 auto 40px; padding: 0 12px; }
+    .layout { display: flex; gap: 18px; align-items: flex-start; }
+    .main { flex: 1 1 auto; min-width: 0; }
+    .side { width: 320px; flex: 0 0 320px; }
+    .floating-panel { position: fixed; top: 72px; right: 24px; width: 320px; max-height: calc(100vh - 96px); overflow: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .page { position: relative; margin: 18px auto; }
+    .page img { width: 100%; height: auto; display: block; }
+    .overlay { position: absolute; inset: 0; }
+    .field-input { position: absolute; background: transparent; border: none; outline: none; padding: 0 2px; color: #111; }
+    .field-input.text { font-family: Arial, Helvetica, sans-serif; }
+    .field-check { position: absolute; }
+    .field-check input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; }
+    .field-check span { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-weight: 700; color: #111; }
+    .field-check input:checked + span { display: flex; }
+
+    .translation-panel { margin: 24px 0 0; padding: 16px; border: 1px solid #ddd; background: #f8f8f8; }
+    .translation-panel h2 { margin: 0 0 8px; font-size: 18px; }
+    .translation-panel h3 { margin: 16px 0 6px; font-size: 14px; }
+    .translation-panel .lang-switch { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .translation-panel .lang-switch a { text-decoration: none; padding: 4px 8px; border: 1px solid #bbb; border-radius: 4px; color: #111; background: #fff; font-size: 12px; }
+    .translation-panel .item { font-size: 12px; line-height: 1.35; margin: 2px 0; }
+    .translation-panel .item .q { font-weight: 700; margin-right: 6px; }
+    .actions { position: sticky; top: 12px; z-index: 5; margin: 12px 0; }
+    .btn { padding: 8px 12px; border: 1px solid #111; background: #fff; font-size: 12px; cursor: pointer; }
     @media print {
-      body {
-        background: #fff;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      .top-actions {
-        display: none;
-      }
-      .page {
-        margin: 0 auto;
-        box-shadow: none;
-        border: 1px solid #000;
-        page-break-after: always;
-      }
-      .glossary-bubble {
-        display: none !important;
-      }
-    }
-    .fill-line {
-      width: 100%;
-      border: none;
-      outline: none;
-      font-size: 11px;
-      background: transparent;
+      .side, .actions { display: none !important; }
+      body { background: #fff; margin: 0; }
+      .wrap { max-width: none; margin: 0; padding: 0; }
+      .layout { display: block; }
+      .page { margin: 0; page-break-after: always; break-after: page; break-inside: avoid; }
+      .page img { width: 100%; height: auto; display: block; }
+      @page { size: letter; margin: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="top-actions">
-    <button class="btn" type="button" id="download-pdf">Download PDF</button>
-  </div>
-  <div class="page">
-    <div class="header">
-      <div>Immigration, Refugees and Citizenship Canada</div>
-      <div>Immigration, Refugies et Citoyennete Canada</div>
+  <div class="wrap">
+    <div class="actions">
+      <button class="btn" type="button" id="download-form">Download PDF</button>
     </div>
-    <div class="title-row">
-      <h1 data-i18n="title">APPLICATION FOR A PERMANENT RESIDENT CARD</h1>
-      <div class="tiny"><span data-i18n="protected">PROTECTED WHEN COMPLETED - B</span><br><span data-i18n="page1of4">PAGE 1 OF 4</span></div>
-    </div>
-
-    <div class="tiny"><span data-i18n="continue_by_question">Continue by question? See step 2 of the instruction guide.</span><br><span data-i18n="type_or_print">TYPE OR PRINT IN BLACK OR BLUE INK</span></div>
-
-    <div class="row cols-2">
-      <div class="field">
-        <label><span data-i18n="q1_label">1. Language you prefer for correspondence</span></label>
-        <div class="checkbox-line">
-          <label><input type="radio" name="q1_language"> <span data-i18n="english">English</span></label>
-          <label><input type="radio" name="q1_language"> <span data-i18n="french">French</span></label>
-        </div>
-      </div>
-      <div class="field">
-        <label>
-          <span
-            class="glossary-term"
-            data-term="UCI number"
-            data-def-en="This is your unique client identifier in Canada. Enter it exactly as shown on your documents."
-            data-def-es="Este es tu identificador unico de cliente en Canada. Ingresalo exactamente como aparece en tus documentos."
-            data-def-fr="Il s’agit de votre identifiant unique de client au Canada. Entrez-le exactement comme il apparait sur vos documents."
-            data-def-de="Dies ist Ihre eindeutige Kundennummer in Kanada. Geben Sie sie genau so ein, wie sie auf Ihren Dokumenten steht."
-            data-def-tr="Bu terim Kanada’da, size verilen benzersiz kimlik numarasini ifade eder. Bu alani doldururken, belgelerinizde yazdigi sekliyle girin."
-          >UCI number</span>
+    <div class="layout">
+      <div class="main">
+    <div class="page" data-page="0">
+      <img src="/static/prcard_pages/page-1.png" alt="Page 1">
+      <div class="overlay">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].master[0].frontPage[0].UCI_number[0]" style="left:79.5090%;top:9.7273%;width:16.9616%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].dateBecamePermanentResident[0]" style="left:82.9412%;top:16.0506%;width:12.9412%;height:1.0403%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].landingFamilyName[0]" style="left:6.4345%;top:29.3636%;width:42.4335%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].landingGivenName[0]" style="left:50.0389%;top:29.3636%;width:45.8374%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].differentFamilyName[0]" style="left:6.4345%;top:34.8182%;width:42.4335%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].differentGivenName[0]" style="left:50.0389%;top:34.8182%;width:45.8374%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].birthDate[0]" style="left:47.6471%;top:37.8182%;width:11.7647%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].countryBirth[0]" style="left:74.7861%;top:37.0000%;width:21.6845%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].countryCitizenship[0]" style="left:28.4278%;top:39.7273%;width:68.0428%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].otherField[0]" style="left:80.0000%;top:42.0000%;width:16.4706%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].heightCM[0]" style="left:18.2353%;top:44.3636%;width:11.1765%;height:1.7273%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].heightFT[0]" style="left:36.4706%;top:44.3636%;width:11.1765%;height:1.7273%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].heightIN[0]" style="left:51.1765%;top:44.3636%;width:3.5294%;height:1.7273%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].currentApartment[0]" style="left:6.4706%;top:49.3636%;width:14.1176%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].currentStreetNo[0]" style="left:21.7647%;top:49.3636%;width:14.1176%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].currentStreet_Name[0]" style="left:37.0588%;top:49.3636%;width:58.8235%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].currentCity[0]" style="left:6.4706%;top:52.0909%;width:29.4118%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].currentPostalCode[0]" style="left:68.8235%;top:52.0909%;width:27.0588%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].mailingApartment[0]" style="left:6.4706%;top:56.6364%;width:14.1176%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].mailingStreetNo[0]" style="left:21.7647%;top:56.6364%;width:14.1176%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].mailingStreet_Name[0]" style="left:37.0588%;top:56.6364%;width:58.8235%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].mailingCity[0]" style="left:6.4706%;top:59.3636%;width:29.4118%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].mailingPostalCode[0]" style="left:68.8235%;top:59.3636%;width:27.0588%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].TelephoneNoHome[0]" style="left:6.4706%;top:66.0909%;width:14.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].TelephoneNoAlternative[0]" style="left:21.7647%;top:66.0909%;width:14.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].email[0]" style="left:37.0588%;top:66.0909%;width:58.8235%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].cityBecameResident[0]" style="left:17.0376%;top:76.0909%;width:32.3742%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page1[0].provinceBecameResident[0]" style="left:62.6150%;top:76.0909%;width:33.8556%;height:1.9091%;">
+        <label class="field-check" style="left:30.5882%;top:15.5051%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].languageSelection[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].languageSelection[0]" data-pdf-value="/0">
+          <span>X</span>
         </label>
-        <input type="text">
+        <label class="field-check" style="left:41.1765%;top:15.5051%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].languageSelection[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].languageSelection[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:30.5882%;top:17.7778%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].RadioButtonList[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].RadioButtonList[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:50.5882%;top:17.7778%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].RadioButtonList[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].RadioButtonList[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:70.5882%;top:17.7778%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].RadioButtonList[0]" value="2" data-pdf-field="IMM_5444[0].page1[0].RadioButtonList[0]" data-pdf-value="/2">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:18.2353%;top:37.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].sexeSelection[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].sexeSelection[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:25.2941%;top:37.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].sexeSelection[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].sexeSelection[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:18.2353%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:25.2941%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:32.3529%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="2" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/2">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:40.0000%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="3" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/3">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:47.6471%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="4" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/4">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:54.7059%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="5" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/5">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:71.1765%;top:42.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].eyeColourSelection[0]" value="6" data-pdf-field="IMM_5444[0].page1[0].eyeColourSelection[0]" data-pdf-value="/6">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:5.8824%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:20.0000%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:34.1176%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="2" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/2">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:50.0000%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="3" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/3">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:65.8824%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="4" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/4">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:81.7647%;top:70.0505%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].maritalStatusSelection[0]" value="5" data-pdf-field="IMM_5444[0].page1[0].maritalStatusSelection[0]" data-pdf-value="/5">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:39.4118%;top:79.3622%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].responseQuestion[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].responseQuestion[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:45.2941%;top:79.3622%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].responseQuestion[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].responseQuestion[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:63.5294%;top:82.0960%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].responseQuestion18[0]" value="0" data-pdf-field="IMM_5444[0].page1[0].responseQuestion18[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:69.4118%;top:82.0960%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page1[0].responseQuestion18[0]" value="1" data-pdf-field="IMM_5444[0].page1[0].responseQuestion18[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:11.7647%;top:36.6414%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page2[0].traveledQuestion[0]" value="0" data-pdf-field="IMM_5444[0].page2[0].traveledQuestion[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:5.8824%;top:36.6414%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page2[0].traveledQuestion[0]" value="1" data-pdf-field="IMM_5444[0].page2[0].traveledQuestion[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:6.1176%;top:56.8687%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page3[0].questionAuthorization[0]" value="0" data-pdf-field="IMM_5444[0].page3[0].questionAuthorization[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:14.1176%;top:56.8687%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page3[0].questionAuthorization[0]" value="1" data-pdf-field="IMM_5444[0].page3[0].questionAuthorization[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:6.1176%;top:72.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page3[0].questionAuthorization[1]" value="0" data-pdf-field="IMM_5444[0].page3[0].questionAuthorization[1]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:14.1176%;top:72.3232%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page3[0].questionAuthorization[1]" value="1" data-pdf-field="IMM_5444[0].page3[0].questionAuthorization[1]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:63.5294%;top:36.4141%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" value="0" data-pdf-field="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:72.3529%;top:36.4141%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" value="1" data-pdf-field="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:80.5882%;top:36.4141%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" value="2" data-pdf-field="IMM_5444[0].page4[0].questionRelationshipApplicant[0]" data-pdf-value="/2">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:24.7082%;top:49.3687%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" value="0" data-pdf-field="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" data-pdf-value="/0">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:24.7082%;top:51.1869%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" value="1" data-pdf-field="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" data-pdf-value="/1">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:37.0588%;top:49.3687%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" value="2" data-pdf-field="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" data-pdf-value="/2">
+          <span>X</span>
+        </label>
+        <label class="field-check" style="left:37.0588%;top:51.1869%;width:1.6340%;height:1.2626%;">
+          <input type="radio" name="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" value="3" data-pdf-field="IMM_5444[0].page4[0].#subform[0].questionResponse[0]" data-pdf-value="/3">
+          <span>X</span>
+        </label>
       </div>
     </div>
+    <div class="page" data-page="1">
+      <img src="/static/prcard_pages/page-2.png" alt="Page 2">
+      <div class="overlay">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].dateFromYearMonth[0]" style="left:6.1176%;top:12.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].dateToYearMonth[0]" style="left:14.9412%;top:12.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].historyStreetNumber[0]" style="left:23.7647%;top:12.0000%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].historyCityTown[0]" style="left:54.3529%;top:12.0000%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].historyProvince[0]" style="left:68.4706%;top:12.0000%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row1[0].historyCountry[0]" style="left:82.5882%;top:12.0000%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].dateFromYearMonth[0]" style="left:6.1176%;top:13.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].dateToYearMonth[0]" style="left:14.9412%;top:13.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].historyStreetNumber[0]" style="left:23.7647%;top:13.8182%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].historyCityTown[0]" style="left:54.3529%;top:13.8182%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].historyProvince[0]" style="left:68.4706%;top:13.8182%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row2[0].historyCountry[0]" style="left:82.5882%;top:13.8182%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].dateFromYearMonth[0]" style="left:6.1176%;top:15.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].dateToYearMonth[0]" style="left:14.9412%;top:15.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].historyStreetNumber[0]" style="left:23.7647%;top:15.6364%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].historyCityTown[0]" style="left:54.3529%;top:15.6364%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].historyProvince[0]" style="left:68.4706%;top:15.6364%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row3[0].historyCountry[0]" style="left:82.5882%;top:15.6364%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].dateFromYearMonth[0]" style="left:6.1176%;top:17.4545%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].dateToYearMonth[0]" style="left:14.9412%;top:17.4545%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].historyStreetNumber[0]" style="left:23.7647%;top:17.4545%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].historyCityTown[0]" style="left:54.3529%;top:17.4545%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].historyProvince[0]" style="left:68.4706%;top:17.4545%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].addressHistoryTable[0].Row4[0].historyCountry[0]" style="left:82.5882%;top:17.4545%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].dateFromWorkHistory[0]" style="left:6.1176%;top:26.0909%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].dateToWorkHistory[0]" style="left:14.9412%;top:26.0909%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].NameEmployerWorkHistory[0]" style="left:23.7647%;top:26.0909%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].cityTownWorkHistory[0]" style="left:54.3529%;top:26.0909%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].provinceWorkHistory[0]" style="left:68.4706%;top:26.0909%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row1[0].countryWorkHistory[0]" style="left:82.5882%;top:26.0909%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].dateFromWorkHistory[0]" style="left:6.1176%;top:27.9091%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].dateToWorkHistory[0]" style="left:14.9412%;top:27.9091%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].NameEmployerWorkHistory[0]" style="left:23.7647%;top:27.9091%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].Cell4[0]" style="left:54.3529%;top:27.9091%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].provinceWorkHistory[0]" style="left:68.4706%;top:27.9091%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row2[0].Cell6[0]" style="left:82.5882%;top:27.9091%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].dateFromWorkHistory[0]" style="left:6.1176%;top:29.7273%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].dateToWorkHistory[0]" style="left:14.9412%;top:29.7273%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].NameEmployerWorkHistory[0]" style="left:23.7647%;top:29.7273%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].Cell4[0]" style="left:54.3529%;top:29.7273%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].provinceWorkHistory[0]" style="left:68.4706%;top:29.7273%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row3[0].Cell6[0]" style="left:82.5882%;top:29.7273%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].dateFromWorkHistory[0]" style="left:6.1176%;top:31.5455%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].dateToWorkHistory[0]" style="left:14.9412%;top:31.5455%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].NameEmployerWorkHistory[0]" style="left:23.7647%;top:31.5455%;width:30.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].Cell4[0]" style="left:54.3529%;top:31.5455%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].provinceWorkHistory[0]" style="left:68.4706%;top:31.5455%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].workHistory[0].Row4[0].Cell6[0]" style="left:82.5882%;top:31.5455%;width:13.6471%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row1[0].dateFromTravelled[0]" style="left:6.1176%;top:44.2727%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row1[0].dateToTravelled[0]" style="left:14.9412%;top:44.2727%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row1[0].travelLocation[0]" style="left:23.7647%;top:44.2727%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row1[0].travelReasons[0]" style="left:54.9412%;top:44.2727%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row1[0].numberDaysTravelled[0]" style="left:86.1176%;top:44.2727%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row2[0].dateFromTravelled[0]" style="left:6.1176%;top:46.0909%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row2[0].dateToTravelled[0]" style="left:14.9412%;top:46.0909%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row2[0].travelLocation[0]" style="left:23.7647%;top:46.0909%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row2[0].travelReasons[0]" style="left:54.9412%;top:46.0909%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row2[0].numberDaysTravelled[0]" style="left:86.1176%;top:46.0909%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row3[0].dateFromTravelled[0]" style="left:6.1176%;top:47.9091%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row3[0].dateToTravelled[0]" style="left:14.9412%;top:47.9091%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row3[0].travelLocation[0]" style="left:23.7647%;top:47.9091%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row3[0].travelReasons[0]" style="left:54.9412%;top:47.9091%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row3[0].numberDaysTravelled[0]" style="left:86.1176%;top:47.9091%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row4[0].dateFromTravelled[0]" style="left:6.1176%;top:49.7273%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row4[0].dateToTravelled[0]" style="left:14.9412%;top:49.7273%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row4[0].travelLocation[0]" style="left:23.7647%;top:49.7273%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row4[0].travelReasons[0]" style="left:54.9412%;top:49.7273%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row4[0].numberDaysTravelled[0]" style="left:86.1176%;top:49.7273%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row5[0].dateFromTravelled[0]" style="left:6.1176%;top:51.5455%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row5[0].dateToTravelled[0]" style="left:14.9412%;top:51.5455%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row5[0].travelLocation[0]" style="left:23.7647%;top:51.5455%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row5[0].travelReasons[0]" style="left:54.9412%;top:51.5455%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row5[0].numberDaysTravelled[0]" style="left:86.1176%;top:51.5455%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row6[0].dateFromTravelled[0]" style="left:6.1176%;top:53.3636%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row6[0].dateToTravelled[0]" style="left:14.9412%;top:53.3636%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row6[0].travelLocation[0]" style="left:23.7647%;top:53.3636%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row6[0].travelReasons[0]" style="left:54.9412%;top:53.3636%;width:30.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOnTravelTable[0].Row6[0].numberDaysTravelled[0]" style="left:86.1176%;top:53.3636%;width:10.1176%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].twentyOneTotalDays[0]" style="left:85.8511%;top:55.0909%;width:10.6194%;height:2.0000%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].AssessFromDate[0]" style="left:45.2229%;top:38.3636%;width:11.2477%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].AssessToDate[0]" style="left:65.8111%;top:38.3636%;width:11.2477%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1FamilyMemberName[0]" style="left:20.2353%;top:70.9091%;width:33.8824%;height:2.2727%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Relationship[0]" style="left:20.2353%;top:74.0909%;width:33.8824%;height:2.2727%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row1[0].option1From[0]" style="left:6.1176%;top:80.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row1[0].option1To[0]" style="left:14.9412%;top:80.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row1[0].option1Address[0]" style="left:23.7647%;top:80.1818%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row1[0].CityCountry[0]" style="left:64.9412%;top:80.1818%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row1[0].option1Days[0]" style="left:84.9412%;top:80.1818%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row2[0].option1From[0]" style="left:6.1176%;top:82.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row2[0].option1To[0]" style="left:14.9412%;top:82.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row2[0].option1Address[0]" style="left:23.7647%;top:82.0000%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row2[0].CityCountry[0]" style="left:64.9412%;top:82.0000%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row2[0].option1Days[0]" style="left:84.9412%;top:82.0000%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row3[0].option1From[0]" style="left:6.1176%;top:83.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row3[0].option1To[0]" style="left:14.9412%;top:83.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row3[0].option1Address[0]" style="left:23.7647%;top:83.8182%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row3[0].CityCountry[0]" style="left:64.9412%;top:83.8182%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row3[0].option1Days[0]" style="left:84.9412%;top:83.8182%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row4[0].option1From[0]" style="left:6.1176%;top:85.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row4[0].option1To[0]" style="left:14.9412%;top:85.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row4[0].option1Address[0]" style="left:23.7647%;top:85.6364%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row4[0].CityCountry[0]" style="left:64.9412%;top:85.6364%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1Table[0].Row4[0].option1Days[0]" style="left:84.9412%;top:85.6364%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page2[0].option1TotalDays[0]" style="left:84.6683%;top:87.3636%;width:11.8023%;height:2.0000%;">
+      </div>
+    </div>
+    <div class="page" data-page="2">
+      <img src="/static/prcard_pages/page-3.png" alt="Page 3">
+      <div class="overlay">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row1[0].option2From[0]" style="left:6.1176%;top:13.3636%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row1[0].option2To[0]" style="left:14.9412%;top:13.3636%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row1[0].option2Address[0]" style="left:23.7647%;top:13.3636%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row1[0].CityCountry[0]" style="left:64.9412%;top:13.3636%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row1[0].option2Days[0]" style="left:84.9412%;top:13.3636%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row2[0].option2From[0]" style="left:6.1176%;top:15.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row2[0].option2To[0]" style="left:14.9412%;top:15.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row2[0].option2Address[0]" style="left:23.7647%;top:15.1818%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row2[0].CityCountry[0]" style="left:64.9412%;top:15.1818%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row2[0].option2Days[0]" style="left:84.9412%;top:15.1818%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row3[0].option2From[0]" style="left:6.1176%;top:17.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row3[0].option2To[0]" style="left:14.9412%;top:17.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row3[0].option2Address[0]" style="left:23.7647%;top:17.0000%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row3[0].CityCountry[0]" style="left:64.9412%;top:17.0000%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row3[0].option2Days[0]" style="left:84.9412%;top:17.0000%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row4[0].option2From[0]" style="left:6.1176%;top:18.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row4[0].option2To[0]" style="left:14.9412%;top:18.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row4[0].option2Address[0]" style="left:23.7647%;top:18.8182%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row4[0].CityCountry[0]" style="left:64.9412%;top:18.8182%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2Table[0].Row4[0].option2Days[0]" style="left:84.9412%;top:18.8182%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option2TotalDays[0]" style="left:84.7059%;top:20.5455%;width:11.7647%;height:2.0000%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3FamilyName[0]" style="left:20.3155%;top:26.3636%;width:33.8021%;height:2.2727%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Relationship[0]" style="left:20.3155%;top:29.5455%;width:33.8021%;height:2.2727%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row1[0].option3From[0]" style="left:6.1176%;top:35.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row1[0].option3To[0]" style="left:14.9412%;top:35.1818%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row1[0].option3Address[0]" style="left:23.7647%;top:35.1818%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row1[0].CityCountry[0]" style="left:64.9412%;top:35.1818%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row1[0].option3Days[0]" style="left:84.9412%;top:35.1818%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row2[0].option3From[0]" style="left:6.1176%;top:37.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row2[0].option3To[0]" style="left:14.9412%;top:37.0000%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row2[0].option3Address[0]" style="left:23.7647%;top:37.0000%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row2[0].CityCountry[0]" style="left:64.9412%;top:37.0000%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row2[0].option3Days[0]" style="left:84.9412%;top:37.0000%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row3[0].option3From[0]" style="left:6.1176%;top:38.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row3[0].option3To[0]" style="left:14.9412%;top:38.8182%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row3[0].option3Address[0]" style="left:23.7647%;top:38.8182%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row3[0].CityCountry[0]" style="left:64.9412%;top:38.8182%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row3[0].option3Days[0]" style="left:84.9412%;top:38.8182%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row4[0].option3From[0]" style="left:6.1176%;top:40.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row4[0].option3To[0]" style="left:14.9412%;top:40.6364%;width:8.3529%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row4[0].option3Address[0]" style="left:23.7647%;top:40.6364%;width:40.7059%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row4[0].CityCountry[0]" style="left:64.9412%;top:40.6364%;width:19.5294%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3Table[0].Row4[0].option3Days[0]" style="left:84.9412%;top:40.6364%;width:11.2941%;height:1.4545%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].option3TotalDays[0]" style="left:84.7059%;top:42.3636%;width:11.7647%;height:2.0000%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page3[0].SIN[0]" style="left:24.8028%;top:74.5455%;width:29.3149%;height:2.2727%;">
+      </div>
+    </div>
+    <div class="page" data-page="3">
+      <img src="/static/prcard_pages/page-4.png" alt="Page 4">
+      <div class="overlay">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].dateDeclarantSigned[0]" style="left:14.7059%;top:33.7273%;width:10.5882%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].city[0]" style="left:14.0299%;top:35.6364%;width:33.6172%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].province[0]" style="left:14.0299%;top:37.9091%;width:33.6172%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].dateParentGuardianSigned[0]" style="left:63.5294%;top:33.7273%;width:10.5882%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].PRCNumber[0]" style="left:24.4706%;top:46.8182%;width:29.6471%;height:1.7975%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].dateIssue[0]" style="left:70.0000%;top:47.8160%;width:10.5882%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].dateLost[0]" style="left:60.0000%;top:51.0000%;width:10.5882%;height:1.0909%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].at[0]" style="left:74.1176%;top:50.1818%;width:22.3529%;height:1.9091%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].underCircumstances[0]" style="left:5.8824%;top:54.7427%;width:90.5882%;height:5.7119%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].effortsLocate[0]" style="left:5.8824%;top:63.3636%;width:90.5882%;height:6.1818%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].dateDeclarantSigned[1]" style="left:14.7059%;top:84.6364%;width:12.9412%;height:1.5455%;">
+        <input class="field-input text" type="text" data-pdf-field="IMM_5444[0].page4[0].#subform[0].dateGuardianSigned[0]" style="left:63.5294%;top:84.6364%;width:12.9412%;height:1.5455%;">
+      </div>
+    </div>
+    </div>
+      <aside class="side">
+        <div class="translation-panel floating-panel" id="translation-panel">
+      <div class="lang-switch">
+        <a href="?lang=en">English</a>
+        <a href="?lang=es">Español</a>
+        <a href="?lang=fr">Français</a>
+        <a href="?lang=de">Deutsch</a>
+        <a href="?lang=tr">Türkçe</a>
+      </div>
+      <h2 data-i18n="translation_title">Translation (reference only)</h2>
 
-    <div class="field">
-      <label><span data-i18n="q2_label_prefix">2.</span>
-        <span
-          class="glossary-term"
-          data-term="Date you became a permanent resident"
-          data-def-en="Enter the date you officially became a PR as shown on your COPR (not the application date or PR card date). This is only for people who are already PRs; first-time applicants should leave it blank or write 'N/A'."
-          data-def-es="Ingresa la fecha en que oficialmente te convertiste en PR, tal como aparece en tu COPR (no la fecha de solicitud ni la fecha de la tarjeta PR). Esto es solo para quienes ya son PR; los solicitantes por primera vez deben dejarlo en blanco o escribir 'N/A'."
-          data-def-fr="Indiquez la date a laquelle vous etes officiellement devenu RP, telle qu’indiquee sur votre COPR (pas la date de demande ni la date de la carte RP). Ceci concerne uniquement les personnes deja RP; les premiers demandeurs doivent laisser vide ou ecrire « N/A »."
-          data-def-de="Geben Sie das Datum an, an dem Sie offiziell PR geworden sind, wie es auf Ihrer COPR steht (nicht das Antragsdatum oder das Datum der PR-Karte). Dies gilt nur fur Personen, die bereits PR sind; Erstantragsteller sollten das Feld leer lassen oder „N/A“ schreiben."
-          data-def-tr="Bu alana, COPR belgende yazan PR statüsünü resmi olarak aldığın tarihi girmen gerekiyor (başvuru ya da PR kart tarihi değil). Bu soru sadece halihazırda PR olanlar içindir. İlk kez PR başvurusu yapan biri bu alanı boş bırakır ya da 'N/A' yazar."
-        ><span data-i18n="q2_label">Date you became a permanent resident of Canada</span></span> <span data-i18n="date_format">(YYYY-MM-DD)</span>
-      </label>
-      <input type="text">
-    </div>
+      <h3 data-i18n="section_a">A. PERSONAL DETAILS</h3>
+      <div class="item"><span class="q">1.</span><span data-i18n="q1_label">Language you prefer for correspondence</span></div>
+      <div class="item"><span class="q">2.</span><span data-i18n="q2_label">Date you became a permanent resident of Canada (YYYY-MM-DD)</span></div>
+      <div class="item"><span class="q">3.</span><span data-i18n="q3_label">You are applying to (check one box)</span></div>
+      <div class="item" data-i18n="q3_opt1">Obtain your first Permanent Resident Card</div>
+      <div class="item" data-i18n="q3_opt2">Renew your present Permanent Resident Card</div>
+      <div class="item" data-i18n="q3_opt3">Replace a lost, stolen, destroyed or never received Permanent Resident Card</div>
+      <div class="item"><span class="q">4.</span><span data-i18n="q4_label">Your full name as shown on your Record of Landing / Confirmation of Permanent Residence / last PR Card</span></div>
+      <div class="item" data-i18n="family_name">Family name (surname)</div>
+      <div class="item" data-i18n="given_names">Given name(s)</div>
+      <div class="item"><span class="q">5.</span><span data-i18n="q5_label">Your current name, if different from above</span></div>
+      <div class="item"><span class="q">6.</span><span data-i18n="q6_label">Your sex</span></div>
+      <div class="item" data-i18n="male">Male</div>
+      <div class="item" data-i18n="female">Female</div>
+      <div class="item"><span class="q">7.</span><span data-i18n="q7_label">Your date of birth (YYYY-MM-DD)</span></div>
+      <div class="item"><span class="q">8.</span><span data-i18n="q8_label">Your country of birth</span></div>
+      <div class="item"><span class="q">9.</span><span data-i18n="q9_label">Your country or countries of citizenship</span></div>
+      <div class="item"><span class="q">10.</span><span data-i18n="q10_label">Colour of your eyes</span></div>
+      <div class="item" data-i18n="blue">Blue</div>
+      <div class="item" data-i18n="grey">Grey</div>
+      <div class="item" data-i18n="brown">Brown</div>
+      <div class="item" data-i18n="green">Green</div>
+      <div class="item" data-i18n="black">Black</div>
+      <div class="item" data-i18n="hazel">Hazel (yellowish brown)</div>
+      <div class="item" data-i18n="other">Other</div>
+      <div class="item"><span class="q">11.</span><span data-i18n="q11_label">Your height (cm / ft / in)</span></div>
+      <div class="item"><span class="q">12.</span><span data-i18n="q12_label">Your current residential address in Canada</span></div>
+      <div class="item" data-i18n="apartment">Apartment</div>
+      <div class="item" data-i18n="street_no">Street no.</div>
+      <div class="item" data-i18n="street_name">Street name</div>
+      <div class="item" data-i18n="city">City</div>
+      <div class="item" data-i18n="province">Province</div>
+      <div class="item" data-i18n="postal_code">Postal code</div>
+      <div class="item"><span class="q">13.</span><span data-i18n="q13_label">Your mailing address in Canada (if different)</span></div>
+      <div class="item"><span class="q">14.</span><span data-i18n="q14_label">Your telephone numbers and e-mail address</span></div>
+      <div class="item"><span class="q">15.</span><span data-i18n="q15_label">Your current marital status</span></div>
+      <div class="item" data-i18n="never_married">Never married</div>
+      <div class="item" data-i18n="married">Married</div>
+      <div class="item" data-i18n="widowed">Widowed</div>
+      <div class="item" data-i18n="legally_separated">Legally separated</div>
+      <div class="item" data-i18n="divorced">Divorced</div>
+      <div class="item" data-i18n="common_law">Common-law</div>
 
-    <div class="field">
-      <label><span data-i18n="q3_label">3. You are applying to (check one box)</span></label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q3_apply"> <span data-i18n="q3_opt1">Obtain your first Permanent Resident Card</span></label>
-        <label><input type="radio" name="q3_apply"> <span data-i18n="q3_opt2">Renew your present Permanent Resident Card</span></label>
-        <label><input type="radio" name="q3_apply"> <span data-i18n="q3_opt3">Replace a lost, stolen, destroyed or never received Permanent Resident Card</span></label>
-      </div>
-      <div class="tiny" data-i18n="q3_note">NOTE: If you are applying to renew your present card, you should keep it until you receive your replacement card. You will be asked to destroy your old card when you receive your new one. If you are applying to replace your damaged card, you must send the damaged card with your application.</div>
-    </div>
+      <h3 data-i18n="section_b">B. YOUR IMMIGRATION HISTORY</h3>
+      <div class="item"><span class="q">16.</span><span data-i18n="q16_label">Place you became a permanent resident of Canada (City/Port of entry)</span></div>
+      <div class="item"><span class="q">17.</span><span data-i18n="q17_label">Have you ever been issued a removal order in Canada?</span></div>
+      <div class="item"><span class="q">18.</span><span data-i18n="q18_label">Has an Immigration Officer ever issued you a report under 44(1)...?</span></div>
 
-    <div class="section-title" data-i18n="section_a">A. PERSONAL DETAILS</div>
+      <h3 data-i18n="section_c">C. PERSONAL HISTORY</h3>
+      <div class="item"><span class="q">19.</span><span data-i18n="q19_label">Address history inside and outside Canada (last 5 years)</span></div>
+      <div class="item"><span class="q">20.</span><span data-i18n="q20_label">Work and educational history inside and outside Canada (last 5 years)</span></div>
+      <div class="item"><span class="q">21.</span><span data-i18n="q21_label">Travel history: Have you travelled or lived outside Canada in the last 5 years?</span></div>
 
-    <div class="field">
-      <label data-i18n="q4_label">4. Your full name as shown on your Record of Landing (IMM 1000), Confirmation of Permanent Residence (IMM 5292) or (IMM 5688), or last Permanent Resident Card</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="family_name">Family name (surname)</label><input type="text"></div>
-        <div class="field"><label data-i18n="given_names">Given name(s)</label><input type="text"></div>
-      </div>
-    </div>
+      <h3 data-i18n="section_d">D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA</h3>
+      <div class="item"><span class="q">22.</span><span data-i18n="q22_label">List ALL your absences from Canada in the past five (5) years</span></div>
+      <div class="item" data-i18n="situation1_label">Situation 1 - Absences while accompanying a family member who is a Canadian citizen</div>
+      <div class="item" data-i18n="situation2_label">Situation 2 - Absences while employed by a Canadian business outside Canada</div>
+      <div class="item" data-i18n="situation3_label">Situation 3 - Absences while accompanying a family member who is a permanent resident and employed abroad</div>
 
-    <div class="field">
-      <label data-i18n="q5_label">5. Your current name, if different from above (provide supporting documents for any change in your name)</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="family_name">Family name (surname)</label><input type="text"></div>
-        <div class="field"><label data-i18n="given_names">Given name(s)</label><input type="text"></div>
-      </div>
-    </div>
+      <h3 data-i18n="section_e">E. CONSENT TO DISCLOSE INFORMATION</h3>
+      <div class="item"><span class="q">23.</span><span data-i18n="q23_label">History of entries into Canada</span></div>
+      <div class="item"><span class="q">24.</span><span data-i18n="q24_label">Income tax information and filing history</span></div>
 
-    <div class="row cols-3">
-      <div class="field">
-        <label data-i18n="q6_label">6. Your sex</label>
-        <div class="checkbox-line">
-          <label><input type="radio" name="q6_sex"> <span data-i18n="male">Male</span></label>
-          <label><input type="radio" name="q6_sex"> <span data-i18n="female">Female</span></label>
-        </div>
-      </div>
-      <div class="field">
-        <label data-i18n="q7_label">7. Your date of birth (YYYY-MM-DD)</label>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label data-i18n="q8_label">8. Your country of birth</label>
-        <input type="text">
-      </div>
-    </div>
+      <h3 data-i18n="section_g">G. DECLARATION OF APPLICANT</h3>
+      <div class="item"><span class="q">25.</span><span data-i18n="q25_label">I am the applicant's (check appropriate box)</span></div>
 
-    <div class="row cols-2">
-      <div class="field">
-        <label data-i18n="q9_label">9. Your country or countries of citizenship</label>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label data-i18n="q10_label">10. Colour of your eyes</label>
-        <div class="checkbox-line">
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="blue">Blue</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="grey">Grey</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="brown">Brown</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="green">Green</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="black">Black</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="hazel">Hazel (yellowish brown)</span></label>
-          <label><input type="radio" name="q10_eyes"> <span data-i18n="other">Other</span></label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row cols-3">
-      <div class="field"><label data-i18n="q11_label">11. Your height (cm)</label><input type="text"></div>
-      <div class="field"><label data-i18n="ft">ft</label><input type="text"></div>
-      <div class="field"><label data-i18n="in">in</label><input type="text"></div>
-    </div>
-
-    <div class="field">
-      <label data-i18n="q12_label">12. Your current residential address in Canada</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="apartment">Apartment</label><input type="text"></div>
-        <div class="field"><label data-i18n="street_no">Street no.</label><input type="text"></div>
-      </div>
-      <div class="field"><label data-i18n="street_name">Street name</label><input type="text"></div>
-      <div class="row cols-3">
-        <div class="field"><label data-i18n="city">City</label><input type="text"></div>
-        <div class="field"><label data-i18n="province">Province</label><input type="text"></div>
-        <div class="field"><label data-i18n="postal_code">Postal code</label><input type="text"></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label data-i18n="q13_label">13. Your mailing address in Canada (if different from above)</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="apartment">Apartment</label><input type="text"></div>
-        <div class="field"><label data-i18n="street_no">Street no.</label><input type="text"></div>
-      </div>
-      <div class="field"><label data-i18n="street_name">Street name</label><input type="text"></div>
-      <div class="row cols-3">
-        <div class="field"><label data-i18n="city">City</label><input type="text"></div>
-        <div class="field"><label data-i18n="province">Province</label><input type="text"></div>
-        <div class="field"><label data-i18n="postal_code">Postal code</label><input type="text"></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label data-i18n="q14_label">14. Your telephone numbers and e-mail address</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="at_home">At home</label><input type="text"></div>
-        <div class="field"><label data-i18n="alternative">Alternative</label><input type="text"></div>
-      </div>
-      <div class="field"><label data-i18n="email">E-mail</label><input type="text"></div>
-    </div>
-
-    <div class="field">
-      <label data-i18n="q15_label">15. Your current marital status</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q15_marital"> <span data-i18n="never_married">Never married</span></label>
-        <label><input type="radio" name="q15_marital"> <span data-i18n="married">Married</span></label>
-        <label><input type="radio" name="q15_marital"> <span data-i18n="widowed">Widowed</span></label>
-        <label><input type="radio" name="q15_marital"> <span data-i18n="legally_separated">Legally separated</span></label>
-        <label><input type="radio" name="q15_marital"> <span data-i18n="divorced">Divorced</span></label>
-        <label><input type="radio" name="q15_marital"> <span class="glossary-term" data-term="Common-law" data-def-en="In Canada, this means you live together in a marriage-like relationship without being married, usually for at least 12 months. You may need proof of shared address and cohabitation period." data-def-es="En Canada, esto significa vivir juntos en una relacion similar al matrimonio sin estar casados, por lo general durante al menos 12 meses. Puede que necesites prueba de domicilio compartido y del periodo de convivencia." data-def-fr="Au Canada, cela signifie vivre ensemble dans une relation de type conjugal sans etre maries, generalement pendant au moins 12 mois. Vous pourriez devoir fournir une preuve d’adresse commune et de cohabitation." data-def-de="In Kanada bedeutet dies, dass Sie ohne Heirat in einer eheahnlichen Beziehung zusammenleben, in der Regel mindestens 12 Monate. Möglicherweise brauchen Sie Nachweise fur gemeinsame Adresse und Zusammenleben." data-def-tr="Bu terim Kanada’da, evli olmadan birlikte yaşayan ve evlilik benzeri bir iliskiyi belirli bir sure (genellikle en az 12 ay) surdurmus kisileri ifade eder. Bu alani doldururken, birlikte yasama surenizi ve ortak adresi belgeleyebilmeniz gerekebilir.">Common-law</span></label>
-      </div>
-    </div>
-
-    <div class="section-title" data-i18n="section_b">B. YOUR IMMIGRATION HISTORY</div>
-    <div class="row cols-2">
-      <div class="field">
-        <label data-i18n="q16_label">16. Place you became a permanent resident of Canada (City/Port of entry)</label>
-        <input type="text">
-      </div>
-      <div class="field">
-        <label data-i18n="province">Province</label>
-        <input type="text">
-      </div>
-    </div>
-    <div class="field">
-      <label data-i18n="q17_label">17. Have you ever been issued a removal order in Canada?</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q17_removal"> <span data-i18n="yes">Yes</span></label>
-        <label><input type="radio" name="q17_removal"> <span data-i18n="no">No</span></label>
-      </div>
-    </div>
-    <div class="field">
-      <label data-i18n="q18_label">18. Has an Immigration Officer ever issued you a Report Under Subsection 44(1) or made the decision that you have not met the residency obligations required of Canadian permanent residents?</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q18_report"> <span data-i18n="yes">Yes</span></label>
-        <label><input type="radio" name="q18_report"> <span data-i18n="no">No</span></label>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div>IMM 5444 (08-2016) E</div>
-      <div data-i18n="footer_page1">This form is made available by Immigration, Refugees and Citizenship Canada and is not to be sold to applicants. (DISPONIBLE EN FRANCAIS - IMM 5444 F)</div>
-      <div>Canada</div>
+      <h3 data-i18n="section_h">H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PR CARD</h3>
+      <div class="item"><span class="q">26.</span><span data-i18n="q26_card_number">Permanent Resident Card number</span></div>
+      <div class="item" data-i18n="q26_card_was">My Permanent Resident Card was (lost/stolen/destroyed/never received)</div>
+            </div>
+      </aside>
     </div>
   </div>
 
-  <div class="page">
-    <div class="title-row">
-      <div></div>
-      <div class="tiny" data-i18n="page2of4">PAGE 2 OF 4</div>
-    </div>
-
-    <div class="section-title" data-i18n="section_c">C. PERSONAL HISTORY</div>
-    <div class="tiny" data-i18n="section_c_note">If you need additional space for any of the questions below, print out an additional page containing the appropriate section, complete it and submit it with your application.</div>
-
-    <div class="field">
-      <label data-i18n="q19_label">19. ADDRESS HISTORY INSIDE AND OUTSIDE CANADA: Your address history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your address history since becoming a permanent resident. List all your addresses in chronological order from the oldest to the most recent.</label>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="apt_street">Apartment, street no. and street name</th>
-        <th data-i18n="city_town">City or town</th>
-        <th data-i18n="province">Province</th>
-        <th data-i18n="country">Country</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Address history from date"></td>
-        <td><input type="text" aria-label="Address history to date"></td>
-        <td><input type="text" aria-label="Address history street"></td>
-        <td><input type="text" aria-label="Address history city"></td>
-        <td><input type="text" aria-label="Address history province"></td>
-        <td><input type="text" aria-label="Address history country"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Address history from date"></td>
-        <td><input type="text" aria-label="Address history to date"></td>
-        <td><input type="text" aria-label="Address history street"></td>
-        <td><input type="text" aria-label="Address history city"></td>
-        <td><input type="text" aria-label="Address history province"></td>
-        <td><input type="text" aria-label="Address history country"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Address history from date"></td>
-        <td><input type="text" aria-label="Address history to date"></td>
-        <td><input type="text" aria-label="Address history street"></td>
-        <td><input type="text" aria-label="Address history city"></td>
-        <td><input type="text" aria-label="Address history province"></td>
-        <td><input type="text" aria-label="Address history country"></td>
-      </tr>
-    </table>
-
-    <div class="field">
-      <label data-i18n="q20_label">20. WORK AND EDUCATIONAL HISTORY INSIDE AND OUTSIDE CANADA: Your work and educational history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your work and educational history since becoming a permanent resident. If you have not worked or studied, provide your other activity history, including location. List all your activities in chronological order from the oldest to the most recent.</label>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="employer_school">Name of employer or name of educational institution attended (do not use abbreviations)</th>
-        <th data-i18n="city_town">City or town</th>
-        <th data-i18n="province">Province</th>
-        <th data-i18n="country">Country</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Work history from date"></td>
-        <td><input type="text" aria-label="Work history to date"></td>
-        <td><input type="text" aria-label="Employer or school"></td>
-        <td><input type="text" aria-label="Work history city"></td>
-        <td><input type="text" aria-label="Work history province"></td>
-        <td><input type="text" aria-label="Work history country"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Work history from date"></td>
-        <td><input type="text" aria-label="Work history to date"></td>
-        <td><input type="text" aria-label="Employer or school"></td>
-        <td><input type="text" aria-label="Work history city"></td>
-        <td><input type="text" aria-label="Work history province"></td>
-        <td><input type="text" aria-label="Work history country"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Work history from date"></td>
-        <td><input type="text" aria-label="Work history to date"></td>
-        <td><input type="text" aria-label="Employer or school"></td>
-        <td><input type="text" aria-label="Work history city"></td>
-        <td><input type="text" aria-label="Work history province"></td>
-        <td><input type="text" aria-label="Work history country"></td>
-      </tr>
-    </table>
-
-    <div class="field">
-      <label data-i18n="q21_label">21. TRAVEL HISTORY: Have you travelled or lived outside of Canada in the last five (5) years (or if you became a permanent resident less than five (5) years ago, since becoming a permanent resident)? Include ALL absences, including those due to employment, vacations, trips to the United States and any other time you left Canada.</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q21_travel"> <span data-i18n="no">No</span></label>
-        <label><input type="radio" name="q21_travel"> <span data-i18n="yes_list">Yes (List all your absences)</span></label>
-      </div>
-      <div class="tiny" data-i18n="period_assessed">Period to be assessed:</div>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="from_date">From (YYYY-MM-DD)</label><input type="text"></div>
-        <div class="field"><label data-i18n="to_date">To (YYYY-MM-DD)</label><input type="text"></div>
-      </div>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="location_absence">Your location during your absence (city, country)</th>
-        <th data-i18n="reason_absence">Reason for absence</th>
-        <th data-i18n="number_days">Number of days</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Travel history from date"></td>
-        <td><input type="text" aria-label="Travel history to date"></td>
-        <td><input type="text" aria-label="Travel location"></td>
-        <td><input type="text" aria-label="Reason for absence"></td>
-        <td><input type="text" aria-label="Number of days"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Travel history from date"></td>
-        <td><input type="text" aria-label="Travel history to date"></td>
-        <td><input type="text" aria-label="Travel location"></td>
-        <td><input type="text" aria-label="Reason for absence"></td>
-        <td><input type="text" aria-label="Number of days"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Travel history from date"></td>
-        <td><input type="text" aria-label="Travel history to date"></td>
-        <td><input type="text" aria-label="Travel location"></td>
-        <td><input type="text" aria-label="Reason for absence"></td>
-        <td><input type="text" aria-label="Number of days"></td>
-      </tr>
-      <tr>
-        <td colspan="4" style="text-align:right;" data-i18n="total_number_days">Total number of days</td>
-        <td><input type="text" aria-label="Total number of days"></td>
-      </tr>
-    </table>
-
-    <div class="notice" data-i18n="important_1095">IMPORTANT: If your total number of days outside Canada is equal to 1095 days or more, you must complete Section D below.</div>
-
-    <div class="section-title" data-i18n="section_d">D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA</div>
-    <div class="tiny" data-i18n="section_d_note">Complete this section if you have been outside of Canada for 1095 days or more in the past five (5) years.</div>
-    <div class="field">
-      <label data-i18n="q22_label">22. List ALL your absences from Canada in the past five (5) years according to the situation that applies to you. If you became a permanent resident less than five (5) years ago, list ALL absences from the time you became a permanent resident to present. List your absences in chronological order from the oldest to the most recent.</label>
-    </div>
-    <div class="field">
-      <label data-i18n="situation1_label">Situation 1 - Absences while accompanying a family member who is a Canadian citizen</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="family_member_name">Name of family member</label><input type="text"></div>
-        <div class="field"><label data-i18n="relationship_to_you">Relationship to you</label><input type="text"></div>
-      </div>
-      <div class="tiny" data-i18n="situation1_note">Provide proof of Canadian citizenship. Provide proof of your relationship.</div>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="no_and_street">No. and street</th>
-        <th data-i18n="city_town_country">City/Town, country</th>
-        <th data-i18n="total_number_days">Total number of days</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 1 from date"></td>
-        <td><input type="text" aria-label="Situation 1 to date"></td>
-        <td><input type="text" aria-label="Situation 1 street"></td>
-        <td><input type="text" aria-label="Situation 1 city/country"></td>
-        <td><input type="text" aria-label="Situation 1 total days"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 1 from date"></td>
-        <td><input type="text" aria-label="Situation 1 to date"></td>
-        <td><input type="text" aria-label="Situation 1 street"></td>
-        <td><input type="text" aria-label="Situation 1 city/country"></td>
-        <td><input type="text" aria-label="Situation 1 total days"></td>
-      </tr>
-      <tr>
-        <td colspan="4" style="text-align:right;" data-i18n="total_number_days">Total number of days</td>
-        <td><input type="text" aria-label="Situation 1 total number of days"></td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="page">
-    <div class="title-row">
-      <div></div>
-      <div class="tiny" data-i18n="page3of4">PAGE 3 OF 4</div>
-    </div>
-
-    <div class="section-title" data-i18n="section_d_cont">D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA (continued)</div>
-
-    <div class="field">
-      <label data-i18n="situation2_label">Situation 2 - Absences while employed by a Canadian business outside Canada or in the Canadian federal or provincial public service</label>
-      <div class="tiny" data-i18n="situation2_note">Provide proof of full-time Canadian employment</div>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="no_and_street">No. and street</th>
-        <th data-i18n="city_town_country">City/Town, country</th>
-        <th data-i18n="total_number_days">Total number of days</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 2 from date"></td>
-        <td><input type="text" aria-label="Situation 2 to date"></td>
-        <td><input type="text" aria-label="Situation 2 street"></td>
-        <td><input type="text" aria-label="Situation 2 city/country"></td>
-        <td><input type="text" aria-label="Situation 2 total days"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 2 from date"></td>
-        <td><input type="text" aria-label="Situation 2 to date"></td>
-        <td><input type="text" aria-label="Situation 2 street"></td>
-        <td><input type="text" aria-label="Situation 2 city/country"></td>
-        <td><input type="text" aria-label="Situation 2 total days"></td>
-      </tr>
-      <tr>
-        <td colspan="4" style="text-align:right;" data-i18n="total_number_days">Total number of days</td>
-        <td><input type="text" aria-label="Situation 2 total number of days"></td>
-      </tr>
-    </table>
-
-    <div class="field">
-      <label data-i18n="situation3_label">Situation 3 - Absences while accompanying a family member who is a permanent resident of Canada AND who is employed by a Canadian business outside Canada or in the Canadian federal or provincial public service</label>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="family_member_name">Name of family member</label><input type="text"></div>
-        <div class="field"><label data-i18n="relationship_to_you">Relationship to you</label><input type="text"></div>
-      </div>
-      <div class="tiny" data-i18n="situation3_note">Provide proof of this person's permanent resident status and proof of this person's full-time employment. Provide proof of your relationship.</div>
-    </div>
-    <table class="form">
-      <tr>
-        <th data-i18n="from_date">From (YYYY-MM-DD)</th>
-        <th data-i18n="to_date">To (YYYY-MM-DD)</th>
-        <th data-i18n="no_and_street">No. and street</th>
-        <th data-i18n="city_town_country">City/Town, country</th>
-        <th data-i18n="total_number_days">Total number of days</th>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 3 from date"></td>
-        <td><input type="text" aria-label="Situation 3 to date"></td>
-        <td><input type="text" aria-label="Situation 3 street"></td>
-        <td><input type="text" aria-label="Situation 3 city/country"></td>
-        <td><input type="text" aria-label="Situation 3 total days"></td>
-      </tr>
-      <tr>
-        <td><input type="text" aria-label="Situation 3 from date"></td>
-        <td><input type="text" aria-label="Situation 3 to date"></td>
-        <td><input type="text" aria-label="Situation 3 street"></td>
-        <td><input type="text" aria-label="Situation 3 city/country"></td>
-        <td><input type="text" aria-label="Situation 3 total days"></td>
-      </tr>
-      <tr>
-        <td colspan="4" style="text-align:right;" data-i18n="total_number_days">Total number of days</td>
-        <td><input type="text" aria-label="Situation 3 total number of days"></td>
-      </tr>
-    </table>
-
-    <div class="section-title" data-i18n="section_e">E. CONSENT TO DISCLOSE INFORMATION</div>
-    <div class="field">
-      <label data-i18n="q23_label">23. History of entries into Canada</label>
-      <div class="tiny" data-i18n="q23_text">By selecting "YES" in the box below, and by signing this form, I hereby give my consent to the Canada Border Services Agency (CBSA) to disclose the details of my history of entries into Canada to Immigration, Refugees and Citizenship Canada (IRCC) in order to assist IRCC in determining my eligibility for a permanent resident card. I also hereby authorize IRCC to collect the history of my entries into Canada from the CBSA.</div>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q23_consent"> <span data-i18n="yes">Yes</span></label>
-        <label><input type="radio" name="q23_consent"> <span data-i18n="no">No</span></label>
-      </div>
-      <div class="tiny" data-i18n="q23_note">Note: If you do not provide consent, you may be asked to request your history of entries directly from the CBSA and send it to IRCC which could result in delays in the processing of your application.</div>
-    </div>
-
-    <div class="section-title" data-i18n="section_f">F. STATEMENT OF CONSENT</div>
-    <div class="field">
-      <label data-i18n="q24_label">24. Income tax information and filing history</label>
-      <div class="tiny" data-i18n="q24_text">By selecting "YES" in the box below, and by signing this application form, I hereby give my consent to the Immigration, Refugees and Citizenship Canada (IRCC) to collect my Social Insurance Number (SIN) for the purpose of requesting that the Canada Revenue Agency (CRA) disclose my income tax information and residency information for any taxation years required to assist the department in determining whether I meet the residency obligation as set out in Section 28 of the Immigration and Refugee Protection Act.</div>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q24_consent"> <span data-i18n="yes">Yes</span></label>
-        <label><input type="radio" name="q24_consent"> <span data-i18n="no">No</span></label>
-      </div>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="sin_label">Social Insurance Number (SIN)</label><input type="text"></div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div>IMM 5444 (08-2016) E</div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-
-  <div class="page">
-    <div class="title-row">
-      <div></div>
-      <div class="tiny" data-i18n="page4of4">PAGE 4 OF 4</div>
-    </div>
-
-    <div class="section-title" data-i18n="section_g">G. DECLARATION OF APPLICANT</div>
-    <div class="box">
-      <span data-i18n="g_intro">This declaration covers the information that I have provided on this form and all the information submitted with my application for a Permanent Resident Card as well as the attached accompanying documents.</span>
-      <ul class="tiny">
-        <li data-i18n="g1">I declare that the information I have given is truthful, complete and correct.</li>
-        <li data-i18n="g2">I understand that any false statements or concealment of a material fact may be grounds for my prosecution or removal.</li>
-        <li data-i18n="g3">The photographs enclosed are a true likeness of me.</li>
-        <li data-i18n="g4">I am a permanent resident of Canada.</li>
-        <li data-i18n="g5">I am not a Canadian citizen.</li>
-        <li data-i18n="g6">I understand that all foreign statements, having asked for and obtained an explanation on every point that was not clear to me.</li>
-        <li data-i18n="g7">I realize that once this document has been completed and signed, it will form part of my Immigration Record and will be used to verify my family details on future applications.</li>
-        <li data-i18n="g8">I will immediately inform Immigration, Refugees and Citizenship Canada if any of the information or the answers provided in my application forms change.</li>
-      </ul>
-    </div>
-
-    <div class="notice"><span data-i18n="sign_g">SIGN SECTION G BEFORE PROCEEDING TO SECTION H.</span><br><span class="tiny" data-i18n="sign_g_note">To avoid processing delays, ensure your application is not postdated or stale dated.</span></div>
-
-    <div class="row cols-2">
-      <div class="field"><label data-i18n="signature_declarant">Signature of declarant</label><input type="text"></div>
-      <div class="field"><label data-i18n="signature_parent">Signature of parent or legal guardian, if applicable</label><input type="text"></div>
-    </div>
-    <div class="row cols-3">
-      <div class="field"><label data-i18n="date_label">Date (YYYY-MM-DD)</label><input type="text"></div>
-      <div class="field"><label data-i18n="city">City</label><input type="text"></div>
-      <div class="field"><label data-i18n="province">Province</label><input type="text"></div>
-    </div>
-    <div class="field">
-      <label data-i18n="q25_label">I am the applicant's (check appropriate box)</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q25_role"> <span data-i18n="mother">Mother</span></label>
-        <label><input type="radio" name="q25_role"> <span data-i18n="father">Father</span></label>
-        <label><input type="radio" name="q25_role"> <span data-i18n="legal_guardian">Legal guardian</span></label>
-      </div>
-    </div>
-
-    <div class="section-title" data-i18n="section_h">H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD</div>
-    <div class="tiny" data-i18n="section_h_note">Complete this section only if you are applying to replace a lost, stolen, destroyed or never received PR Card.</div>
-
-    <div class="row cols-2">
-      <div class="field"><label data-i18n="q26_card_number">26. Permanent Resident Card number</label><input type="text"></div>
-      <div class="field"><label data-i18n="date_of_issue">Date of issue (YYYY-MM-DD)</label><input type="text"></div>
-    </div>
-    <div class="field">
-      <label data-i18n="q26_card_was">My Permanent Resident Card was</label>
-      <div class="checkbox-line">
-        <label><input type="radio" name="q26_card_status"> <span data-i18n="lost">Lost</span></label>
-        <label><input type="radio" name="q26_card_status"> <span data-i18n="stolen">Stolen</span></label>
-        <label><input type="radio" name="q26_card_status"> <span data-i18n="destroyed">Destroyed</span></label>
-        <label><input type="radio" name="q26_card_status"> <span data-i18n="never_received">Never received</span></label>
-      </div>
-      <div class="row cols-2">
-        <div class="field"><label data-i18n="on_or_about">On or about (YYYY-MM-DD)</label><input type="text"></div>
-        <div class="field"><label data-i18n="at_city_country">At (city, country)</label><input type="text"></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label data-i18n="circumstances">Under the following circumstances (full information must be provided below):</label>
-      <input type="text">
-    </div>
-    <div class="field">
-      <label data-i18n="efforts_locate">I have made the following efforts to locate this document</label>
-      <input type="text">
-    </div>
-
-    <div class="field">
-      <label data-i18n="promise_destroy">Should I ever regain possession of my original PR Card, I promise to destroy it immediately.</label>
-    </div>
-    <div class="tiny" data-i18n="h_declaration">I solemnly declare that the information I have provided is true, that it is of the same force and effect as if made under oath, and that it was freely given. I authorize the department of Immigration, Refugees and Citizenship Canada to verify the information I have provided. I also understand that the provision of any false or misleading information may lead to prosecution and/or removal. Section 127 of the Immigration and Refugee Protection Act.</div>
-
-    <div class="notice" data-i18n="h_notice">DO NOT SIGN HERE UNLESS YOU ARE DECLARING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD.</div>
-
-    <div class="row cols-2">
-      <div class="field"><label data-i18n="signature_declarant">Signature of declarant</label><input type="text"></div>
-      <div class="field"><label data-i18n="signature_parent">Signature of parent or legal guardian, if applicable</label><input type="text"></div>
-    </div>
-    <div class="row cols-2">
-      <div class="field"><label data-i18n="date_label">Date (YYYY-MM-DD)</label><input type="text"></div>
-      <div class="field"><label data-i18n="date_label">Date (YYYY-MM-DD)</label><input type="text"></div>
-    </div>
-
-    <div class="footer">
-      <div>IMM 5444 (08-2016) E</div>
-      <div class="tiny" data-i18n="footer_privacy">The information you provide on this form is collected under the authority of the Immigration and Refugee Protection Act and will be used to determine whether the term and conditions of your permanent residency were maintained and whether you should be granted a Permanent Resident Card. It will be retained in the Personal Information Bank CIC PPU 047 and Personal Information Bank CIC PPU 051. Under the Privacy Act and the Access to Information Act, you have the right of access to your personal information and protection of access to this personal information. Details on these matters are available at the Information Centre of Immigration, Refugees and Citizenship Canada.</div>
-      <div>Canada</div>
-    </div>
-  </div>
-
-  <div id="glossary-bubble" class="glossary-bubble" role="dialog" aria-live="polite"></div>
   <script>
-    const bubble = document.getElementById("glossary-bubble");
-    const terms = document.querySelectorAll(".glossary-term");
-    const downloadBtn = document.getElementById("download-pdf");
-
-    function showBubble(termEl) {
-      const params = new URLSearchParams(window.location.search);
-      const lang = (params.get("lang") || "en").toLowerCase();
-      const key = `data-def-${lang}`;
-      const def = termEl.getAttribute(key) || termEl.getAttribute("data-def-en");
-      const term = termEl.getAttribute("data-term") || "Term";
-      bubble.innerHTML = `<div class="title">${term}</div><div>${def || ""}</div>`;
-      const rect = termEl.getBoundingClientRect();
-      const top = Math.max(12, rect.top - 12);
-      const left = Math.min(window.innerWidth - 300, rect.left);
-      bubble.style.top = `${top}px`;
-      bubble.style.left = `${left}px`;
-      bubble.style.display = "block";
-    }
-
-    terms.forEach((el) => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        showBubble(el);
-      });
-    });
-
     const translations = {
       en: {
-        title: "APPLICATION FOR A PERMANENT RESIDENT CARD",
-        protected: "PROTECTED WHEN COMPLETED - B",
-        page1of4: "PAGE 1 OF 4",
-        page2of4: "PAGE 2 OF 4",
-        page3of4: "PAGE 3 OF 4",
-        page4of4: "PAGE 4 OF 4",
-        continue_by_question: "Continue by question? See step 2 of the instruction guide.",
-        type_or_print: "TYPE OR PRINT IN BLACK OR BLUE INK",
-        q1_label: "1. Language you prefer for correspondence",
-        english: "English",
-        french: "French",
-        q2_label_prefix: "2.",
-        q2_label: "Date you became a permanent resident of Canada",
-        date_format: "(YYYY-MM-DD)",
-        q3_label: "3. You are applying to (check one box)",
+        translation_title: "Translation (reference only)",
+        section_a: "A. PERSONAL DETAILS",
+        section_b: "B. YOUR IMMIGRATION HISTORY",
+        section_c: "C. PERSONAL HISTORY",
+        section_d: "D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA",
+        section_e: "E. CONSENT TO DISCLOSE INFORMATION",
+        section_g: "G. DECLARATION OF APPLICANT",
+        section_h: "H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PR CARD",
+        q1_label: "Language you prefer for correspondence",
+        q2_label: "Date you became a permanent resident of Canada (YYYY-MM-DD)",
+        q3_label: "You are applying to (check one box)",
         q3_opt1: "Obtain your first Permanent Resident Card",
         q3_opt2: "Renew your present Permanent Resident Card",
         q3_opt3: "Replace a lost, stolen, destroyed or never received Permanent Resident Card",
-        q3_note: "NOTE: If you are applying to renew your present card, you should keep it until you receive your replacement card. You will be asked to destroy your old card when you receive your new one. If you are applying to replace your damaged card, you must send the damaged card with your application.",
-        section_a: "A. PERSONAL DETAILS",
-        q4_label: "4. Your full name as shown on your Record of Landing (IMM 1000), Confirmation of Permanent Residence (IMM 5292) or (IMM 5688), or last Permanent Resident Card",
+        q4_label: "Your full name as shown on your Record of Landing / Confirmation of Permanent Residence / last PR Card",
         family_name: "Family name (surname)",
         given_names: "Given name(s)",
-        q5_label: "5. Your current name, if different from above (provide supporting documents for any change in your name)",
-        q6_label: "6. Your sex",
+        q5_label: "Your current name, if different from above",
+        q6_label: "Your sex",
         male: "Male",
         female: "Female",
-        q7_label: "7. Your date of birth (YYYY-MM-DD)",
-        q8_label: "8. Your country of birth",
-        q9_label: "9. Your country or countries of citizenship",
-        q10_label: "10. Colour of your eyes",
+        q7_label: "Your date of birth (YYYY-MM-DD)",
+        q8_label: "Your country of birth",
+        q9_label: "Your country or countries of citizenship",
+        q10_label: "Colour of your eyes",
         blue: "Blue",
         grey: "Grey",
         brown: "Brown",
@@ -900,770 +526,303 @@
         black: "Black",
         hazel: "Hazel (yellowish brown)",
         other: "Other",
-        q11_label: "11. Your height (cm)",
-        ft: "ft",
-        in: "in",
-        q12_label: "12. Your current residential address in Canada",
+        q11_label: "Your height (cm / ft / in)",
+        q12_label: "Your current residential address in Canada",
         apartment: "Apartment",
         street_no: "Street no.",
         street_name: "Street name",
         city: "City",
         province: "Province",
         postal_code: "Postal code",
-        q13_label: "13. Your mailing address in Canada (if different from above)",
-        q14_label: "14. Your telephone numbers and e-mail address",
-        at_home: "At home",
-        alternative: "Alternative",
-        email: "E-mail",
-        q15_label: "15. Your current marital status",
+        q13_label: "Your mailing address in Canada (if different)",
+        q14_label: "Your telephone numbers and e-mail address",
+        q15_label: "Your current marital status",
         never_married: "Never married",
         married: "Married",
         widowed: "Widowed",
         legally_separated: "Legally separated",
         divorced: "Divorced",
-        section_b: "B. YOUR IMMIGRATION HISTORY",
-        q16_label: "16. Place you became a permanent resident of Canada (City/Port of entry)",
-        yes: "Yes",
-        no: "No",
-        q17_label: "17. Have you ever been issued a removal order in Canada?",
-        q18_label: "18. Has an Immigration Officer ever issued you a Report Under Subsection 44(1) or made the decision that you have not met the residency obligations required of Canadian permanent residents?",
-        footer_page1: "This form is made available by Immigration, Refugees and Citizenship Canada and is not to be sold to applicants. (DISPONIBLE EN FRANCAIS - IMM 5444 F)",
-        section_c: "C. PERSONAL HISTORY",
-        section_c_note: "If you need additional space for any of the questions below, print out an additional page containing the appropriate section, complete it and submit it with your application.",
-        q19_label: "19. ADDRESS HISTORY INSIDE AND OUTSIDE CANADA: Your address history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your address history since becoming a permanent resident. List all your addresses in chronological order from the oldest to the most recent.",
-        from_date: "From (YYYY-MM-DD)",
-        to_date: "To (YYYY-MM-DD)",
-        apt_street: "Apartment, street no. and street name",
-        city_town: "City or town",
-        country: "Country",
-        q20_label: "20. WORK AND EDUCATIONAL HISTORY INSIDE AND OUTSIDE CANADA: Your work and educational history for the past five (5) years or if you became a permanent resident less than five (5) years ago, your work and educational history since becoming a permanent resident. If you have not worked or studied, provide your other activity history, including location. List all your activities in chronological order from the oldest to the most recent.",
-        employer_school: "Name of employer or name of educational institution attended (do not use abbreviations)",
-        q21_label: "21. TRAVEL HISTORY: Have you travelled or lived outside of Canada in the last five (5) years (or if you became a permanent resident less than five (5) years ago, since becoming a permanent resident)? Include ALL absences, including those due to employment, vacations, trips to the United States and any other time you left Canada.",
-        yes_list: "Yes (List all your absences)",
-        period_assessed: "Period to be assessed:",
-        location_absence: "Your location during your absence (city, country)",
-        reason_absence: "Reason for absence",
-        number_days: "Number of days",
-        total_number_days: "Total number of days",
-        important_1095: "IMPORTANT: If your total number of days outside Canada is equal to 1095 days or more, you must complete Section D below.",
-        section_d: "D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA",
-        section_d_note: "Complete this section if you have been outside of Canada for 1095 days or more in the past five (5) years.",
-        q22_label: "22. List ALL your absences from Canada in the past five (5) years according to the situation that applies to you. If you became a permanent resident less than five (5) years ago, list ALL absences from the time you became a permanent resident to present. List your absences in chronological order from the oldest to the most recent.",
+        common_law: "Common-law",
+        q16_label: "Place you became a permanent resident of Canada (City/Port of entry)",
+        q17_label: "Have you ever been issued a removal order in Canada?",
+        q18_label: "Has an Immigration Officer ever issued you a report under 44(1) or decided you did not meet residency obligations?",
+        q19_label: "Address history inside and outside Canada (last 5 years)",
+        q20_label: "Work and educational history inside and outside Canada (last 5 years)",
+        q21_label: "Travel history: Have you travelled or lived outside Canada in the last 5 years?",
+        q22_label: "List ALL your absences from Canada in the past five (5) years",
         situation1_label: "Situation 1 - Absences while accompanying a family member who is a Canadian citizen",
-        family_member_name: "Name of family member",
-        relationship_to_you: "Relationship to you",
-        situation1_note: "Provide proof of Canadian citizenship. Provide proof of your relationship.",
-        no_and_street: "No. and street",
-        city_town_country: "City/Town, country",
-        section_d_cont: "D. RESIDENCY OBLIGATION - TIME SPENT OUTSIDE CANADA (continued)",
-        situation2_label: "Situation 2 - Absences while employed by a Canadian business outside Canada or in the Canadian federal or provincial public service",
-        situation2_note: "Provide proof of full-time Canadian employment",
-        situation3_label: "Situation 3 - Absences while accompanying a family member who is a permanent resident of Canada AND who is employed by a Canadian business outside Canada or in the Canadian federal or provincial public service",
-        situation3_note: "Provide proof of this person's permanent resident status and proof of this person's full-time employment. Provide proof of your relationship.",
-        section_e: "E. CONSENT TO DISCLOSE INFORMATION",
-        q23_label: "23. History of entries into Canada",
-        q23_text: "By selecting \"YES\" in the box below, and by signing this form, I hereby give my consent to the Canada Border Services Agency (CBSA) to disclose the details of my history of entries into Canada to Immigration, Refugees and Citizenship Canada (IRCC) in order to assist IRCC in determining my eligibility for a permanent resident card. I also hereby authorize IRCC to collect the history of my entries into Canada from the CBSA.",
-        q23_note: "Note: If you do not provide consent, you may be asked to request your history of entries directly from the CBSA and send it to IRCC which could result in delays in the processing of your application.",
-        section_f: "F. STATEMENT OF CONSENT",
-        q24_label: "24. Income tax information and filing history",
-        q24_text: "By selecting \"YES\" in the box below, and by signing this application form, I hereby give my consent to the Immigration, Refugees and Citizenship Canada (IRCC) to collect my Social Insurance Number (SIN) for the purpose of requesting that the Canada Revenue Agency (CRA) disclose my income tax information and residency information for any taxation years required to assist the department in determining whether I meet the residency obligation as set out in Section 28 of the Immigration and Refugee Protection Act.",
-        sin_label: "Social Insurance Number (SIN)",
-        section_g: "G. DECLARATION OF APPLICANT",
-        g_intro: "This declaration covers the information that I have provided on this form and all the information submitted with my application for a Permanent Resident Card as well as the attached accompanying documents.",
-        g1: "I declare that the information I have given is truthful, complete and correct.",
-        g2: "I understand that any false statements or concealment of a material fact may be grounds for my prosecution or removal.",
-        g3: "The photographs enclosed are a true likeness of me.",
-        g4: "I am a permanent resident of Canada.",
-        g5: "I am not a Canadian citizen.",
-        g6: "I understand that all foreign statements, having asked for and obtained an explanation on every point that was not clear to me.",
-        g7: "I realize that once this document has been completed and signed, it will form part of my Immigration Record and will be used to verify my family details on future applications.",
-        g8: "I will immediately inform Immigration, Refugees and Citizenship Canada if any of the information or the answers provided in my application forms change.",
-        sign_g: "SIGN SECTION G BEFORE PROCEEDING TO SECTION H.",
-        sign_g_note: "To avoid processing delays, ensure your application is not postdated or stale dated.",
-        signature_declarant: "Signature of declarant",
-        signature_parent: "Signature of parent or legal guardian, if applicable",
-        date_label: "Date (YYYY-MM-DD)",
+        situation2_label: "Situation 2 - Absences while employed by a Canadian business outside Canada",
+        situation3_label: "Situation 3 - Absences while accompanying a family member who is a permanent resident and employed abroad",
+        q23_label: "History of entries into Canada",
+        q24_label: "Income tax information and filing history",
         q25_label: "I am the applicant's (check appropriate box)",
-        mother: "Mother",
-        father: "Father",
-        legal_guardian: "Legal guardian",
-        section_h: "H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD",
-        section_h_note: "Complete this section only if you are applying to replace a lost, stolen, destroyed or never received PR Card.",
-        q26_card_number: "26. Permanent Resident Card number",
-        date_of_issue: "Date of issue (YYYY-MM-DD)",
-        q26_card_was: "My Permanent Resident Card was",
-        lost: "Lost",
-        stolen: "Stolen",
-        destroyed: "Destroyed",
-        never_received: "Never received",
-        on_or_about: "On or about (YYYY-MM-DD)",
-        at_city_country: "At (city, country)",
-        circumstances: "Under the following circumstances (full information must be provided below):",
-        efforts_locate: "I have made the following efforts to locate this document",
-        promise_destroy: "Should I ever regain possession of my original PR Card, I promise to destroy it immediately.",
-        h_declaration: "I solemnly declare that the information I have provided is true, that it is of the same force and effect as if made under oath, and that it was freely given. I authorize the department of Immigration, Refugees and Citizenship Canada to verify the information I have provided. I also understand that the provision of any false or misleading information may lead to prosecution and/or removal. Section 127 of the Immigration and Refugee Protection Act.",
-        h_notice: "DO NOT SIGN HERE UNLESS YOU ARE DECLARING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PERMANENT RESIDENT CARD.",
-        footer_privacy: "The information you provide on this form is collected under the authority of the Immigration and Refugee Protection Act and will be used to determine whether the term and conditions of your permanent residency were maintained and whether you should be granted a Permanent Resident Card. It will be retained in the Personal Information Bank CIC PPU 047 and Personal Information Bank CIC PPU 051. Under the Privacy Act and the Access to Information Act, you have the right of access to your personal information and protection of access to this personal information. Details on these matters are available at the Information Centre of Immigration, Refugees and Citizenship Canada.",
+        q26_card_number: "Permanent Resident Card number",
+        q26_card_was: "My Permanent Resident Card was (lost/stolen/destroyed/never received)"
       },
       es: {
-        title: "SOLICITUD DE TARJETA DE RESIDENTE PERMANENTE",
-        protected: "PROTEGIDO CUANDO SE COMPLETA - B",
-        page1of4: "PAGINA 1 DE 4",
-        continue_by_question: "Continuar por pregunta? Vea el paso 2 de la guia de instrucciones.",
-        type_or_print: "ESCRIBA A MAQUINA O EN LETRA DE IMPRENTA EN TINTA NEGRA O AZUL",
-        q1_label: "1. Idioma que prefiere para la correspondencia",
-        english: "Ingles",
-        french: "Frances",
-        q2_label_prefix: "2.",
-        q2_label: "Fecha en que se convirtio en residente permanente de Canada",
-        date_format: "(AAAA-MM-DD)",
-        q3_label: "3. Usted solicita (marque una sola casilla)",
-        q3_opt1: "Obtener su primera tarjeta de Residente Permanente",
-        q3_opt2: "Renovar su tarjeta actual de Residente Permanente",
-        q3_opt3: "Reemplazar una tarjeta de Residente Permanente perdida, robada, destruida o nunca recibida",
-        q3_note: "NOTA: Si solicita renovar su tarjeta actual, debe conservarla hasta recibir la tarjeta de reemplazo. Se le pedira destruir su tarjeta anterior cuando reciba la nueva. Si solicita reemplazar una tarjeta danada, debe enviar la tarjeta danada con su solicitud.",
+        translation_title: "Traducción (solo referencia)",
         section_a: "A. DATOS PERSONALES",
-        q4_label: "4. Su nombre completo tal como aparece en su Registro de Llegada (IMM 1000), Confirmacion de Residencia Permanente (IMM 5292) o (IMM 5688), o la ultima tarjeta de Residente Permanente",
+        section_b: "B. HISTORIAL DE INMIGRACIÓN",
+        section_c: "C. HISTORIAL PERSONAL",
+        section_d: "D. OBLIGACIÓN DE RESIDENCIA - TIEMPO FUERA DE CANADÁ",
+        section_e: "E. CONSENTIMIENTO PARA DIVULGAR INFORMACIÓN",
+        section_g: "G. DECLARACIÓN DEL SOLICITANTE",
+        section_h: "H. DECLARACIÓN SOLEMNE SOBRE UNA TARJETA PR PERDIDA, ROBADA, DESTRUIDA O NO RECIBIDA",
+        q1_label: "Idioma preferido para la correspondencia",
+        q2_label: "Fecha en que se convirtió en residente permanente de Canadá (AAAA-MM-DD)",
+        q3_label: "Usted solicita (marque una sola casilla)",
+        q3_opt1: "Obtener su primera Tarjeta de Residente Permanente",
+        q3_opt2: "Renovar su Tarjeta de Residente Permanente actual",
+        q3_opt3: "Reemplazar una Tarjeta PR perdida, robada, destruida o nunca recibida",
+        q4_label: "Nombre completo según sus documentos de inmigración",
         family_name: "Apellido",
         given_names: "Nombre(s)",
-        q5_label: "5. Su nombre actual, si es diferente al anterior (adjunte documentos de respaldo por cualquier cambio)",
-        q6_label: "6. Su sexo",
+        q5_label: "Nombre actual, si es diferente",
+        q6_label: "Sexo",
         male: "Masculino",
         female: "Femenino",
-        q7_label: "7. Su fecha de nacimiento (AAAA-MM-DD)",
-        q8_label: "8. Su pais de nacimiento",
-        q9_label: "9. Su(s) pais(es) de ciudadania",
-        q10_label: "10. Color de sus ojos",
+        q7_label: "Fecha de nacimiento (AAAA-MM-DD)",
+        q8_label: "País de nacimiento",
+        q9_label: "País(es) de ciudadanía",
+        q10_label: "Color de ojos",
         blue: "Azul",
         grey: "Gris",
-        brown: "Marron",
+        brown: "Marrón",
         green: "Verde",
         black: "Negro",
-        hazel: "Avellana (marron amarillento)",
+        hazel: "Avellana",
         other: "Otro",
-        q11_label: "11. Su estatura (cm)",
-        ft: "ft",
-        in: "in",
-        q12_label: "12. Su direccion residencial actual en Canada",
+        q11_label: "Estatura (cm / pies / pulgadas)",
+        q12_label: "Dirección residencial actual en Canadá",
         apartment: "Apartamento",
-        street_no: "Numero",
+        street_no: "No. de calle",
         street_name: "Nombre de la calle",
         city: "Ciudad",
         province: "Provincia",
-        postal_code: "Codigo postal",
-        q13_label: "13. Su direccion postal en Canada (si es diferente a la anterior)",
-        q14_label: "14. Sus numeros de telefono y correo electronico",
-        at_home: "Casa",
-        alternative: "Alternativo",
-        email: "Correo electronico",
-        q15_label: "15. Su estado civil actual",
+        postal_code: "Código postal",
+        q13_label: "Dirección postal en Canadá (si es diferente)",
+        q14_label: "Teléfonos y correo electrónico",
+        q15_label: "Estado civil actual",
         never_married: "Nunca casado/a",
         married: "Casado/a",
         widowed: "Viudo/a",
         legally_separated: "Separado/a legalmente",
         divorced: "Divorciado/a",
-        section_b: "B. SU HISTORIAL MIGRATORIO",
-        q16_label: "16. Lugar donde se convirtio en residente permanente de Canada (Ciudad/Puerto de entrada)",
-        yes: "Si",
-        no: "No",
-        q17_label: "17. Alguna vez se le emitio una orden de expulsion en Canada?",
-        q18_label: "18. Alguna vez un oficial de inmigracion le emitio un Reporte bajo la Subseccion 44(1) o decidio que no cumplio con las obligaciones de residencia?",
-        footer_page1: "Este formulario es proporcionado por Inmigracion, Refugiados y Ciudadania de Canada y no debe venderse a los solicitantes. (DISPONIBLE EN FRANCES - IMM 5444 F)",
-        page2of4: "PAGINA 2 DE 4",
-        page3of4: "PAGINA 3 DE 4",
-        page4of4: "PAGINA 4 DE 4",
-        section_c: "C. HISTORIAL PERSONAL",
-        section_c_note: "Si necesita mas espacio para cualquiera de las preguntas, imprima una pagina adicional con la seccion correspondiente, completela y enviela con su solicitud.",
-        q19_label: "19. HISTORIAL DE DIRECCIONES DENTRO Y FUERA DE CANADA: Su historial de direcciones de los ultimos cinco (5) anos o desde que se convirtio en residente permanente. Liste todas las direcciones en orden cronologico del mas antiguo al mas reciente.",
-        from_date: "Desde (AAAA-MM-DD)",
-        to_date: "Hasta (AAAA-MM-DD)",
-        apt_street: "Apartamento, numero y nombre de la calle",
-        city_town: "Ciudad o pueblo",
-        country: "Pais",
-        q20_label: "20. HISTORIAL LABORAL Y EDUCATIVO DENTRO Y FUERA DE CANADA: Historial de los ultimos cinco (5) anos o desde que se convirtio en residente permanente. Si no trabajo ni estudio, indique otras actividades. Liste en orden cronologico del mas antiguo al mas reciente.",
-        employer_school: "Nombre del empleador o institucion educativa (sin abreviaturas)",
-        q21_label: "21. HISTORIAL DE VIAJES: Ha viajado o vivido fuera de Canada en los ultimos cinco (5) anos (o desde que se convirtio en residente permanente)? Incluya TODAS las ausencias.",
-        yes_list: "Si (Liste todas las ausencias)",
-        period_assessed: "Periodo a evaluar:",
-        location_absence: "Lugar durante la ausencia (ciudad, pais)",
-        reason_absence: "Motivo de ausencia",
-        number_days: "Numero de dias",
-        total_number_days: "Numero total de dias",
-        important_1095: "IMPORTANTE: Si el total de dias fuera de Canada es 1095 dias o mas, debe completar la Seccion D.",
-        section_d: "D. OBLIGACION DE RESIDENCIA - TIEMPO FUERA DE CANADA",
-        section_d_note: "Complete esta seccion si ha estado fuera de Canada 1095 dias o mas en los ultimos cinco (5) anos.",
-        q22_label: "22. Liste TODAS sus ausencias de Canada en los ultimos cinco (5) anos segun la situacion aplicable. Si se convirtio en residente permanente hace menos de cinco (5) anos, liste desde esa fecha. Orden cronologico del mas antiguo al mas reciente.",
-        situation1_label: "Situacion 1 - Ausencias acompanando a un familiar ciudadano canadiense",
-        family_member_name: "Nombre del familiar",
-        relationship_to_you: "Relacion con usted",
-        situation1_note: "Proporcione prueba de ciudadania canadiense y de su relacion.",
-        no_and_street: "Numero y calle",
-        city_town_country: "Ciudad/Pueblo, pais",
-        section_d_cont: "D. OBLIGACION DE RESIDENCIA - TIEMPO FUERA DE CANADA (continuacion)",
-        situation2_label: "Situacion 2 - Ausencias mientras trabaja para una empresa canadiense fuera de Canada o en el servicio publico federal o provincial",
-        situation2_note: "Proporcione prueba de empleo canadiense de tiempo completo",
-        situation3_label: "Situacion 3 - Ausencias acompanando a un familiar residente permanente y empleado por una empresa canadiense fuera de Canada o en el servicio publico federal o provincial",
-        situation3_note: "Proporcione prueba del estatus de residente permanente y del empleo de tiempo completo. Proporcione prueba de su relacion.",
-        section_e: "E. CONSENTIMIENTO PARA DIVULGAR INFORMACION",
-        q23_label: "23. Historial de entradas a Canada",
-        q23_text: "Al seleccionar \"SI\" y firmar este formulario, doy mi consentimiento a la CBSA para divulgar mi historial de entradas a IRCC para ayudar a determinar mi elegibilidad. Autorizo a IRCC a recopilar este historial de la CBSA.",
-        q23_note: "Nota: Si no brinda consentimiento, es posible que se le pida solicitar su historial directamente a la CBSA y enviarlo a IRCC, lo que puede causar demoras.",
-        section_f: "F. DECLARACION DE CONSENTIMIENTO",
-        q24_label: "24. Informacion de impuestos y historial de declaracion",
-        q24_text: "Al seleccionar \"SI\" y firmar, doy mi consentimiento a IRCC para recopilar mi SIN y solicitar a la CRA informacion fiscal y de residencia para determinar si cumplo la obligacion de residencia segun la Seccion 28.",
-        sin_label: "Numero de Seguro Social (SIN)",
-        section_g: "G. DECLARACION DEL SOLICITANTE",
-        g_intro: "Esta declaracion cubre la informacion proporcionada en este formulario y la informacion enviada con mi solicitud de tarjeta de Residente Permanente y documentos adjuntos.",
-        g1: "Declaro que la informacion dada es verdadera, completa y correcta.",
-        g2: "Entiendo que declaraciones falsas u ocultar hechos materiales pueden ser causa de procesamiento o remocion.",
-        g3: "Las fotografias adjuntas son una imagen fiel de mi persona.",
-        g4: "Soy residente permanente de Canada.",
-        g5: "No soy ciudadano canadiense.",
-        g6: "Entiendo las declaraciones extranjeras, habiendo solicitado explicacion cuando algo no estaba claro.",
-        g7: "Entiendo que este documento, una vez completado y firmado, formara parte de mi Registro de Inmigracion y se usara para verificar datos familiares en futuras solicitudes.",
-        g8: "Informare de inmediato a IRCC si cambia alguna informacion o respuesta en mis formularios.",
-        sign_g: "FIRME LA SECCION G ANTES DE CONTINUAR CON LA SECCION H.",
-        sign_g_note: "Para evitar demoras, asegurese de que la solicitud no tenga fecha posterior ni caducada.",
-        signature_declarant: "Firma del declarante",
-        signature_parent: "Firma del padre/madre o tutor legal, si aplica",
-        date_label: "Fecha (AAAA-MM-DD)",
-        q25_label: "Soy el/la solicitante (marque la opcion correspondiente)",
-        mother: "Madre",
-        father: "Padre",
-        legal_guardian: "Tutor legal",
-        section_h: "H. DECLARACION SOLEMNE SOBRE TARJETA PR PERDIDA, ROBADA, DESTRUIDA O NUNCA RECIBIDA",
-        section_h_note: "Complete esta seccion solo si solicita reemplazo por tarjeta PR perdida, robada, destruida o nunca recibida.",
-        q26_card_number: "26. Numero de tarjeta de Residente Permanente",
-        date_of_issue: "Fecha de emision (AAAA-MM-DD)",
-        q26_card_was: "Mi tarjeta de Residente Permanente fue",
-        lost: "Perdida",
-        stolen: "Robada",
-        destroyed: "Destruida",
-        never_received: "Nunca recibida",
-        on_or_about: "En o alrededor de (AAAA-MM-DD)",
-        at_city_country: "En (ciudad, pais)",
-        circumstances: "Bajo las siguientes circunstancias (debe proporcionar informacion completa):",
-        efforts_locate: "He realizado los siguientes esfuerzos para localizar este documento",
-        promise_destroy: "Si recupero mi tarjeta PR original, prometo destruirla de inmediato.",
-        h_declaration: "Declaro solemnemente que la informacion es verdadera, con la misma fuerza que bajo juramento. Autorizo a IRCC a verificarla. Entiendo que informacion falsa puede llevar a procesamiento y/o remocion. Seccion 127 de la Ley de Inmigracion y Proteccion de Refugiados.",
-        h_notice: "NO FIRME AQUI A MENOS QUE DECLARE UNA TARJETA PR PERDIDA, ROBADA, DESTRUIDA O NUNCA RECIBIDA.",
-        footer_privacy: "La informacion proporcionada se recopila bajo la Ley de Inmigracion y Proteccion de Refugiados y se usara para determinar el mantenimiento de la residencia permanente. Se retendra en los bancos de informacion personal CIC PPU 047 y CIC PPU 051. Bajo la Ley de Privacidad y la Ley de Acceso a la Informacion, usted tiene derecho de acceso y proteccion de su informacion personal.",
+        common_law: "Unión de hecho",
+        q16_label: "Lugar donde se hizo residente permanente (Ciudad/Puerto de entrada)",
+        q17_label: "¿Alguna vez le emitieron una orden de expulsión en Canadá?",
+        q18_label: "¿Un oficial de inmigración emitió un reporte 44(1) o decidió que no cumplió la obligación de residencia?",
+        q19_label: "Historial de direcciones dentro y fuera de Canadá (últimos 5 años)",
+        q20_label: "Historial laboral y educativo dentro y fuera de Canadá (últimos 5 años)",
+        q21_label: "Historial de viajes: ¿Ha viajado o vivido fuera de Canadá en los últimos 5 años?",
+        q22_label: "Enumere TODAS sus ausencias de Canadá en los últimos cinco (5) años",
+        situation1_label: "Situación 1 - Ausencias acompañando a un familiar ciudadano canadiense",
+        situation2_label: "Situación 2 - Ausencias por empleo en una empresa canadiense fuera de Canadá",
+        situation3_label: "Situación 3 - Ausencias acompañando a un familiar RP empleado en el extranjero",
+        q23_label: "Historial de entradas a Canadá",
+        q24_label: "Información de impuestos y declaración",
+        q25_label: "Soy el/la solicitante (marque la casilla apropiada)",
+        q26_card_number: "Número de la Tarjeta de Residente Permanente",
+        q26_card_was: "Mi Tarjeta PR fue (perdida/robada/destruida/nunca recibida)"
       },
       fr: {
-        title: "DEMANDE DE CARTE DE RESIDENT PERMANENT",
-        protected: "PROTEGE UNE FOIS REMPLI - B",
-        page1of4: "PAGE 1 DE 4",
-        continue_by_question: "Continuer par question? Voir l'etape 2 du guide d'instructions.",
-        type_or_print: "TAPEZ OU ECRIVEZ EN LETTRES MAJUSCULES A L'ENCRE NOIRE OU BLEUE",
-        q1_label: "1. Langue preferee pour la correspondance",
-        english: "Anglais",
-        french: "Francais",
-        q2_label_prefix: "2.",
-        q2_label: "Date a laquelle vous etes devenu resident permanent du Canada",
-        date_format: "(AAAA-MM-JJ)",
-        q3_label: "3. Vous faites une demande pour (cochez une seule case)",
-        q3_opt1: "Obtenir votre premiere carte de resident permanent",
-        q3_opt2: "Renouveler votre carte actuelle de resident permanent",
-        q3_opt3: "Remplacer une carte de resident permanent perdue, volee, detruite ou jamais recue",
-        q3_note: "REMARQUE : Si vous demandez un renouvellement, conservez votre carte actuelle jusqu'a reception de la carte de remplacement. Vous devrez detruire l'ancienne carte une fois la nouvelle recue. Si vous remplacez une carte endommagee, vous devez joindre la carte endommagee a votre demande.",
+        translation_title: "Traduction (référence seulement)",
         section_a: "A. RENSEIGNEMENTS PERSONNELS",
-        q4_label: "4. Votre nom complet tel qu'il apparait sur votre fiche d'etablissement (IMM 1000), Confirmation de residence permanente (IMM 5292) ou (IMM 5688), ou derniere carte de resident permanent",
+        section_b: "B. HISTORIQUE D’IMMIGRATION",
+        section_c: "C. HISTORIQUE PERSONNEL",
+        section_d: "D. OBLIGATION DE RÉSIDENCE - TEMPS PASSÉ À L’EXTÉRIEUR DU CANADA",
+        section_e: "E. CONSENTEMENT À LA COMMUNICATION DE RENSEIGNEMENTS",
+        section_g: "G. DÉCLARATION DU DEMANDEUR",
+        section_h: "H. DÉCLARATION SOLENNELLE POUR CARTE RP PERDUE, VOLÉE, DÉTRUITE OU JAMAIS REÇUE",
+        q1_label: "Langue préférée pour la correspondance",
+        q2_label: "Date de résidence permanente au Canada (AAAA-MM-JJ)",
+        q3_label: "Vous présentez une demande pour (cocher une case)",
+        q3_opt1: "Obtenir votre première carte de résident permanent",
+        q3_opt2: "Renouveler votre carte de résident permanent actuelle",
+        q3_opt3: "Remplacer une carte RP perdue, volée, détruite ou jamais reçue",
+        q4_label: "Nom complet tel qu’indiqué sur vos documents d’immigration",
         family_name: "Nom de famille",
-        given_names: "Prenom(s)",
-        q5_label: "5. Votre nom actuel, s'il est different (fournir des documents justificatifs)",
-        q6_label: "6. Sexe",
-        male: "Homme",
-        female: "Femme",
-        q7_label: "7. Date de naissance (AAAA-MM-JJ)",
-        q8_label: "8. Pays de naissance",
-        q9_label: "9. Pays de citoyennete",
-        q10_label: "10. Couleur des yeux",
+        given_names: "Prénom(s)",
+        q5_label: "Nom actuel, si différent",
+        q6_label: "Sexe",
+        male: "Masculin",
+        female: "Féminin",
+        q7_label: "Date de naissance (AAAA-MM-JJ)",
+        q8_label: "Pays de naissance",
+        q9_label: "Pays de citoyenneté",
+        q10_label: "Couleur des yeux",
         blue: "Bleu",
         grey: "Gris",
         brown: "Brun",
         green: "Vert",
         black: "Noir",
-        hazel: "Noisette (brun jaunatre)",
+        hazel: "Noisette",
         other: "Autre",
-        q11_label: "11. Taille (cm)",
-        ft: "ft",
-        in: "in",
-        q12_label: "12. Adresse residentielle actuelle au Canada",
+        q11_label: "Taille (cm / pieds / pouces)",
+        q12_label: "Adresse résidentielle actuelle au Canada",
         apartment: "Appartement",
-        street_no: "Numero",
-        street_name: "Nom de rue",
+        street_no: "No de rue",
+        street_name: "Nom de la rue",
         city: "Ville",
         province: "Province",
         postal_code: "Code postal",
-        q13_label: "13. Adresse postale au Canada (si differente)",
-        q14_label: "14. Numeros de telephone et courriel",
-        at_home: "A la maison",
-        alternative: "Autre",
-        email: "Courriel",
-        q15_label: "15. Etat matrimonial actuel",
-        never_married: "Jamais marie",
-        married: "Marie",
-        widowed: "Veuf/veuve",
-        legally_separated: "Separe legalement",
-        divorced: "Divorce",
-        section_b: "B. HISTORIQUE D'IMMIGRATION",
-        q16_label: "16. Lieu ou vous etes devenu resident permanent (Ville/Port d'entree)",
-        yes: "Oui",
-        no: "Non",
-        q17_label: "17. Avez-vous deja recu une mesure de renvoi au Canada?",
-        q18_label: "18. Un agent d'immigration a-t-il deja emis un rapport en vertu du paragraphe 44(1) ou decide que vous n'avez pas respecte l'obligation de residence?",
-        footer_page1: "Ce formulaire est fourni par IRCC et ne doit pas etre vendu aux demandeurs. (DISPONIBLE EN FRANCAIS - IMM 5444 F)",
-        page2of4: "PAGE 2 DE 4",
-        page3of4: "PAGE 3 DE 4",
-        page4of4: "PAGE 4 DE 4",
-        section_c: "C. HISTORIQUE PERSONNEL",
-        section_c_note: "Si vous avez besoin d'espace additionnel, imprimez une page supplementaire de la section correspondante, remplissez-la et joignez-la a votre demande.",
-        q19_label: "19. HISTORIQUE DES ADRESSES AU CANADA ET A L'ETRANGER : Historique des adresses des cinq (5) dernieres annees ou depuis l'obtention de la RP. Listez en ordre chronologique de la plus ancienne a la plus recente.",
-        from_date: "De (AAAA-MM-JJ)",
-        to_date: "A (AAAA-MM-JJ)",
-        apt_street: "Appartement, numero et nom de rue",
-        city_town: "Ville ou localite",
-        country: "Pays",
-        q20_label: "20. HISTORIQUE D'EMPLOI ET D'ETUDES AU CANADA ET A L'ETRANGER : Historique des cinq (5) dernieres annees ou depuis l'obtention de la RP. Si vous n'avez pas travaille/etudie, indiquez d'autres activites. Listez en ordre chronologique.",
-        employer_school: "Nom de l'employeur ou de l'etablissement scolaire (sans abreviations)",
-        q21_label: "21. HISTORIQUE DE VOYAGES : Avez-vous voyage ou vecu hors du Canada au cours des cinq (5) dernieres annees? Incluez TOUTES les absences.",
-        yes_list: "Oui (Listez toutes les absences)",
-        period_assessed: "Periode a evaluer :",
-        location_absence: "Lieu pendant l'absence (ville, pays)",
-        reason_absence: "Raison de l'absence",
-        number_days: "Nombre de jours",
-        total_number_days: "Nombre total de jours",
-        important_1095: "IMPORTANT : Si votre total de jours hors du Canada est egal ou superieur a 1095, vous devez remplir la section D.",
-        section_d: "D. OBLIGATION DE RESIDENCE - TEMPS PASSE HORS DU CANADA",
-        section_d_note: "Remplissez cette section si vous avez ete hors du Canada 1095 jours ou plus au cours des cinq (5) dernieres annees.",
-        q22_label: "22. Listez TOUTES vos absences du Canada au cours des cinq (5) dernieres annees selon la situation applicable. Si vous etes RP depuis moins de cinq (5) ans, listez depuis cette date. Ordre chronologique.",
+        q13_label: "Adresse postale au Canada (si différente)",
+        q14_label: "Téléphones et courriel",
+        q15_label: "État matrimonial actuel",
+        never_married: "Jamais marié(e)",
+        married: "Marié(e)",
+        widowed: "Veuf/Veuve",
+        legally_separated: "Séparé(e) légalement",
+        divorced: "Divorcé(e)",
+        common_law: "Union de fait",
+        q16_label: "Lieu d’obtention de la RP (Ville/Point d’entrée)",
+        q17_label: "Avez-vous déjà reçu une mesure de renvoi au Canada?",
+        q18_label: "Un agent d’immigration a-t-il rendu une décision 44(1) ou que vous n’avez pas respecté l’obligation de résidence?",
+        q19_label: "Historique des adresses au Canada et à l’étranger (5 dernières années)",
+        q20_label: "Historique travail/études au Canada et à l’étranger (5 dernières années)",
+        q21_label: "Historique de voyages : avez-vous voyagé ou vécu à l’extérieur du Canada (5 dernières années)?",
+        q22_label: "Listez TOUTES vos absences du Canada au cours des cinq (5) dernières années",
         situation1_label: "Situation 1 - Absences en accompagnant un membre de la famille citoyen canadien",
-        family_member_name: "Nom du membre de la famille",
-        relationship_to_you: "Lien avec vous",
-        situation1_note: "Fournir une preuve de citoyennete canadienne et de votre lien.",
-        no_and_street: "Numero et rue",
-        city_town_country: "Ville, pays",
-        section_d_cont: "D. OBLIGATION DE RESIDENCE - TEMPS PASSE HORS DU CANADA (suite)",
-        situation2_label: "Situation 2 - Absences pendant un emploi par une entreprise canadienne a l'etranger ou dans la fonction publique",
-        situation2_note: "Fournir une preuve d'emploi canadien a temps plein",
-        situation3_label: "Situation 3 - Absences en accompagnant un membre de la famille RP et employe par une entreprise canadienne a l'etranger ou dans la fonction publique",
-        situation3_note: "Fournir une preuve du statut RP et de l'emploi a temps plein. Fournir une preuve de votre lien.",
-        section_e: "E. CONSENTEMENT A LA COMMUNICATION D'INFORMATION",
-        q23_label: "23. Historique des entrees au Canada",
-        q23_text: "En selectionnant \"OUI\" et en signant, je consens a ce que la CBSA divulgue mon historique d'entrees a IRCC pour aider a determiner mon admissibilite. J'autorise IRCC a le recueillir aupres de la CBSA.",
-        q23_note: "Remarque : Sans consentement, vous pourriez devoir demander votre historique directement a la CBSA et l'envoyer a IRCC, ce qui peut causer des retards.",
-        section_f: "F. DECLARATION DE CONSENTEMENT",
-        q24_label: "24. Informations fiscales et historique de declaration",
-        q24_text: "En selectionnant \"OUI\" et en signant, je consens a ce que IRCC collecte mon NAS et demande a l'ARC des informations fiscales et de residence pour verifier l'obligation de residence selon la section 28.",
-        sin_label: "Numero d'assurance sociale (NAS)",
-        section_g: "G. DECLARATION DU DEMANDEUR",
-        g_intro: "Cette declaration couvre les renseignements fournis sur ce formulaire et ceux soumis avec la demande de carte RP et les documents joints.",
-        g1: "Je declare que les renseignements fournis sont veridiques, complets et exacts.",
-        g2: "Je comprends que toute fausse declaration ou dissimulation peut entrainer des poursuites ou le renvoi.",
-        g3: "Les photos jointes sont une ressemblance fidele de moi.",
-        g4: "Je suis resident permanent du Canada.",
-        g5: "Je ne suis pas citoyen canadien.",
-        g6: "Je comprends toutes les declarations et ai obtenu des explications pour tout point non clair.",
-        g7: "Je comprends que ce document, une fois signe, fera partie de mon dossier d'immigration et servira a verifier les details familiaux.",
-        g8: "J'informerai immediatement IRCC de tout changement aux renseignements ou reponses.",
-        sign_g: "SIGNEZ LA SECTION G AVANT DE PASSER A LA SECTION H.",
-        sign_g_note: "Pour eviter les retards, assurez-vous que la demande n'est pas postdatee ou perimee.",
-        signature_declarant: "Signature du declarant",
-        signature_parent: "Signature du parent ou tuteur legal, le cas echeant",
-        date_label: "Date (AAAA-MM-JJ)",
-        q25_label: "Je suis le/la demandeur(se) (cochez la case appropriee)",
-        mother: "Mere",
-        father: "Pere",
-        legal_guardian: "Tuteur legal",
-        section_h: "H. DECLARATION SOLENNELLE - CARTE RP PERDUE, VOLEE, DETRUITE OU JAMAIS RECUE",
-        section_h_note: "Remplissez cette section seulement si vous demandez le remplacement d'une carte RP perdue, volee, detruite ou jamais recue.",
-        q26_card_number: "26. Numero de carte de resident permanent",
-        date_of_issue: "Date de delivrance (AAAA-MM-JJ)",
-        q26_card_was: "Ma carte de resident permanent a ete",
-        lost: "Perdue",
-        stolen: "Volee",
-        destroyed: "Detruite",
-        never_received: "Jamais recue",
-        on_or_about: "Vers le (AAAA-MM-JJ)",
-        at_city_country: "A (ville, pays)",
-        circumstances: "Dans les circonstances suivantes (renseignements complets requis) :",
-        efforts_locate: "J'ai fait les efforts suivants pour retrouver ce document",
-        promise_destroy: "Si je recupere ma carte RP originale, je promets de la detruire immediatement.",
-        h_declaration: "Je declare solennellement que les renseignements fournis sont veridiques, avec la meme force que sous serment. J'autorise IRCC a verifier ces renseignements. Je comprends que toute fausse information peut entrainer des poursuites et/ou un renvoi. Article 127 de la Loi sur l'immigration et la protection des refugies.",
-        h_notice: "NE SIGNEZ PAS ICI SAUF SI VOUS DECLAREZ UNE CARTE RP PERDUE, VOLEE, DETRUITE OU JAMAIS RECUE.",
-        footer_privacy: "Les renseignements fournis sont recueillis en vertu de la Loi sur l'immigration et la protection des refugies et serviront a determiner le respect des conditions de residence. Ils seront conserves dans les banques CIC PPU 047 et CIC PPU 051. En vertu des lois sur la protection de la vie privee et l'acces a l'information, vous avez le droit d'acces et de protection de vos renseignements personnels.",
+        situation2_label: "Situation 2 - Absences liées à un emploi pour une entreprise canadienne à l’étranger",
+        situation3_label: "Situation 3 - Absences en accompagnant un membre de la famille RP employé à l’étranger",
+        q23_label: "Historique des entrées au Canada",
+        q24_label: "Renseignements fiscaux et déclarations",
+        q25_label: "Je suis le/la demandeur(euse) (cocher la case appropriée)",
+        q26_card_number: "Numéro de la carte de résident permanent",
+        q26_card_was: "Ma carte RP était (perdue/volée/détruite/jamais reçue)"
       },
       de: {
-        title: "ANTRAG AUF EINE DAUERAUFENTHALTSKARTE",
-        protected: "GESCHUTZT WENN AUSGEFULLT - B",
-        page1of4: "SEITE 1 VON 4",
-        continue_by_question: "Weiter nach Frage? Siehe Schritt 2 der Anleitung.",
-        type_or_print: "TIPPEN ODER IN DRUCKBUCHSTABEN MIT SCHWARZER ODER BLAUER TINTE AUSFULLEN",
-        q1_label: "1. Bevorzugte Sprache fur die Korrespondenz",
-        english: "Englisch",
-        french: "Franzosisch",
-        q2_label_prefix: "2.",
-        q2_label: "Datum, an dem Sie zum ständigen Einwohner Kanadas wurden",
-        date_format: "(JJJJ-MM-TT)",
-        q3_label: "3. Sie stellen einen Antrag (nur eine Option auswahlen)",
-        q3_opt1: "Erhalt Ihrer ersten PR-Karte",
-        q3_opt2: "Verlangerung Ihrer aktuellen PR-Karte",
-        q3_opt3: "Ersatz einer verlorenen, gestohlenen, zerstorten oder nie erhaltenen PR-Karte",
-        q3_note: "HINWEIS: Wenn Sie eine Verlangerung beantragen, behalten Sie Ihre aktuelle Karte, bis Sie die Ersatzkarte erhalten. Sie werden gebeten, die alte Karte zu zerstoren, sobald die neue eingetroffen ist. Wenn Sie eine beschadigte Karte ersetzen, mussen Sie die beschadigte Karte mit dem Antrag einsenden.",
-        section_a: "A. PERSONLICHE ANGABEN",
-        q4_label: "4. Ihr vollstandiger Name wie auf Ihrem Record of Landing (IMM 1000), Confirmation of Permanent Residence (IMM 5292) oder (IMM 5688) oder der letzten PR-Karte",
+        translation_title: "Übersetzung (nur zur Referenz)",
+        section_a: "A. PERSÖNLICHE ANGABEN",
+        section_b: "B. EINWANDERUNGSGESCHICHTE",
+        section_c: "C. PERSÖNLICHER WERDEGANG",
+        section_d: "D. AUFENTHALTSVERPFLICHTUNG - ZEIT AUßERHALB KANADAS",
+        section_e: "E. ZUSTIMMUNG ZUR WEITERGABE VON INFORMATIONEN",
+        section_g: "G. ERKLÄRUNG DES ANTRAGSTELLERS",
+        section_h: "H. FEIERLICHE ERKLÄRUNG ZU VERLORENER/GESTOHLENER/ZERSTÖRTER PR-KARTE",
+        q1_label: "Bevorzugte Sprache für die Korrespondenz",
+        q2_label: "Datum der Erlangung des PR-Status (JJJJ-MM-TT)",
+        q3_label: "Sie beantragen (ein Kästchen ankreuzen)",
+        q3_opt1: "Erste Daueraufenthaltskarte",
+        q3_opt2: "Erneuerung der aktuellen PR-Karte",
+        q3_opt3: "Ersatz einer verlorenen/gestohlenen/zerstörten/nicht erhaltenen PR-Karte",
+        q4_label: "Vollständiger Name laut Einwanderungsdokumenten",
         family_name: "Nachname",
         given_names: "Vorname(n)",
-        q5_label: "5. Ihr aktueller Name, falls anders (Belege fur Namensanderung beifugen)",
-        q6_label: "6. Geschlecht",
-        male: "Mannlich",
+        q5_label: "Aktueller Name, falls abweichend",
+        q6_label: "Geschlecht",
+        male: "Männlich",
         female: "Weiblich",
-        q7_label: "7. Geburtsdatum (JJJJ-MM-TT)",
-        q8_label: "8. Geburtsland",
-        q9_label: "9. Staatsangehorigkeit(en)",
-        q10_label: "10. Augenfarbe",
+        q7_label: "Geburtsdatum (JJJJ-MM-TT)",
+        q8_label: "Geburtsland",
+        q9_label: "Staatsangehörigkeit(en)",
+        q10_label: "Augenfarbe",
         blue: "Blau",
         grey: "Grau",
         brown: "Braun",
-        green: "Grun",
+        green: "Grün",
         black: "Schwarz",
-        hazel: "Hasel (gelblich braun)",
+        hazel: "Haselnuss",
         other: "Andere",
-        q11_label: "11. Grosse (cm)",
-        ft: "ft",
-        in: "in",
-        q12_label: "12. Aktuelle Wohnadresse in Kanada",
+        q11_label: "Körpergröße (cm / ft / in)",
+        q12_label: "Aktuelle Wohnadresse in Kanada",
         apartment: "Wohnung",
         street_no: "Hausnummer",
-        street_name: "Strassenname",
+        street_name: "Straßenname",
         city: "Stadt",
         province: "Provinz",
         postal_code: "Postleitzahl",
-        q13_label: "13. Postanschrift in Kanada (falls anders)",
-        q14_label: "14. Telefonnummern und E-Mail",
-        at_home: "Zuhause",
-        alternative: "Alternativ",
-        email: "E-Mail",
-        q15_label: "15. Familienstand",
+        q13_label: "Postanschrift in Kanada (falls abweichend)",
+        q14_label: "Telefonnummern und E-Mail",
+        q15_label: "Familienstand",
         never_married: "Nie verheiratet",
         married: "Verheiratet",
         widowed: "Verwitwet",
         legally_separated: "Rechtlich getrennt",
         divorced: "Geschieden",
-        section_b: "B. IHRE EINWANDERUNGSHISTORIE",
-        q16_label: "16. Ort, an dem Sie PR wurden (Stadt/Hafen der Einreise)",
-        yes: "Ja",
-        no: "Nein",
-        q17_label: "17. Wurde jemals eine Abschiebungsverfugung gegen Sie erlassen?",
-        q18_label: "18. Hat ein Einwanderungsbeamter jemals einen Bericht nach Unterabschnitt 44(1) erstellt oder entschieden, dass Sie die Residenzpflicht nicht erfullt haben?",
-        footer_page1: "Dieses Formular wird von IRCC bereitgestellt und darf nicht an Antragsteller verkauft werden. (DISPONIBLE EN FRANCAIS - IMM 5444 F)",
-        page2of4: "SEITE 2 VON 4",
-        page3of4: "SEITE 3 VON 4",
-        page4of4: "SEITE 4 VON 4",
-        section_c: "C. PERSONLICHE HISTORIE",
-        section_c_note: "Wenn Sie mehr Platz benotigen, drucken Sie eine zusatzliche Seite mit der entsprechenden Sektion aus, fullen sie aus und senden sie mit.",
-        q19_label: "19. ADRESSHISTORIE IN UND AUSSERHALB KANADAS: Adresshistorie der letzten funf (5) Jahre oder seit PR. Chronologisch von alt nach neu.",
-        from_date: "Von (JJJJ-MM-TT)",
-        to_date: "Bis (JJJJ-MM-TT)",
-        apt_street: "Wohnung, Hausnummer und Strasse",
-        city_town: "Stadt oder Ort",
-        country: "Land",
-        q20_label: "20. ARBEITS- UND BILDUNGSHISTORIE IN UND AUSSERHALB KANADAS: Historie der letzten funf (5) Jahre oder seit PR. Wenn nicht gearbeitet/studiert, andere Tatigkeiten angeben. Chronologisch von alt nach neu.",
-        employer_school: "Name des Arbeitgebers oder der Bildungseinrichtung (keine Abkurzungen)",
-        q21_label: "21. REISEHISTORIE: Haben Sie in den letzten funf (5) Jahren ausserhalb Kanadas gelebt oder gereist? Schliessen Sie ALLE Abwesenheiten ein.",
-        yes_list: "Ja (Alle Abwesenheiten auflisten)",
-        period_assessed: "Zeitraum:",
-        location_absence: "Ort wahrend der Abwesenheit (Stadt, Land)",
-        reason_absence: "Grund der Abwesenheit",
-        number_days: "Anzahl der Tage",
-        total_number_days: "Gesamtzahl der Tage",
-        important_1095: "WICHTIG: Wenn die Gesamtzahl der Tage ausserhalb Kanadas 1095 Tage oder mehr ist, mussen Sie Abschnitt D ausfullen.",
-        section_d: "D. AUFENTHALTSPFLICHT - ZEIT AUSSERHALB KANADAS",
-        section_d_note: "Fullen Sie diesen Abschnitt aus, wenn Sie in den letzten funf (5) Jahren 1095 Tage oder mehr ausserhalb Kanadas waren.",
-        q22_label: "22. Listen Sie ALLE Abwesenheiten der letzten funf (5) Jahre nach der zutreffenden Situation. Bei PR unter funf Jahren: ab PR-Datum. Chronologisch von alt nach neu.",
-        situation1_label: "Situation 1 - Abwesenheiten bei Begleitung eines kanadischen Staatsburgers",
-        family_member_name: "Name des Familienmitglieds",
-        relationship_to_you: "Beziehung zu Ihnen",
-        situation1_note: "Nachweis der kanadischen Staatsburgerschaft und Ihrer Beziehung beifugen.",
-        no_and_street: "Nummer und Strasse",
-        city_town_country: "Stadt/Ort, Land",
-        section_d_cont: "D. AUFENTHALTSPFLICHT - ZEIT AUSSERHALB KANADAS (Fortsetzung)",
-        situation2_label: "Situation 2 - Abwesenheiten bei Beschaftigung durch ein kanadisches Unternehmen ausserhalb Kanadas oder im offentlichen Dienst",
-        situation2_note: "Nachweis einer kanadischen Vollzeitbeschaftigung beifugen",
-        situation3_label: "Situation 3 - Abwesenheiten bei Begleitung eines PR-Familienmitglieds, das ausserhalb Kanadas fur ein kanadisches Unternehmen oder im offentlichen Dienst arbeitet",
-        situation3_note: "Nachweis des PR-Status und der Vollzeitbeschaftigung sowie der Beziehung beifugen.",
-        section_e: "E. ZUSTIMMUNG ZUR OFFENLEGUNG VON INFORMATIONEN",
-        q23_label: "23. Historie der Einreisen nach Kanada",
-        q23_text: "Mit Auswahl von \"JA\" und Unterschrift erteile ich der CBSA die Zustimmung, meine Einreisehistorie an IRCC weiterzugeben, um die Anspruchsberechtigung zu prufen. Ich erlaube IRCC, die Historie von der CBSA zu beziehen.",
-        q23_note: "Hinweis: Ohne Zustimmung konnen Sie aufgefordert werden, die Historie direkt bei der CBSA anzufordern und an IRCC zu senden, was zu Verzogerungen fuhren kann.",
-        section_f: "F. EINVERSTANDNISERKLARUNG",
-        q24_label: "24. Steuerinformationen und Abgabehistorie",
-        q24_text: "Mit Auswahl von \"JA\" und Unterschrift erteile ich IRCC die Zustimmung, meine SIN zu erfassen und die CRA um steuerliche und wohnsitzbezogene Informationen zu bitten, um die Residenzpflicht zu prufen.",
-        sin_label: "Sozialversicherungsnummer (SIN)",
-        section_g: "G. ERKLARUNG DES ANTRAGSTELLERS",
-        g_intro: "Diese Erklarung umfasst die Angaben in diesem Formular und alle Informationen mit meiner PR-Karten-Antragsunterlage sowie beigefugte Dokumente.",
-        g1: "Ich erklare, dass die Angaben wahrheitsgemaess, vollstandig und korrekt sind.",
-        g2: "Ich verstehe, dass falsche Angaben oder Verschweigen wesentlicher Tatsachen zu Strafverfolgung oder Entfernung fuhren konnen.",
-        g3: "Die beigefugten Fotos entsprechen meinem Aussehen.",
-        g4: "Ich bin ständiger Einwohner Kanadas.",
-        g5: "Ich bin kein kanadischer Staatsburger.",
-        g6: "Ich verstehe alle fremdsprachigen Erklarungen und habe Erlauterungen erhalten, wenn etwas unklar war.",
-        g7: "Ich verstehe, dass dieses Dokument nach Unterzeichnung Teil meines Einwanderungsdatensatzes wird und zur Uberprufung von Familiendetails genutzt wird.",
-        g8: "Ich informiere IRCC sofort uber jede Anderung der Angaben oder Antworten.",
-        sign_g: "UNTERSCHREIBEN SIE ABSCHNITT G, BEVOR SIE ZU ABSCHNITT H GEHEN.",
-        sign_g_note: "Um Verzogerungen zu vermeiden, stellen Sie sicher, dass der Antrag nicht nachdatiert oder veraltet ist.",
-        signature_declarant: "Unterschrift des Erklarenden",
-        signature_parent: "Unterschrift eines Elternteils oder gesetzlichen Vertreters, falls zutreffend",
-        date_label: "Datum (JJJJ-MM-TT)",
-        q25_label: "Ich bin der/die Antragsteller/in (zutreffendes Feld ankreuzen)",
-        mother: "Mutter",
-        father: "Vater",
-        legal_guardian: "Gesetzlicher Vormund",
-        section_h: "H. EIDESSTATTLICHE ERKLARUNG ZU VERLORENER, GESTOHLENER, ZERSTORTER ODER NIE ERHALTENER PR-KARTE",
-        section_h_note: "Nur ausfullen, wenn Sie eine verlorene, gestohlene, zerstorte oder nie erhaltene PR-Karte ersetzen.",
-        q26_card_number: "26. PR-Kartennummer",
-        date_of_issue: "Ausstellungsdatum (JJJJ-MM-TT)",
-        q26_card_was: "Meine PR-Karte war",
-        lost: "Verloren",
-        stolen: "Gestohlen",
-        destroyed: "Zerstort",
-        never_received: "Nie erhalten",
-        on_or_about: "Am oder um (JJJJ-MM-TT)",
-        at_city_country: "In (Stadt, Land)",
-        circumstances: "Unter folgenden Umstanden (vollstandige Angaben erforderlich):",
-        efforts_locate: "Ich habe folgende Schritte unternommen, um dieses Dokument zu finden",
-        promise_destroy: "Falls ich meine originale PR-Karte wiedererhalte, werde ich sie sofort vernichten.",
-        h_declaration: "Ich erklare eidesstattlich, dass die Angaben wahr sind und die gleiche Wirkung haben wie unter Eid. Ich erlaube IRCC, die Angaben zu uberprufen. Ich verstehe, dass falsche Angaben zu Strafverfolgung und/oder Entfernung fuhren konnen. Abschnitt 127 des Immigration and Refugee Protection Act.",
-        h_notice: "HIER NICHT UNTERSCHREIBEN, AUSSER SIE ERKLAREN EINE VERLORENE, GESTOHLENE, ZERSTORTE ODER NIE ERHALTENE PR-KARTE.",
-        footer_privacy: "Die von Ihnen bereitgestellten Informationen werden nach dem Immigration and Refugee Protection Act erhoben und dienen der Prufung der Residenzbedingungen. Sie werden in den Personal Information Banks CIC PPU 047 und CIC PPU 051 gespeichert. Nach dem Privacy Act und dem Access to Information Act haben Sie das Recht auf Zugang und Schutz Ihrer personenbezogenen Daten.",
+        common_law: "Eheähnliche Gemeinschaft",
+        q16_label: "Ort des PR-Erhalts (Stadt/Einreisepunkt)",
+        q17_label: "Wurde gegen Sie jemals eine Abschiebungsverfügung erlassen?",
+        q18_label: "Hat ein Einwanderungsbeamter jemals einen 44(1)-Bericht erstellt oder entschieden, dass Sie die Residenzpflicht nicht erfüllt haben?",
+        q19_label: "Adresshistorie in/außerhalb Kanadas (letzte 5 Jahre)",
+        q20_label: "Arbeits- und Bildungshistorie (letzte 5 Jahre)",
+        q21_label: "Reisehistorie: Haben Sie in den letzten 5 Jahren außerhalb Kanadas gelebt/gereist?",
+        q22_label: "Listen Sie ALLE Abwesenheiten von Kanada in den letzten fünf (5) Jahren auf",
+        situation1_label: "Situation 1 - Abwesenheiten mit kanadischem Familienmitglied",
+        situation2_label: "Situation 2 - Abwesenheiten wegen Beschäftigung bei kanadischem Unternehmen im Ausland",
+        situation3_label: "Situation 3 - Abwesenheiten mit PR-Familienmitglied, das im Ausland arbeitet",
+        q23_label: "Einreisehistorie nach Kanada",
+        q24_label: "Steuerinformationen und Erklärungshistorie",
+        q25_label: "Ich bin der/die Antragsteller(in) (zutreffendes Kästchen)",
+        q26_card_number: "Nummer der PR-Karte",
+        q26_card_was: "Meine PR-Karte war (verloren/gestohlen/zerstört/nie erhalten)"
       },
       tr: {
-        title: "DAIMI OTURUM KARTI BASVURUSU",
-        protected: "TAMAMLANDIGINDA KORUNMUS - B",
-        page1of4: "SAYFA 1 / 4",
-        continue_by_question: "Soruya gore devam mi? Talimat kilavuzunun 2. adimina bakin.",
-        type_or_print: "SIYAH YA DA MAVI MUREKKEP ILE DAKTILO YAZIN YA DA BUYUK HARFLE YAZIN",
-        q1_label: "1. Yazismalar icin tercih ettiginiz dil",
-        english: "Ingilizce",
-        french: "Fransizca",
-        q2_label_prefix: "2.",
-        q2_label: "Kanada'da daimî oturum sahibi oldugunuz tarih",
-        date_format: "(YYYY-AA-GG)",
-        q3_label: "3. Basvuru turu (tek secenek isaretleyin)",
-        q3_opt1: "Ilk Daimi Oturum Kartinizi almak",
-        q3_opt2: "Mevcut Daimi Oturum Kartinizi yenilemek",
-        q3_opt3: "Kayip, calinmis, yok edilmis veya hic alinmamis Daimi Oturum Kartini degistirmek",
-        q3_note: "NOT: Kart yenileme basvurusu yapiyorsaniz, yeni kart elinize gecene kadar mevcut kartinizi saklamalisiniz. Yeni kart geldiginde eski kartinizi imha etmeniz istenir. Hasarli kartin degisimi icin basvuruyorsaniz, hasarli karti basvurunuza eklemelisiniz.",
-        section_a: "A. KISISEL BILGILER",
-        q4_label: "4. IMM 1000, IMM 5292/5688 veya son PR kartinda yazan tam adiniz",
-        family_name: "Soyadi",
-        given_names: "Adi",
-        q5_label: "5. Yukaridakinden farkliysa mevcut adiniz (degisiklik belgesi gerekir)",
-        q6_label: "6. Cinsiyetiniz",
+        translation_title: "Çeviri (sadece referans)",
+        section_a: "A. KİŞİSEL BİLGİLER",
+        section_b: "B. GÖÇMENLİK GEÇMİŞİ",
+        section_c: "C. KİŞİSEL GEÇMİŞ",
+        section_d: "D. İKAMET YÜKÜMLÜLÜĞÜ - KANADA DIŞINDA GEÇİRİLEN SÜRE",
+        section_e: "E. BİLGİ PAYLAŞIMI İZNİ",
+        section_g: "G. BAŞVURU SAHİBİ BEYANI",
+        section_h: "H. KAYIP/ÇALINMIŞ/İMHA EDİLMİŞ/ALINMAMIŞ PR KARTI İÇİN BEYAN",
+        q1_label: "Yazışmalar için tercih edilen dil",
+        q2_label: "Kanada’da daimi ikametçi olduğunuz tarih (YYYY-MM-DD)",
+        q3_label: "Başvuru türü (tek seçenek işaretleyin)",
+        q3_opt1: "İlk Daimi Oturum Kartını almak",
+        q3_opt2: "Mevcut PR kartını yenilemek",
+        q3_opt3: "Kayıp/çalınmış/hasar görmüş/hiç alınmamış PR kartını değiştirmek",
+        q4_label: "Göçmenlik belgelerindeki tam adınız",
+        family_name: "Soyadı",
+        given_names: "Ad(lar)",
+        q5_label: "Farklıysa mevcut adınız",
+        q6_label: "Cinsiyet",
         male: "Erkek",
-        female: "Kadin",
-        q7_label: "7. Dogum tarihiniz (YYYY-MM-DD)",
-        q8_label: "8. Dogum ulkeniz",
-        q9_label: "9. Vatandasliginiz",
-        q10_label: "10. Goz rengi",
+        female: "Kadın",
+        q7_label: "Doğum tarihi (YYYY-MM-DD)",
+        q8_label: "Doğum ülkesi",
+        q9_label: "Vatandaşlık(lar) ülke(leri)",
+        q10_label: "Göz rengi",
         blue: "Mavi",
         grey: "Gri",
         brown: "Kahverengi",
-        green: "Yesil",
+        green: "Yeşil",
         black: "Siyah",
-        hazel: "Ela (sarimsi kahverengi)",
-        other: "Diger",
-        q11_label: "11. Boyunuz (cm)",
-        ft: "ft",
-        in: "in",
-        q12_label: "12. Kanada'daki mevcut ikamet adresiniz",
+        hazel: "Ela",
+        other: "Diğer",
+        q11_label: "Boy (cm / ft / in)",
+        q12_label: "Kanada’daki mevcut ikamet adresi",
         apartment: "Daire",
-        street_no: "Kapi no.",
-        street_name: "Sokak adi",
-        city: "Sehir",
+        street_no: "Sokak no",
+        street_name: "Sokak adı",
+        city: "Şehir",
         province: "Eyalet",
         postal_code: "Posta kodu",
-        q13_label: "13. Kanada'daki posta adresiniz (farkliysa)",
-        q14_label: "14. Telefon numaralariniz ve e-posta adresiniz",
-        at_home: "Ev",
-        alternative: "Alternatif",
-        email: "E-posta",
-        q15_label: "15. Medeni durumunuz",
-        never_married: "Hic evlenmedi",
+        q13_label: "Kanada’daki posta adresi (farklıysa)",
+        q14_label: "Telefon numaraları ve e-posta",
+        q15_label: "Medeni durum",
+        never_married: "Hiç evlenmemiş",
         married: "Evli",
         widowed: "Dul",
-        legally_separated: "Hukuken ayri",
-        divorced: "Bosandi",
-        section_b: "B. GOCMENLIK GECMISINIZ",
-        q16_label: "16. PR oldugunuz yer (Sehir/Giris noktasi)",
-        yes: "Evet",
-        no: "Hayir",
-        q17_label: "17. Kanada'da hakkinda sinir disi emri verildi mi?",
-        q18_label: "18. Bir gocmenlik memuru size 44(1) raporu verdi mi veya ikamet yukumluluklerini yerine getirmediginize karar verdi mi?",
-        footer_page1: "Bu form IRCC tarafindan sunulur ve basvuranlara satilamaz. (DISPONIBLE EN FRANCAIS - IMM 5444 F)",
-        page2of4: "SAYFA 2 / 4",
-        page3of4: "SAYFA 3 / 4",
-        page4of4: "SAYFA 4 / 4",
-        section_c: "C. KISISel GECMIS",
-        section_c_note: "Daha fazla alana ihtiyaciniz varsa ilgili bolumu iceren ek sayfa yazdirip doldurun ve basvurunuza ekleyin.",
-        q19_label: "19. KANADA ICINDE/DIŞINDA ADRES GECMISI: Son bes (5) yil veya PR oldugunuz tarihten itibaren adres gecmisi. Eski tarihten yeni tarihe siralayin.",
-        from_date: "Baslangic (YYYY-MM-DD)",
-        to_date: "Bitis (YYYY-MM-DD)",
-        apt_street: "Daire, kapi no. ve sokak adi",
-        city_town: "Sehir veya kasaba",
-        country: "Ulke",
-        q20_label: "20. KANADA ICINDE/DIŞINDA IS VE EGITIM GECMISI: Son bes (5) yil veya PR oldugunuz tarihten itibaren. Calismadiysaniz/ders almadiysaniz diger aktiviteleri yazin. Eski tarihten yeni tarihe.",
-        employer_school: "Isverenin veya okulun adi (kisaltma kullanmayin)",
-        q21_label: "21. SEYAHAT GECMISI: Son bes (5) yilda Kanada disinda yasadiniz/seyahat ettiniz mi? Tum ayriliklari dahil edin.",
-        yes_list: "Evet (Tum ayriliklari listeleyin)",
-        period_assessed: "Degerlendirilen donem:",
-        location_absence: "Yokluk sirasinda konum (sehir, ulke)",
-        reason_absence: "Yokluk nedeni",
-        number_days: "Gun sayisi",
-        total_number_days: "Toplam gun sayisi",
-        important_1095: "ONEMLI: Kanada disinda toplam gun sayiniz 1095 gun veya fazlaysa Bolum D'yi doldurun.",
-        section_d: "D. IKAMET YUKUMLULUGU - KANADA DISINDA GECIRILEN SURE",
-        section_d_note: "Son bes (5) yilda 1095 gun veya daha fazla Kanada disinda bulunduysaniz bu bolumu doldurun.",
-        q22_label: "22. Son bes (5) yildaki tum ayriliklarinizi ilgili duruma gore listeleyin. PR suresi 5 yildan azsa PR oldugunuz tarihten itibaren. Eski tarihten yeni tarihe.",
-        situation1_label: "Durum 1 - Kanada vatandasi bir aile uyesiyle birlikteyken ayriliklar",
-        family_member_name: "Aile uyesinin adi",
-        relationship_to_you: "Size yakinligi",
-        situation1_note: "Kanada vatandasligi ve iliski kaniti sunun.",
-        no_and_street: "Kapi no. ve sokak",
-        city_town_country: "Sehir/Kasaba, ulke",
-        section_d_cont: "D. IKAMET YUKUMLULUGU - KANADA DISINDA GECIRILEN SURE (devam)",
-        situation2_label: "Durum 2 - Kanada disinda bir Kanada isvereni veya kamu hizmetinde calisirken ayriliklar",
-        situation2_note: "Tam zamanli Kanada istihdam kaniti sunun",
-        situation3_label: "Durum 3 - PR olan aile uyesiyle ve bu kisi Kanada disinda Kanada isvereni veya kamu hizmetinde calisirken ayriliklar",
-        situation3_note: "Kisinin PR durumu ve tam zamanli istihdam kaniti ile iliski kaniti sunun.",
-        section_e: "E. BILGI PAYLASIMI ICIN ONAY",
-        q23_label: "23. Kanada'ya giris gecmisi",
-        q23_text: "\"EVET\" secip bu formu imzalayarak CBSA'nin Kanada'ya giris gecmimi IRCC ile paylasmasina onay veriyorum. IRCC'nin bu bilgileri CBSA'dan almasina izin veriyorum.",
-        q23_note: "Not: Onay vermezseniz, giris gecmisinizi CBSA'dan isteyip IRCC'ye gondermeniz istenebilir; bu gecikmelere yol acabilir.",
-        section_f: "F. ONAY BEYANI",
-        q24_label: "24. Gelir vergisi bilgileri ve beyan gecmisi",
-        q24_text: "\"EVET\" secip imzalayarak IRCC'nin SIN numarami alarak CRA'dan gelir vergisi ve ikamet bilgilerini istemesine onay veriyorum.",
-        sin_label: "Sosyal Sigorta Numarasi (SIN)",
-        section_g: "G. BASVURAN BEYANI",
-        g_intro: "Bu beyan, formda verdigim bilgiler ve PR Kart basvurumla birlikte sunulan tum bilgiler ile ek belgeleri kapsar.",
-        g1: "Verdigim bilgilerin dogru, eksiksiz ve gercek oldugunu beyan ederim.",
-        g2: "Yanlis beyan veya maddi gercegi gizlemenin kovusturma veya sinir disi edilme nedeni olabilecegini anlarim.",
-        g3: "Ekli fotograflar bana aittir ve gercegi yansitir.",
-        g4: "Kanada daimi oturum sahibiyim.",
-        g5: "Kanada vatandasi degilim.",
-        g6: "Yabanci beyanlari anladigimi ve anlasilmayan noktalari sordugumu beyan ederim.",
-        g7: "Bu belgenin imzalandiktan sonra Gocmenlik Kaydimin parcasi olacagini ve gelecekteki basvurularda aile bilgilerimin dogrulanmasinda kullanilacagini anlarim.",
-        g8: "Bilgiler veya yanitlar degisirse IRCC'yi derhal bilgilendirecegim.",
-        sign_g: "H BOLUMUNE GECMEDEN ONCE G BOLUMUNU IMZALAYIN.",
-        sign_g_note: "Islem gecikmelerini onlemek icin basvurunuzun ileri tarihli veya eski tarihli olmadigindan emin olun.",
-        signature_declarant: "Beyan edenin imzasi",
-        signature_parent: "Ebeveyn veya yasal vasi imzasi (varsa)",
-        date_label: "Tarih (YYYY-MM-DD)",
-        q25_label: "Basvuru sahibi benim (uygun kutuyu isaretleyin)",
-        mother: "Anne",
-        father: "Baba",
-        legal_guardian: "Yasal vasi",
-        section_h: "H. KAYIP, CALINMIS, YOK EDILMIS VEYA HIC ALINMAMIS PR KARTI ICIN YEMINLI BEYAN",
-        section_h_note: "Sadece kayip, calinmis, yok edilmis veya hic alinmamis PR Kartin yerine basvuruyorsaniz doldurun.",
-        q26_card_number: "26. PR Kart numarasi",
-        date_of_issue: "Verilis tarihi (YYYY-MM-DD)",
-        q26_card_was: "PR Kartim",
-        lost: "Kayboldu",
-        stolen: "Calindi",
-        destroyed: "Yok edildi",
-        never_received: "Hic alinmadi",
-        on_or_about: "Yaklasik tarih (YYYY-MM-DD)",
-        at_city_country: "Yer (sehir, ulke)",
-        circumstances: "Asagidaki kosullar altinda (tam bilgi verin):",
-        efforts_locate: "Bu belgeyi bulmak icin yaptigim girisimler",
-        promise_destroy: "Orijinal PR Kartimi tekrar ele gecirirsem derhal imha edecegime soz veririm.",
-        h_declaration: "Saglanan bilgilerin dogru oldugunu ve yemin altinda verilmis gibi ayni gecerlilige sahip oldugunu beyan ederim. IRCC'nin bilgileri dogrulamasina izin veririm. Yanlis veya yaniltici bilgi verilmesinin kovusturma ve/veya sinir disi edilmeye yol acabilecegini anlarim. Immigration and Refugee Protection Act Bolum 127.",
-        h_notice: "KAYIP, CALINMIS, YOK EDILMIS VEYA HIC ALINMAMIS PR KARTI BEYAN ETMIYORSANIZ BURAYI IMZALAMAYIN.",
-        footer_privacy: "Bu formda verdiginiz bilgiler Immigration and Refugee Protection Act yetkisiyle toplanir ve daimi oturum kosullarinin korunup korunmadigini belirlemek icin kullanilir. CIC PPU 047 ve CIC PPU 051 kisisel bilgi bankalarinda saklanir. Privacy Act ve Access to Information Act kapsaminda kisisel bilgilere erisim ve koruma hakkiniz vardir.",
-      },
-    };
-
-    const plainOverrides = {
-      en: {
-        continue_by_question: "See step 2 of the instruction guide.",
-        q3_note: "If renewing, keep your current card until the new one arrives. If replacing a damaged card, include it with your application.",
-        q19_label: "19. ADDRESS HISTORY: List all addresses for the last 5 years (or since becoming a PR), oldest to newest.",
-        q20_label: "20. WORK/EDUCATION HISTORY: List all work or study for the last 5 years (or since becoming a PR), oldest to newest.",
-        q21_label: "21. TRAVEL HISTORY: List all trips outside Canada in the last 5 years (or since becoming a PR).",
-        q22_label: "22. List all absences in the last 5 years by the situation that applies to you.",
-        q23_text: "If you choose YES and sign, CBSA can share your entry history with IRCC to check your eligibility.",
-        q23_note: "If you do not consent, you may need to request your entry history yourself, which can delay processing.",
-        q24_text: "If you choose YES and sign, IRCC may collect your SIN and ask CRA for tax and residency info.",
-        g_intro: "This declaration covers the information you provided on this form and attached documents.",
-        g6: "I asked for explanations when something was unclear.",
-        g7: "This signed form becomes part of my immigration record.",
-        h_declaration: "I declare the information is true and understand false information may lead to penalties.",
-        footer_privacy: "Your information is collected under law to assess your PR status. You can access and protect your personal information under privacy laws.",
-      },
-      es: {
-        continue_by_question: "Vea el paso 2 de la guia de instrucciones.",
-        q3_note: "Si renueva, conserve su tarjeta hasta recibir la nueva. Si reemplaza una tarjeta danada, incluyala con la solicitud.",
-        q19_label: "19. HISTORIAL DE DIRECCIONES: Liste todas las direcciones de los ultimos 5 anos (o desde que es PR), de la mas antigua a la mas reciente.",
-        q20_label: "20. HISTORIAL LABORAL/EDUCATIVO: Liste trabajo o estudio de los ultimos 5 anos (o desde que es PR), de lo mas antiguo a lo mas reciente.",
-        q21_label: "21. HISTORIAL DE VIAJES: Liste todos los viajes fuera de Canada en los ultimos 5 anos (o desde que es PR).",
-        q22_label: "22. Liste todas las ausencias de los ultimos 5 anos segun la situacion aplicable.",
-        q23_text: "Si elige SI y firma, la CBSA puede compartir su historial de entradas con IRCC para verificar su elegibilidad.",
-        q23_note: "Si no consiente, puede que deba solicitar su historial usted mismo, lo que puede demorar el proceso.",
-        q24_text: "Si elige SI y firma, IRCC puede recopilar su SIN y pedir a la CRA informacion fiscal y de residencia.",
-        g_intro: "Esta declaracion cubre la informacion de este formulario y los documentos adjuntos.",
-        g6: "Pedi explicaciones cuando algo no estaba claro.",
-        g7: "Este formulario firmado pasa a mi registro de inmigracion.",
-        h_declaration: "Declaro que la informacion es verdadera y entiendo que la informacion falsa puede traer sanciones.",
-        footer_privacy: "Su informacion se recopila para evaluar su estatus de PR. Puede acceder y proteger su informacion personal segun las leyes de privacidad.",
-      },
-      fr: {
-        continue_by_question: "Voir l'etape 2 du guide d'instructions.",
-        q3_note: "Si vous renouvelez, gardez votre carte actuelle jusqu'a la nouvelle. Si vous remplacez une carte endommagee, joignez-la.",
-        q19_label: "19. HISTORIQUE DES ADRESSES : Listez toutes les adresses des 5 dernieres annees (ou depuis la RP), de la plus ancienne a la plus recente.",
-        q20_label: "20. HISTORIQUE EMPLOI/ETUDES : Listez tout travail ou etudes des 5 dernieres annees (ou depuis la RP), de la plus ancienne a la plus recente.",
-        q21_label: "21. HISTORIQUE DE VOYAGES : Listez tous les voyages hors du Canada des 5 dernieres annees (ou depuis la RP).",
-        q22_label: "22. Listez toutes les absences des 5 dernieres annees selon la situation applicable.",
-        q23_text: "Si vous choisissez OUI et signez, la CBSA peut partager votre historique d'entrees avec IRCC pour verifier l'admissibilite.",
-        q23_note: "Sans consentement, vous devrez peut-etre demander l'historique vous-meme, ce qui peut retarder le traitement.",
-        q24_text: "Si vous choisissez OUI et signez, IRCC peut recueillir votre NAS et demander des infos fiscales a l'ARC.",
-        g_intro: "Cette declaration couvre les renseignements de ce formulaire et les documents joints.",
-        g6: "J'ai demande des explications quand quelque chose n'etait pas clair.",
-        g7: "Ce formulaire signe fait partie de mon dossier d'immigration.",
-        h_declaration: "Je declare que l'information est vraie et comprends que de fausses informations peuvent entrainer des sanctions.",
-        footer_privacy: "Vos renseignements sont recueillis pour evaluer votre statut RP. Vous pouvez acceder et proteger vos renseignements personnels selon les lois sur la vie privee.",
-      },
-      de: {
-        continue_by_question: "Siehe Schritt 2 der Anleitung.",
-        q3_note: "Bei Verlangerung behalten Sie die aktuelle Karte bis die neue da ist. Bei Ersatz einer beschadigten Karte fugen Sie sie bei.",
-        q19_label: "19. ADRESSHISTORIE: Alle Adressen der letzten 5 Jahre (oder seit PR), von alt nach neu.",
-        q20_label: "20. ARBEITS-/BILDUNGSHISTORIE: Alle Arbeit/Studium der letzten 5 Jahre (oder seit PR), von alt nach neu.",
-        q21_label: "21. REISEHISTORIE: Alle Reisen ausserhalb Kanadas der letzten 5 Jahre (oder seit PR).",
-        q22_label: "22. Alle Abwesenheiten der letzten 5 Jahre nach zutreffender Situation auflisten.",
-        q23_text: "Wenn Sie JA wahlen und unterschreiben, kann die CBSA Ihre Einreisehistorie an IRCC weitergeben.",
-        q23_note: "Ohne Zustimmung mussen Sie die Historie ggf. selbst anfordern, was verzogert.",
-        q24_text: "Wenn Sie JA wahlen und unterschreiben, kann IRCC Ihre SIN erfassen und Steuerinfos anfordern.",
-        g_intro: "Diese Erklarung betrifft die Angaben in diesem Formular und beigefugte Dokumente.",
-        g6: "Ich habe nachgefragt, wenn etwas unklar war.",
-        g7: "Dieses unterschriebene Formular wird Teil meines Einwanderungsdatensatzes.",
-        h_declaration: "Ich erklare, dass die Angaben wahr sind und verstehe, dass falsche Angaben zu Strafen fuhren konnen.",
-        footer_privacy: "Ihre Angaben werden zur Prufung Ihres PR-Status erhoben. Sie haben Rechte auf Zugang und Schutz Ihrer Daten.",
-      },
-      tr: {
-        continue_by_question: "Talimat kilavuzunun 2. adimina bakin.",
-        q3_note: "Kart yenilemede yeni kart gelene kadar mevcut karti saklayin. Hasarli kart degisimi icin karti basvuruya ekleyin.",
-        q19_label: "19. ADRES GECMISI: Son 5 yilin (veya PR oldugunuz tarihten beri) tum adreslerini eski tarihten yeni tarihe yazin.",
-        q20_label: "20. IS/EGITIM GECMISI: Son 5 yilin (veya PR oldugunuz tarihten beri) tum is ve egitim gecmisini eski tarihten yeni tarihe yazin.",
-        q21_label: "21. SEYAHAT GECMISI: Son 5 yilda (veya PR oldugunuzdan beri) Kanada disina tum cikislari listeleyin.",
-        q22_label: "22. Son 5 yildaki tum ayriliklari ilgili duruma gore listeleyin.",
-        q23_text: "\"EVET\" secip imzalarsaniz CBSA giris gecmisinizi IRCC ile paylasabilir.",
-        q23_note: "Onay vermezseniz, giris gecmisini kendiniz istemeniz gerekebilir ve bu gecikmeye yol acar.",
-        q24_text: "\"EVET\" secip imzalarsaniz IRCC SIN numaranizi alip vergi/ikamet bilgileri isteyebilir.",
-        g_intro: "Bu beyan, bu formda ve ek belgelerde verdiginiz bilgileri kapsar.",
-        g6: "Anlamadigim noktalarda aciklama istedim.",
-        g7: "Bu imzali form gocmenlik kaydimin bir parcasi olur.",
-        h_declaration: "Bilgilerin dogru oldugunu beyan ederim; yanlis bilgi cezalara yol acabilir.",
-        footer_privacy: "Bilgileriniz PR durumunuzu degerlendirmek icin toplanir. Kisisel bilgilerinize erisim ve koruma hakkiniz vardir.",
-      },
+        legally_separated: "Yasal olarak ayrı",
+        divorced: "Boşanmış",
+        common_law: "Ortak hayat (common-law)",
+        q16_label: "PR olduğunuz yer (Şehir/Giriş noktası)",
+        q17_label: "Kanada’da hiç sınır dışı kararı aldınız mı?",
+        q18_label: "Bir göçmenlik memuru 44(1) raporu düzenledi mi veya ikamet yükümlülüğünü yerine getirmediğinize karar verdi mi?",
+        q19_label: "Kanada içi/dışı adres geçmişi (son 5 yıl)",
+        q20_label: "İş ve eğitim geçmişi (son 5 yıl)",
+        q21_label: "Seyahat geçmişi: Son 5 yılda Kanada dışında yaşadınız/seyahat ettiniz mi?",
+        q22_label: "Son beş (5) yıldaki TÜM Kanada dışı ayrılıklarınızı listeleyin",
+        situation1_label: "Durum 1 - Kanada vatandaşı aile üyesi ile yurt dışında bulunma",
+        situation2_label: "Durum 2 - Kanada şirketi adına yurt dışında çalışma",
+        situation3_label: "Durum 3 - Yurt dışında çalışan PR aile üyesi ile bulunma",
+        q23_label: "Kanada’ya giriş geçmişi",
+        q24_label: "Gelir vergisi bilgileri ve beyan geçmişi",
+        q25_label: "Başvuru sahibiyim (uygun kutuyu işaretleyin)",
+        q26_card_number: "Daimi Oturum Kartı numarası",
+        q26_card_was: "PR kartım (kayıp/çalınmış/hasar görmüş/hiç alınmamış)"
+      }
     };
 
     function getLangFromUrl() {
@@ -1671,79 +830,44 @@
       return (params.get("lang") || "en").toLowerCase();
     }
 
-    function setLangInUrl(lang) {
-      const params = new URLSearchParams(window.location.search);
-      params.set("lang", lang);
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
-      history.replaceState({}, "", newUrl);
-    }
-
-    function applyTranslations(langOverride) {
-      const lang = (langOverride || getLangFromUrl());
+    function applyTranslations() {
+      const lang = getLangFromUrl();
       const dict = translations[lang] || translations.en;
-      const plain = plainOverrides[lang] || plainOverrides.en;
-      const merged = { ...dict, ...plain };
       document.querySelectorAll("[data-i18n]").forEach((el) => {
         const key = el.getAttribute("data-i18n");
-        if (merged[key]) {
-          el.textContent = merged[key];
+        if (dict[key]) {
+          el.textContent = dict[key];
         }
       });
     }
 
     applyTranslations();
-
-    bubble.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-
-    document.addEventListener("click", () => {
-      bubble.style.display = "none";
-    });
-
-    downloadBtn.addEventListener("click", () => {
-      const prevLang = getLangFromUrl();
-      setLangInUrl("en");
-      applyTranslations("en");
-      window.print();
-      setLangInUrl(prevLang);
-      applyTranslations(prevLang);
-    });
   </script>
-  <div class="chat-tooltip" id="chat-tooltip">
-    <p id="chat-message">Merhaba, önerdiğim linklere bakmak ister misin?</p>
-    <a href="https://www.newcomerwomen.org/" target="_blank" rel="noopener">Newcomer Women Service</a>
-  </div>
-  <div class="chat-bubble" id="chat-bubble" aria-label="Chat">
-    <img src="/static/chat-raccoon.avif" alt="Raccoon chat icon">
-  </div>
   <script>
-    const chatBubble = document.getElementById("chat-bubble");
-    const chatTooltip = document.getElementById("chat-tooltip");
-    const chatMessage = document.getElementById("chat-message");
+    function resizeFields() {
+      document.querySelectorAll(".page").forEach((page) => {
+        const overlay = page.querySelector(".overlay");
+        if (!overlay) return;
+        overlay.querySelectorAll(".field-input").forEach((el) => {
+          const h = el.getBoundingClientRect().height;
+          el.style.fontSize = Math.max(8, h * 0.8) + "px";
+          el.style.lineHeight = h + "px";
+        });
+        overlay.querySelectorAll(".field-check span").forEach((el) => {
+          const h = el.getBoundingClientRect().height;
+          el.style.fontSize = Math.max(8, h * 0.9) + "px";
+        });
+      });
+    }
+    window.addEventListener("load", resizeFields);
+    window.addEventListener("resize", resizeFields);
 
-    const chatTexts = {
-      en: "Hi, would you like to see the links I recommend?",
-      es: "Hola, quieres ver los enlaces que recomiendo?",
-      fr: "Bonjour, voulez-vous voir les liens que je recommande ?",
-      de: "Hallo, mochtest du die von mir empfohlenen Links sehen?",
-      tr: "Merhaba, önerdiğim linklere bakmak ister misin?",
-    };
-
-    chatBubble.addEventListener("click", (e) => {
-      e.stopPropagation();
-      chatTooltip.style.display = chatTooltip.style.display === "block" ? "none" : "block";
-      const lang = getLangFromUrl();
-      chatMessage.textContent = chatTexts[lang] || chatTexts.en;
-    });
-
-    chatTooltip.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-
-    document.addEventListener("click", () => {
-      chatTooltip.style.display = "none";
-    });
+    const downloadBtn = document.getElementById("download-form");
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", () => {
+        window.print();
+      });
+    }
   </script>
 </body>
 </html>
