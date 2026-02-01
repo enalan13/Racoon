@@ -10,7 +10,7 @@
     .layout { display: flex; gap: 18px; align-items: flex-start; }
     .main { flex: 1 1 auto; min-width: 0; }
     .side { width: 320px; flex: 0 0 320px; }
-    .floating-panel { position: fixed; top: 72px; right: 24px; width: 320px; max-height: calc(100vh - 96px); overflow: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .floating-panel { position: fixed; top: 72px; right: 24px; width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); overflow: visible; }
     .page { position: relative; margin: 18px auto; }
     .page img { width: 100%; height: auto; display: block; }
     .overlay { position: absolute; inset: 0; }
@@ -28,6 +28,11 @@
     .translation-panel .lang-switch a { text-decoration: none; padding: 4px 8px; border: 1px solid #bbb; border-radius: 4px; color: #111; background: #fff; font-size: 12px; }
     .translation-panel .item { font-size: 12px; line-height: 1.35; margin: 2px 0; }
     .translation-panel .item .q { font-weight: 700; margin-right: 6px; }
+    .translation-scroll { max-height: calc(100vh - 140px); overflow: auto; padding-right: 6px; }
+    .tooltip { position: relative; display: inline-block; cursor: pointer; }
+    .tooltip-label { text-decoration: underline; text-decoration-color: #f2c200; text-decoration-thickness: 3px; text-underline-offset: 2px; }
+    .tooltip .tooltip-text { visibility: hidden; opacity: 0; transition: opacity 0.15s ease; position: absolute; left: 0; top: 100%; margin-top: 6px; z-index: 10; background: #111; color: #fff; padding: 8px 10px; border-radius: 6px; width: 240px; font-size: 12px; line-height: 1.35; }
+    .tooltip.is-open .tooltip-text { visibility: visible; opacity: 1; }
     .actions { position: sticky; top: 12px; z-index: 5; margin: 12px 0; }
     .btn { padding: 8px 12px; border: 1px solid #111; background: #fff; font-size: 12px; cursor: pointer; }
     @media print {
@@ -408,6 +413,7 @@
     </div>
       <aside class="side">
         <div class="translation-panel floating-panel" id="translation-panel">
+          <div class="translation-scroll">
       <div class="lang-switch">
         <a href="?lang=en">English</a>
         <a href="?lang=es">Español</a>
@@ -419,6 +425,7 @@
 
       <h3 data-i18n="section_a">A. PERSONAL DETAILS</h3>
       <div class="item"><span class="q">1.</span><span data-i18n="q1_label">Language you prefer for correspondence</span></div>
+      <div class="item"><span class="tooltip"><span class="tooltip-label" data-i18n="uci_label">UCI number</span><span class="tooltip-text">UCI number, Kanada Göçmenlik (IRCC) tarafından başvuru sahiplerine verilen benzersiz kimlik numarasıdır; daha önce Kanada’ya başvurduysan belgelerinde yer alır.</span></span></div>
       <div class="item"><span class="q">2.</span><span data-i18n="q2_label">Date you became a permanent resident of Canada (YYYY-MM-DD)</span></div>
       <div class="item"><span class="q">3.</span><span data-i18n="q3_label">You are applying to (check one box)</span></div>
       <div class="item" data-i18n="q3_opt1">Obtain your first Permanent Resident Card</div>
@@ -458,7 +465,7 @@
       <div class="item" data-i18n="widowed">Widowed</div>
       <div class="item" data-i18n="legally_separated">Legally separated</div>
       <div class="item" data-i18n="divorced">Divorced</div>
-      <div class="item" data-i18n="common_law">Common-law</div>
+      <div class="item"><span class="tooltip"><span class="tooltip-label" data-i18n="common_law">Common-law</span><span class="tooltip-text">Common-law, Kanada’da evli olmadan en az 12 ay birlikte yaşayan ve evli çift gibi kabul edilen partnerlik durumudur.</span></span></div>
 
       <h3 data-i18n="section_b">B. YOUR IMMIGRATION HISTORY</h3>
       <div class="item"><span class="q">16.</span><span data-i18n="q16_label">Place you became a permanent resident of Canada (City/Port of entry)</span></div>
@@ -486,12 +493,28 @@
       <h3 data-i18n="section_h">H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PR CARD</h3>
       <div class="item"><span class="q">26.</span><span data-i18n="q26_card_number">Permanent Resident Card number</span></div>
       <div class="item" data-i18n="q26_card_was">My Permanent Resident Card was (lost/stolen/destroyed/never received)</div>
-            </div>
+              </div>
+        </div>
       </aside>
     </div>
   </div>
 
   <script>
+    document.querySelectorAll(".tooltip").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.querySelectorAll(".tooltip.is-open").forEach((open) => {
+          if (open !== el) open.classList.remove("is-open");
+        });
+        el.classList.toggle("is-open");
+      });
+    });
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".tooltip.is-open").forEach((open) => {
+        open.classList.remove("is-open");
+      });
+    });
+
     const translations = {
       en: {
         translation_title: "Translation (reference only)",
@@ -503,6 +526,7 @@
         section_g: "G. DECLARATION OF APPLICANT",
         section_h: "H. SOLEMN DECLARATION CONCERNING A LOST, STOLEN, DESTROYED OR NEVER RECEIVED PR CARD",
         q1_label: "Language you prefer for correspondence",
+        uci_label: "UCI number",
         q2_label: "Date you became a permanent resident of Canada (YYYY-MM-DD)",
         q3_label: "You are applying to (check one box)",
         q3_opt1: "Obtain your first Permanent Resident Card",
@@ -569,6 +593,7 @@
         section_g: "G. DECLARACIÓN DEL SOLICITANTE",
         section_h: "H. DECLARACIÓN SOLEMNE SOBRE UNA TARJETA PR PERDIDA, ROBADA, DESTRUIDA O NO RECIBIDA",
         q1_label: "Idioma preferido para la correspondencia",
+        uci_label: "Número UCI",
         q2_label: "Fecha en que se convirtió en residente permanente de Canadá (AAAA-MM-DD)",
         q3_label: "Usted solicita (marque una sola casilla)",
         q3_opt1: "Obtener su primera Tarjeta de Residente Permanente",
@@ -635,6 +660,7 @@
         section_g: "G. DÉCLARATION DU DEMANDEUR",
         section_h: "H. DÉCLARATION SOLENNELLE POUR CARTE RP PERDUE, VOLÉE, DÉTRUITE OU JAMAIS REÇUE",
         q1_label: "Langue préférée pour la correspondance",
+        uci_label: "Numéro UCI",
         q2_label: "Date de résidence permanente au Canada (AAAA-MM-JJ)",
         q3_label: "Vous présentez une demande pour (cocher une case)",
         q3_opt1: "Obtenir votre première carte de résident permanent",
@@ -701,6 +727,7 @@
         section_g: "G. ERKLÄRUNG DES ANTRAGSTELLERS",
         section_h: "H. FEIERLICHE ERKLÄRUNG ZU VERLORENER/GESTOHLENER/ZERSTÖRTER PR-KARTE",
         q1_label: "Bevorzugte Sprache für die Korrespondenz",
+        uci_label: "UCI-Nummer",
         q2_label: "Datum der Erlangung des PR-Status (JJJJ-MM-TT)",
         q3_label: "Sie beantragen (ein Kästchen ankreuzen)",
         q3_opt1: "Erste Daueraufenthaltskarte",
@@ -767,6 +794,7 @@
         section_g: "G. BAŞVURU SAHİBİ BEYANI",
         section_h: "H. KAYIP/ÇALINMIŞ/İMHA EDİLMİŞ/ALINMAMIŞ PR KARTI İÇİN BEYAN",
         q1_label: "Yazışmalar için tercih edilen dil",
+        uci_label: "UCI numarası",
         q2_label: "Kanada’da daimi ikametçi olduğunuz tarih (YYYY-MM-DD)",
         q3_label: "Başvuru türü (tek seçenek işaretleyin)",
         q3_opt1: "İlk Daimi Oturum Kartını almak",

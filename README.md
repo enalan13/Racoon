@@ -12,3 +12,4 @@ Additionally, since the app is AI-powered, users can ask questions like “What 
 
 run this commend to run the backend
 fastapi dev main.py 
+/Users/senayagmurcandik/fastapi_test/venv/bin/uvicorn main:app --reload
