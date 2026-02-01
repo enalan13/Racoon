@@ -48,6 +48,55 @@
       height: auto;
       display: block;
     }
+    .chat-bubble {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      border: 2px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      z-index: 20;
+    }
+    .chat-bubble img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .chat-tooltip {
+      position: fixed;
+      right: 18px;
+      bottom: 96px;
+      width: 300px;
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 20;
+    }
+    .chat-tooltip p {
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .chat-tooltip a {
+      display: block;
+      color: #0a58ca;
+      text-decoration: none;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -64,5 +113,47 @@
     <div class="page"><img src="/static/prcard_pages/page-3.png" alt="Page 3"></div>
     <div class="page"><img src="/static/prcard_pages/page-4.png" alt="Page 4"></div>
   </div>
+
+  <div class="chat-tooltip" id="chat-tooltip">
+    <p id="chat-message">Merhaba, önerdiğim linklere bakmak ister misin?</p>
+    <a href="https://www.newcomerwomen.org/" target="_blank" rel="noopener">Newcomer Women Service</a>
+  </div>
+  <div class="chat-bubble" id="chat-bubble" aria-label="Chat">
+    <img src="/static/chat-raccoon.avif" alt="Raccoon chat icon">
+  </div>
+
+  <script>
+    const chatBubble = document.getElementById("chat-bubble");
+    const chatTooltip = document.getElementById("chat-tooltip");
+    const chatMessage = document.getElementById("chat-message");
+
+    const chatTexts = {
+      en: "Hi, would you like to see the links I recommend?",
+      es: "Hola, quieres ver los enlaces que recomiendo?",
+      fr: "Bonjour, voulez-vous voir les liens que je recommande ?",
+      de: "Hallo, mochtest du die von mir empfohlenen Links sehen?",
+      tr: "Merhaba, önerdiğim linklere bakmak ister misin?",
+    };
+
+    function getLangFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return (params.get("lang") || "en").toLowerCase();
+    }
+
+    chatBubble.addEventListener("click", (e) => {
+      e.stopPropagation();
+      chatTooltip.style.display = chatTooltip.style.display === "block" ? "none" : "block";
+      const lang = getLangFromUrl();
+      chatMessage.textContent = chatTexts[lang] || chatTexts.en;
+    });
+
+    chatTooltip.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
+      chatTooltip.style.display = "none";
+    });
+  </script>
 </body>
 </html>
