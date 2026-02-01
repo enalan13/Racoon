@@ -797,7 +797,7 @@
     }
 
     terms.forEach((el) => {
-      el.addEventListener("mousedown", (e) => {
+      el.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         showBubble(el);
@@ -1636,6 +1636,10 @@
     }
 
     applyTranslations();
+
+    bubble.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
 
     document.addEventListener("click", () => {
       bubble.style.display = "none";
